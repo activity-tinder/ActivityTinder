@@ -121,8 +121,7 @@ Navbar on the bottom of the screen for switching between activities
    * ...
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+![Flowchart](ActivityTinder.png)
 
 ### [BONUS] Digital Wireframes & Mockups
 
