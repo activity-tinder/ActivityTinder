@@ -8,6 +8,7 @@ Activity Tinder
 1. [Product Spec](#Product-Spec)
 1. [Wireframes](#Wireframes)
 2. [Schema](#Schema)
+3. [Todo](#Todo)
 
 ## Overview
 ### Description
@@ -15,7 +16,7 @@ Have you ever wanted to hang out with a group of friends, but have no idea what 
 
 This app will help individuals meet people that they want to hang out or do specific activities with. It will allow them to specify what activity they want to do and find a group or join a group that already plans on doing that activity.
 
-### App Evaluation
+### [App Evaluation](https://courses.codepath.com/courses/android_university_fast_track/pages/app_brainstorming_guide)
 [Evaluation of your app across the following attributes]
 - **Category:**
     - social, meeting people irl (literally Tinder for friends)
@@ -47,18 +48,37 @@ This app will help individuals meet people that they want to hang out or do spec
 
 ### 1. User Stories (Required and Optional)
 
-**Required Must-have Stories**
-
-* Home page
-    * Log in with Facebook/FB Messanger
-* search for activities in the area
-* if you know you want to do a specific activity, directly create a group for it
+**\*Updated\* Required Must-have Stories**
+* App Icon
+* Login/Signup screen
+* Location permissions page
+* Main card stack page with activites on the cards
+    * swipe left and right depending on whether you're interested in activity or not
+* Activity detail page
+* Activity checkout page
+* Contact us page
 * Profile page
-    * Where you are able to have a rating feature
-* Chat option to talk amongst the people in the group
-    * Make the chat option open up FB Messenger
-* Contact-us page
-* Filters for type of people you want, amounts willing to spend, how far people are willing to go
+
+**\*Updated\* Stretch Stories**
+* separate sign-up page
+* location page that asks for city location
+* group chat option
+* color categorized cards for the activities depending on the type of activity
+* organizer can compose a message to be displayed to whoever tries to join the event
+*  
+* type in password to confirm leaving activity
+    * warning for user before leaving activity under 24 hours before activity
+* detailed card view features:
+    * listing of people who are planning on attending already
+    * default images for types of activities
+* profile page features:
+    * can see person's past events and photos they took there
+* cute sound and animation of adding to an event
+    * toast
+* export event details to calendar
+* transfer ownership of events
+* checking into event (attendance)
+
 
 **Optional Nice-to-have Stories**
 
@@ -67,34 +87,37 @@ This app will help individuals meet people that they want to hang out or do spec
 * Filter option where you can choose location, price, number of people, etc.
 * After-event survey where you are able to rate the people who went
     * You can add pictures of the event to the survey
-    * 
 * Optional invite-only events
-* ...
+* Messenger link in profile picture
 
 ### 2. Screen Archetypes
+https://guides.codepath.org/android/Mobile-Screen-Archetypes
+* Login page/register
+   * Login page
+* Card swiping
+   * Swiping for Activities
+* creation page
+    * allows users to create events  
+* Profile Page
+    * Where it says the event that you went to 
+    * Rating - where you receive stars based on your performance
+* Contact us
 
-* [list first screen here]
-   * [list associated required story here]
-   * ...
-* [list second screen here]
-   * [list associated required story here]
-   * ...
-
-### 3. Navigation
+# 3. Navigation
 
 **Tab Navigation** (Tab to Screen)
-
-* [fill out your first tab]
-* [fill out your second tab]
-* [fill out your third tab]
+Navbar on the bottom of the screen for switching between activities
+* Home tab
+* Create event
+* Profile page
 
 **Flow Navigation** (Screen to Screen)
 
-* [list first screen here]
-   * [list screen navigation here]
+* Home card deck with activities
+   * click on specific card to see that activity's details in a separate activity
    * ...
-* [list second screen here]
-   * [list screen navigation here]
+* Profile
+   * click on settings button to access settings
    * ...
 
 ## Wireframes
@@ -113,3 +136,12 @@ This app will help individuals meet people that they want to hang out or do spec
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
+
+##	Todo before App Kickoff
+- find scope of project
+    - break up into features
+    - try to cut features into what it needs
+- need tasks and goals for every individual person
+- want goals per week, per person
+    - make the workflow modular
+    - avoid blockers/dependencies
