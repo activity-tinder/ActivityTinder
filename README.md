@@ -65,7 +65,7 @@ This app will help individuals meet people that they want to hang out or do spec
 * group chat option
 * color categorized cards for the activities depending on the type of activity
 * organizer can compose a message to be displayed to whoever tries to join the event
-*  
+*  delete and event
 * type in password to confirm leaving activity
     * warning for user before leaving activity under 24 hours before activity
 * detailed card view features:
@@ -128,12 +128,51 @@ Navbar on the bottom of the screen for switching between activities
 ### [BONUS] Interactive Prototype
 
 ## Schema 
-[This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+#### User
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | username      | String   | unique id for the user post (default field) |
+   | password      | String   | user's unique password (default field) |
+   | name          | String   | user's real name |
+   | profileImage  | File     | a photo of the user |
+   | dateOfBirth   | DateTime | user's birthdate |
+   | email         | String   | image caption by author |
+   | reliabilityScore | Number   | score representing how consistently the user shows up for events |
+   | email         | String   | user's email address |
+   | location      | String   | user's city/general area |
+   | activeEvents  | Array of Activities | events the user plans to attend|
+   | pastEvents    | Array of Activities | events the user has attended|
+   | scoreList     | Array of ints | scores the user has received in events they have signed up for|
+   
+#### Activity post
+| Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | Name      | String   | activity title |
+   | User      | Pointer to Object   | user who created the post |
+   | Description        | String | description of the activity |
+   | Time & Date         |   DateTime  | regarding the when for the event |
+   | Category       | String   | type of activity |
+   | CreatedAt     | DateTime | date when post is created (default field) |
+   | UpdatedAt     | DateTime | date when post is last updated (default field) |
+   | Location     | String | place of the activity |
+   | People Limit     | Integer | max amount of people that can join the activity |
+   | usersAttending  | Array | list of users attending event |
+   
 ### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
+| Screen      | Endpoint | Property     | Description |
+| ----------- | -------- | ------------ | ------------|
+| Login/Signup | Parse | username, password | user verification |
+| Main Page (stack) | Parse | Activity: name, user who posted, date, location, category, # of people currently attending | basic info about activity |
+| Detailed View | Parse | Activity post + description, more details than ^ | detailed info about activity |
+| Confirmation page | Parse | Activity post, description | detailed info about activity |
+| Profile | Parse | User info | detailed info about the user |
+| Receipt page | Parse | Activity post, delete from User's activeList | detailed info about activity |
+| Receipt page | Google Maps API | User location, Activity location | directions |
+| Receipt page | Calendar | export calendar (intent?) | time info |
+| Create Activity | Parse | write to new Activity object | creating activity post |
+
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
 
 ##	Todo before App Kickoff
