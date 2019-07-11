@@ -1,8 +1,6 @@
 Activity Tinder - README
 ===
 
-Activity Tinder
-
 ## Table of Contents
 1. [Overview](#Overview)
 1. [Product Spec](#Product-Spec)
@@ -79,10 +77,7 @@ This app will help individuals meet people that they want to hang out or do spec
 * transfer ownership of events
 * checking into event (attendance)
 
-
 **Optional Nice-to-have Stories**
-
-* [fill in your required user stories here]
 * Help page where it describes what the app does
 * Filter option where you can choose location, price, number of people, etc.
 * After-event survey where you are able to rate the people who went
@@ -124,8 +119,6 @@ Navbar on the bottom of the screen for switching between activities
 ![Flowchart](ActivityTinder.png)
 
 ### [BONUS] Digital Wireframes & Mockups
-
-### [BONUS] Interactive Prototype
 
 ## Schema 
 ### Models
@@ -172,8 +165,6 @@ Navbar on the bottom of the screen for switching between activities
 | Receipt page | Google Maps API | User location, Activity location | directions |
 | Receipt page | Calendar | export calendar (intent?) | time info |
 | Create Activity | Parse | write to new Activity object | creating activity post |
-
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
 
 ##	Todo before App Kickoff
 - find scope of project
