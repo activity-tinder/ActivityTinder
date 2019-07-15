@@ -1,5 +1,4 @@
 Activity Tinder - README
-Hello World!
 ===
 
 ## Table of Contents
@@ -117,7 +116,7 @@ Navbar on the bottom of the screen for switching between activities
    * ...
 
 ## Wireframes
-![Flowchart](ActivityTinder.png)
+![Flowchart](ActivityTinderUpdated.png)
 
 ### [BONUS] Digital Wireframes & Mockups
 
