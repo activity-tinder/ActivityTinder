@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Activty Tinder</string>
+    <color name="green">#21CC4C</color>
+    <color name="pink">#CE0F55</color>
+    <color name="red">#EB0505</color>
+
 </resources>
