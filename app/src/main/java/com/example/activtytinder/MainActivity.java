@@ -15,6 +15,7 @@ import com.example.activtytinder.Fragments.CreateFragment;
 import com.example.activtytinder.Fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
