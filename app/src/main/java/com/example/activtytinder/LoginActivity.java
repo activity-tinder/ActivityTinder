@@ -20,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordInput;
     private Button loginBtn;
     private Button signupBtn;
+    ///Testing 123
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
