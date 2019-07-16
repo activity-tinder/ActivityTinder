@@ -2,11 +2,8 @@ package com.example.activtytinder;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -35,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
 //
 //                switch (item.getItemId()) {
 //                    case R.id.action_home:
-//                        fragment = new HomeFragment();
+//                        fragment = new CardFragment();
 //                        // Toast.makeText(MainActivity.this, "Home!", Toast.LENGTH_SHORT).show();
 //                        break;
 //                    case R.id.action_compose:
-//                        fragment = new ComposeFragment();
+//                        fragment = new CreateFragment();
 //                        // Toast.makeText(MainActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
 //                        break;
 //                    case R.id.action_profile:
@@ -53,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
 //                return true;
 //            }
 //        });
+        // Set default selection
+//        bottomNavigationView.setSelectedItemId(R.id.action_card);
 //
 //        // Set default selection
 //        bottomNavigationView.setSelectedItemId(R.id.action_home);
