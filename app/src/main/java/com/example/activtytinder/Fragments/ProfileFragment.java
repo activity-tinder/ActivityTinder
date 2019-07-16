@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.activtytinder.MainActivity;
+import com.example.activtytinder.LoginActivity;
 import com.example.activtytinder.R;
 import com.google.android.gms.location.LocationRequest;
 import com.parse.ParseUser;
@@ -57,7 +57,7 @@ public class ProfileFragment extends Fragment {
     private void logout(){
         ParseUser.logOut();
         ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
-        final Intent intent = new Intent(getActivity(), MainActivity.class);
+        final Intent intent = new Intent(getActivity(), LoginActivity.class);
         //start the intent that switches to home activity to in turn go to the home activity
         startActivity(intent);
         getActivity().finish();
