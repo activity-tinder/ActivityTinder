@@ -16,7 +16,7 @@ public class ParseApp extends Application {
         final Parse.Configuration configuration = new Parse.Configuration.Builder(this)
                 .applicationId("not-tinder")
                 .clientKey("platonic-only")
-                .server("http://activity-tinder.herokuapp.com/parse")
+                .server("https://activity-tinder.herokuapp.com/parse")
                 .build();
         Parse.initialize(configuration);
     }

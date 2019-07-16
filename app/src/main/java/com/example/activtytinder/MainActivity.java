@@ -2,13 +2,12 @@ package com.example.activtytinder;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-<<<<<<< HEAD
-=======
 import android.view.MenuItem;
 import android.widget.Toast;
->>>>>>> 8b37b6ff379552ec1ee6d7ba57513995d8db3982
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.activtytinder.Fragments.CardFragment;
@@ -28,43 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFFFF));
 
-
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
-<<<<<<< HEAD
-//        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-//
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                Fragment fragment;
-//
-//                switch (item.getItemId()) {
-//                    case R.id.action_home:
-//                        fragment = new CardFragment();
-//                        // Toast.makeText(MainActivity.this, "Home!", Toast.LENGTH_SHORT).show();
-//                        break;
-//                    case R.id.action_compose:
-//                        fragment = new CreateFragment();
-//                        // Toast.makeText(MainActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
-//                        break;
-//                    case R.id.action_profile:
-//                    default:
-//                        fragment = new ProfileFragment();
-//                        // Toast.makeText(MainActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
-//
-//                        break;
-//                }
-//                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
-//                return true;
-//            }
-//        });
-        // Set default selection
-//        bottomNavigationView.setSelectedItemId(R.id.action_card);
-//
-//        // Set default selection
-//        bottomNavigationView.setSelectedItemId(R.id.action_home);
-=======
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -95,6 +59,5 @@ public class MainActivity extends AppCompatActivity {
 
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_card);
->>>>>>> 8b37b6ff379552ec1ee6d7ba57513995d8db3982
     }
 }
