@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFFFF));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0x000000));
 
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
