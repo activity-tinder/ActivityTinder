@@ -8,6 +8,9 @@ import android.widget.TextView;
 import com.example.activtytinder.Models.Event;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // this class binds the event information to the card swiping view
 public class CardAdapter {
 
@@ -17,6 +20,7 @@ public class CardAdapter {
     private TextView tvCardLocation;
 
     private Event mEvent;
+    protected List<Event> events;
     private Context mContext;
     private SwipePlaceHolderView mSwipeView;
 
@@ -24,6 +28,7 @@ public class CardAdapter {
         mContext = context;
         mEvent = event;
         mSwipeView = swipeView;
+        events = new ArrayList<>();
     }
 
     private void onSwipedOut() {

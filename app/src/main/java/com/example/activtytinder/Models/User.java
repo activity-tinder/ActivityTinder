@@ -7,12 +7,12 @@ import com.parse.ParseUser;
 @ParseClassName("User")
 public class User extends ParseObject{
 
+    // TODO -- Brad's doing this
     //set variables to bring "post" information from Parse database
     public static final String KEY_NAME = "name";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
-
 
     //get and set all variables
     public ParseUser getUser (){

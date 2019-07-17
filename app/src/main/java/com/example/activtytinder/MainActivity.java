@@ -25,37 +25,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFFFF));
-
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment fragment;
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            Fragment fragment;
 
-                switch (item.getItemId()) {
-                    case R.id.action_card:
-                        fragment = new CardFragment();
-                        Toast.makeText(MainActivity.this, "Home!", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.action_create:
-                        fragment = new CreateFragment();
-                        Toast.makeText(MainActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.action_profile:
-                    default:
-                        fragment = new ProfileFragment();
-                        Toast.makeText(MainActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
-
-                        break;
-                }
-                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
-                return true;
+            switch (item.getItemId()) {
+                case R.id.action_card:
+                    fragment = new CardFragment();
+                    Toast.makeText(MainActivity.this, "Home!", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.action_create:
+                    fragment = new CreateFragment();
+                    Toast.makeText(MainActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.action_profile:
+                default:
+                    fragment = new ProfileFragment();
+                    Toast.makeText(MainActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
+                    break;
             }
+            fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+            return true;
         });
 
         // Set default selection

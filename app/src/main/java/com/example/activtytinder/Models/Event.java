@@ -10,25 +10,20 @@ import org.json.JSONArray;
 
 public class Event extends ParseObject{
 
-    private static final String KEY_DATE = "eventDate";
+    private static final String KEY_EVENT_DATE = "eventDate";
     private static final String KEY_NAME= "name";
-//    //creator is an object ID
     private static final String KEY_CREATOR = "creator";
-    //people attending is an arraylist
     private static final String KEY_ATTENDEES =  "peopleAttending";
-    //Limit is an integer
     private static final String KEY_LIMIT = "limit";
     private static final String KEY_DESCRIPTION = "description";
-    //Location is a geopoint
     private static final String KEY_LOCATION  = "location";
 
 
-
     public String getKeyDate(){
-        return getString(KEY_DATE);
+        return getString(KEY_EVENT_DATE);
     }
     public void setKeyDate(String eventDate){
-        put(KEY_DATE, eventDate);
+        put(KEY_EVENT_DATE, eventDate);
     }
 
     public String getKeyName(){
