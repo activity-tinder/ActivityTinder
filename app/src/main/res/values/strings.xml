@@ -1,5 +1,9 @@
 <resources>
+<<<<<<< HEAD
     <string name="app_name">Activity git Tinder</string>
+=======
+    <string name="app_name">Activity Tinder</string>
+>>>>>>> 460d37a05d457e0a6590fdc1a76e7ad2d61c2739
     <color name="green">#21CC4C</color>
     <color name="pink">#CE0F55</color>
     <color name="red">#EB0505</color>
