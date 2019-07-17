@@ -37,4 +37,10 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'// for logging API calls to LogCat
     implementation 'com.google.android.gms:play-services-location:11.8.0' //for getting location
 
+    implementation "com.google.android.gms:play-services-maps:15.0.0"
+    implementation "com.google.android.gms:play-services-location:15.0.0"
+
+    implementation 'com.github.hotchemi:permissionsdispatcher:3.1.0'
+    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.1.0'
+
 }
