@@ -20,6 +20,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.activtytinder.LoginActivity;
+import com.example.activtytinder.Models.User;
 import com.example.activtytinder.R;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -33,7 +34,7 @@ import permissions.dispatcher.NeedsPermission;
 
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment{
 
     public Button logoutButton;
     public Button getLocationButton;
@@ -63,6 +64,9 @@ public class ProfileFragment extends Fragment {
         tvScore = view.findViewById(R.id.tvScore);
         tvAge = view.findViewById(R.id.tvAge);
         tvBaseLocation = view.findViewById(R.id.tvBaseLocation);
+
+        String name = tvName.getText().toString();
+        populateProfile(name);
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +124,11 @@ public class ProfileFragment extends Fragment {
                     }
                 },
                 Looper.myLooper());
+    }
+
+    public void populateProfile(String name){
+        User user = new User();
+        user.setName(name);
     }
 
 }
