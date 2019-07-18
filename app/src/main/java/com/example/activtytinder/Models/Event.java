@@ -78,8 +78,8 @@ public class Event extends ParseObject{
         put(KEY_LOCATION, location);
     }
 
-    public static class Query extends ParseQuery<User>{
-        public Query(Class<User> subclass) {
+    public static class Query extends ParseQuery<ParseUser>{
+        public Query(Class<ParseUser> subclass) {
             super(subclass);
         }
 
