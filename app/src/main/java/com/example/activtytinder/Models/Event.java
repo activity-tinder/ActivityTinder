@@ -1,26 +1,33 @@
 package com.example.activtytinder.Models;
 
 //import com.parse.ParseClassName;
+
+import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
+
+import java.util.Date;
 //import com.parse.ParseQuery;
 
+@ParseClassName("Event")
 public class Event extends ParseObject{
 
-    private static final String KEY_EVENT_DATE = "eventDate";
-    private static final String KEY_NAME= "name";
-    private static final String KEY_CREATOR = "creator";
-    private static final String KEY_ATTENDEES =  "peopleAttending";
-    private static final String KEY_LIMIT = "limit";
-    private static final String KEY_DESCRIPTION = "description";
-    private static final String KEY_LOCATION  = "location";
+    public static final String KEY_EVENT_DATE = "eventDate";
+    public static final String KEY_NAME= "name";
+    public static final String KEY_CREATOR = "creator";
+    public static final String KEY_ATTENDEES =  "usersAttending";
+    public static final String KEY_LIMIT = "peopleLimit";
+    public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_LOCATION  = "location";
+    public static final String KEY_CATERGORY = "category";
 
 
-    public String getKeyDate(){
-        return getString(KEY_EVENT_DATE);
+    public Date getKeyDate(){
+        return getDate(KEY_EVENT_DATE);
     }
     public void setKeyDate(String eventDate){
         put(KEY_EVENT_DATE, eventDate);
@@ -40,10 +47,10 @@ public class Event extends ParseObject{
         put(KEY_DESCRIPTION, description);
     }
 
-    public String getCreator(){
-        return getString(KEY_CREATOR);
+    public ParseUser getCreator(){
+        return getParseUser(KEY_CREATOR);
     }
-    public void setKeyCreator(Object creator){
+    public void setKeyCreator(ParseUser creator){
         put(KEY_CREATOR, creator);
     }
 
