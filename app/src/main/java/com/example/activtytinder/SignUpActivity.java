@@ -1,11 +1,14 @@
 package com.example.activtytinder;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.text.InputType;
-import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -13,16 +16,26 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
-import com.example.activtytinder.Models.User;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.SettingsClient;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
+
+import permissions.dispatcher.NeedsPermission;
+
+import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
 public class SignUpActivity  extends AppCompatActivity {
 
@@ -33,7 +46,12 @@ public class SignUpActivity  extends AppCompatActivity {
     private EditText usernameInput;
     private EditText passwordInput;
     private Button createAccount;
+    public Button getLocationButton;
     private DatePickerDialog picker;
+    private LocationRequest mLocationRequest;
+    double baseLat;
+    double baseLong;
+    String TAG = "Sign Up Activity";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +64,7 @@ public class SignUpActivity  extends AppCompatActivity {
         usernameInput = (EditText) findViewById(R.id.etUsername);
         passwordInput = (EditText) findViewById(R.id.etPassword);
         createAccount = (Button) findViewById(R.id.btnCreateUser);
+        getLocationButton = (Button) findViewById(R.id.get_location_btn);
 
 
         birthday.setInputType(InputType.TYPE_NULL);
@@ -81,28 +100,33 @@ public class SignUpActivity  extends AppCompatActivity {
                 }
                 final String Name = nameOfPerson.getText().toString();
                 final String Email = email.getText().toString();
-                //final String Birthday = birthday.getText().toString();
-                final Date fbirthday = d;
+                final Date finalBirthday = d;
                 final String BaseLocation = baseLocation.getText().toString();
+                ParseGeoPoint gpBaseLocation = new ParseGeoPoint(baseLat,baseLong);
                 final String Username = usernameInput.getText().toString();
                 final String Password = passwordInput.getText().toString();
-                makeAccount(Name, Email, fbirthday, Username, Password);
+                makeAccount(Name, Email, finalBirthday, gpBaseLocation, Username, Password);
+            }
+        });
+
+        getLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getCurrentLocation();
             }
         });
     }
 
-    private void makeAccount(String Name, String Email, Date Birthday, String Username, String Password){
+    private void makeAccount(String Name, String Email, Date Birthday, ParseGeoPoint BaseLocation, String Username, String Password){
 
         ParseUser user = new ParseUser();
-        // Set core properties
         user.setUsername(Username);
         user.setPassword(Password);
         user.setEmail(Email);
-        // Set custom properties
         user.put("name", Name);
-        //user.put("location", "Seattle");
+        user.put("location", BaseLocation);
         user.put("birthday", Birthday);
-        // Invoke signUpInBackground
+        user.put("reliabilityScore", 100);
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
@@ -114,6 +138,7 @@ public class SignUpActivity  extends AppCompatActivity {
                     baseLocation.setText("");
                     usernameInput.setText("");
                     passwordInput.setText("");
+                    baseLocation.setText("");
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "Sign Up Failed!", Toast.LENGTH_SHORT).show();
@@ -121,20 +146,42 @@ public class SignUpActivity  extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
-    public String getRelativeTimeAgo(User user) {
-        String twitterFormat = "dd MMM yyyy HH:mm:ss ZZZZZ yyyy";
-        SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
-        sf.setLenient(true);
+    @SuppressLint({"MissingPermission", "NewApi"})
+    @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    public void getCurrentLocation() {
+        // Create the location request to start receiving updates
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-        String relativeDate = "";
-        long dateMillis = user.getBirthday().getTime();
-        relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
-                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        builder.addLocationRequest(mLocationRequest);
+        LocationSettingsRequest locationSettingsRequest = builder.build();
 
-        return relativeDate;
+        SettingsClient settingsClient = LocationServices.getSettingsClient(SignUpActivity.this);
+        settingsClient.checkLocationSettings(locationSettingsRequest);
+
+        if (SignUpActivity.this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(SignUpActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION}, 20);
+        }else {
+            Log.e(TAG, "PERMISSION GRANTED");
+        }
+        Log.e(TAG, String.valueOf(locationSettingsRequest));
+        getFusedLocationProviderClient(SignUpActivity.this).requestLocationUpdates(mLocationRequest, new LocationCallback() {
+                    @Override
+                    public void onLocationResult(LocationResult locationResult) {
+                        //onLocationChanged(locationResult.getLastLocation());
+                        String msg = "Location: " +
+                                Double.toString(locationResult.getLastLocation().getLatitude()) + "," +
+                                Double.toString(locationResult.getLastLocation().getLongitude());
+                        Toast.makeText(SignUpActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        baseLocation.setText(Double.toString(locationResult.getLastLocation().getLatitude())+", "+Double.toString(locationResult.getLastLocation().getLongitude()));
+                        baseLat = locationResult.getLastLocation().getLatitude();
+                        baseLong = locationResult.getLastLocation().getLongitude();
+                    }
+                },
+                Looper.myLooper());
     }
 }

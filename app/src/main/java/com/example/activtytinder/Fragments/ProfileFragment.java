@@ -20,7 +20,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.activtytinder.LoginActivity;
-import com.example.activtytinder.Models.User;
 import com.example.activtytinder.R;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -30,12 +29,15 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.SettingsClient;
 import com.parse.ParseUser;
 
+import java.text.SimpleDateFormat;
+
 import permissions.dispatcher.NeedsPermission;
 
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
 public class ProfileFragment extends Fragment{
 
+    ParseUser user = ParseUser.getCurrentUser();
     public Button logoutButton;
     public Button getLocationButton;
     public TextView tvName;
@@ -47,7 +49,6 @@ public class ProfileFragment extends Fragment{
     public static final String TAG = "ProfileFragment";
     private LocationRequest mLocationRequest;
 
-    //onCreateView to inflate the view
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,8 +66,7 @@ public class ProfileFragment extends Fragment{
         tvAge = view.findViewById(R.id.tvAge);
         tvBaseLocation = view.findViewById(R.id.tvBaseLocation);
 
-        String name = tvName.getText().toString();
-        populateProfile(name);
+        populateProfile();
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +74,7 @@ public class ProfileFragment extends Fragment{
                 logout();
             }
         });
+
         getLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,15 +88,13 @@ public class ProfileFragment extends Fragment{
         ParseUser.logOut();
         ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
         final Intent intent = new Intent(getActivity(), LoginActivity.class);
-        //start the intent that switches to home activity to in turn go to the home activity
         startActivity(intent);
         getActivity().finish();
     }
 
     @SuppressLint({"MissingPermission", "NewApi"})
     @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
-    private void getCurrentLocation() {
-        // Create the location request to start receiving updates
+    public void getCurrentLocation() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
@@ -118,19 +117,24 @@ public class ProfileFragment extends Fragment{
                     public void onLocationResult(LocationResult locationResult) {
                         //onLocationChanged(locationResult.getLastLocation());
                         String msg = "Location: " +
-                                Double.toString(locationResult.getLastLocation().getLatitude()) + "," +
-                                Double.toString(locationResult.getLastLocation().getLongitude());
+                                (locationResult.getLastLocation().getLatitude()) + "," +
+                                (locationResult.getLastLocation().getLongitude());
                         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
                     }
                 },
                 Looper.myLooper());
     }
 
-    public void populateProfile(String name){
-        User user = new User();
-        user.setName(name);
+    public void populateProfile(){
+        tvName.setText(user.getString("name"));
+        tvUsername.setText(user.getUsername());
+        tvEmail.setText(user.getEmail());
+        tvScore.setText(user.getNumber("reliabilityScore").toString());
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        tvAge.setText(formatter.format(user.getDate("birthday")));
+        tvBaseLocation.setText(user.getParseGeoPoint("location").getLatitude()+", "
+                +user.getParseGeoPoint("location").getLongitude());
     }
-
 }
 
 
