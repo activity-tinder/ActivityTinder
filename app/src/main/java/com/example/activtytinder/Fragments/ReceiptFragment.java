@@ -5,11 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 
 public class ReceiptFragment extends Fragment {
@@ -20,6 +23,8 @@ public class ReceiptFragment extends Fragment {
     private Button chatButton;
     private Button calendarButton;
     private Button ditchButton;
+    protected ScrollView scDetails;
+    protected TextView tvEventDetails;
 
     @Nullable
     @Override
@@ -34,6 +39,22 @@ public class ReceiptFragment extends Fragment {
         chatButton = view.findViewById(R.id.btnChat);
         calendarButton = view.findViewById(R.id.btnCalendar);
         ditchButton = view.findViewById(R.id.btnDitchEvent);
+        scDetails = view.findViewById(R.id.scDetails);
+        tvEventDetails = view.findViewById(R.id.eventDetails);
+
+        Event event = getArguments().getParcelable("event");
+        tvEventDetails.setText("Namme:"
+                        + event.getKeyName()
+                        + "Date:"
+                        +event.getKeyDate()
+                        +"Location:"
+                        + event.getLocation()
+                        + "Attendees:"
+                        + event.getKeyAttendees()
+                        + "Description:"
+                        + event.getKeyDescription()
+                );
+
 
 
         directionsButton.setOnClickListener(new View.OnClickListener() {
