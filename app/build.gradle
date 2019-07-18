@@ -45,6 +45,7 @@ dependencies {
 
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
     implementation 'com.google.android.material:material:1.0.0'// for logging API calls to LogCat
+
     // Card stack library
     implementation 'com.mindorks.android:placeholderview:1.0.3'
     annotationProcessor 'com.mindorks.android:placeholderview-compiler:1.0.3'

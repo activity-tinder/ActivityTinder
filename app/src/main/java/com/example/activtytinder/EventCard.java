@@ -9,24 +9,29 @@ import com.bumptech.glide.Glide;
 import com.example.activtytinder.Models.Event;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.mindorks.placeholderview.annotations.Resolve;
+import com.mindorks.placeholderview.annotations.swipe.SwipeCancelState;
+import com.mindorks.placeholderview.annotations.swipe.SwipeIn;
+import com.mindorks.placeholderview.annotations.swipe.SwipeInState;
+import com.mindorks.placeholderview.annotations.swipe.SwipeOut;
+import com.mindorks.placeholderview.annotations.swipe.SwipeOutState;
 
 import java.util.ArrayList;
 import java.util.List;
 
 // this class binds the event information to the card swiping view
-public class CardAdapter {
+public class EventCard {
 
     // setting up layout variables
-    private ImageView ivCardImage;
-    private TextView tvCardEventName;
-    private TextView tvCardLocation;
+    protected ImageView ivCardImage;
+    protected TextView tvCardEventName;
+    protected TextView tvCardLocation;
 
-    private Event mEvent;
+    protected Event mEvent;
     protected List<Event> events;
-    private Context mContext;
-    private SwipePlaceHolderView mSwipeView;
+    protected Context mContext;
+    public SwipePlaceHolderView mSwipeView;
 
-    public CardAdapter(Context context, Event event, SwipePlaceHolderView swipeView) {
+    public EventCard(Context context, Event event, SwipePlaceHolderView swipeView) {
         mContext = context;
         mEvent = event;
         mSwipeView = swipeView;
@@ -34,29 +39,34 @@ public class CardAdapter {
     }
 
     @Resolve
-    private void onResolved() {
+    public void onResolved() {
         tvCardEventName.setText(mEvent.getKeyName());
         tvCardLocation.setText(mEvent.getLocation().toString());
     }
 
-    private void onSwipedOut() {
+    @SwipeOut
+    public void onSwipedOut() {
         Log.d("EVENT", "onSwipedOut");
         mSwipeView.addView(this);
     }
 
-    private void onSwipeCancelState(){
+    @SwipeCancelState
+    public void onSwipeCancelState(){
         Log.d("EVENT", "onSwipeCancelState");
     }
 
-    private void onSwipeIn(){
+    @SwipeIn
+    public void onSwipeIn(){
         Log.d("EVENT", "onSwipedIn");
     }
 
-    private void onSwipeInState(){
+    @SwipeInState
+    public void onSwipeInState(){
         Log.d("EVENT", "onSwipeInState");
     }
 
-    private void onSwipeOutState(){
+    @SwipeOutState
+    public void onSwipeOutState(){
         Log.d("EVENT", "onSwipeOutState");
     }
 
