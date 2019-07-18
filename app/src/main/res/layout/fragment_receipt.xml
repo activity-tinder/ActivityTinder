@@ -23,7 +23,7 @@
     <ScrollView
         android:id="@+id/scDetails"
         android:layout_width="0dp"
-        android:layout_height="272dp"
+        android:layout_height="210dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
