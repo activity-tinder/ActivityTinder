@@ -5,8 +5,10 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.activtytinder.Models.Event;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
+import com.mindorks.placeholderview.annotations.Resolve;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,12 @@ public class CardAdapter {
         mEvent = event;
         mSwipeView = swipeView;
         events = new ArrayList<>();
+    }
+
+    @Resolve
+    private void onResolved() {
+        tvCardEventName.setText(mEvent.getKeyName());
+        tvCardLocation.setText(mEvent.getLocation().toString());
     }
 
     private void onSwipedOut() {

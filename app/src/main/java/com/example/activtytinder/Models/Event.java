@@ -1,6 +1,7 @@
 package com.example.activtytinder.Models;
 
 //import com.parse.ParseClassName;
+import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -8,6 +9,7 @@ import com.parse.ParseQuery;
 import org.json.JSONArray;
 //import com.parse.ParseQuery;
 
+@ParseClassName("Event")
 public class Event extends ParseObject{
 
     private static final String KEY_EVENT_DATE = "eventDate";
@@ -18,6 +20,7 @@ public class Event extends ParseObject{
     private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_LOCATION  = "location";
 
+    public Event() {}
 
     public String getKeyDate(){
         return getString(KEY_EVENT_DATE);
