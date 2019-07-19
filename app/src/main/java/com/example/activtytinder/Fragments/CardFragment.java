@@ -59,7 +59,7 @@ public class CardFragment extends Fragment {
 
 
         ParseQuery<Event> query = new ParseQuery<Event>(Event.class);
-        query.include(Event.KEY_USER); //ANYTHING THAT FUCKING USES POINTERS MUST BE FUCKING INCLUDED IN THE FUCKING QUERY FUCK I SPENT A MOTHER FUCKING HOUR DEBUGGING THE FUCK OUT OF THIS JUST TO FIND THIS OUT FUCK PARSE AND FUCK POINTERS AHHHHHHHH FUCK
+        query.include(Event.KEY_USER);
         query.setLimit(5);
         query.findInBackground(new FindCallback<Event>() {
             @Override
