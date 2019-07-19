@@ -18,7 +18,7 @@ public class Event extends ParseObject{
 
     public static final String KEY_EVENT_DATE = "eventDate";
     public static final String KEY_NAME= "name";
-    public static final String KEY_CREATOR = "creator";
+    public static final String KEY_USER = "creator";
     public static final String KEY_ATTENDEES =  "usersAttending";
     public static final String KEY_LIMIT = "peopleLimit";
     public static final String KEY_DESCRIPTION = "description";
@@ -48,11 +48,11 @@ public class Event extends ParseObject{
         put(KEY_DESCRIPTION, description);
     }
 
-    public ParseUser getCreator(){
-        return getParseUser(KEY_CREATOR);
+    public ParseUser getUser(){
+        return getParseUser(KEY_USER);
     }
-    public void setKeyCreator(ParseUser creator){
-        put(KEY_CREATOR, creator);
+    public void setKeyCreator(ParseUser user){
+        put(KEY_USER, user);
     }
 
     public JSONArray getKeyAttendees(){

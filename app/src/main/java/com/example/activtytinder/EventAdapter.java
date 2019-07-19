@@ -5,7 +5,6 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.activtytinder.Models.Event;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.mindorks.placeholderview.annotations.Resolve;
@@ -20,7 +19,7 @@ import java.util.List;
 
 // this class binds the event information to the card swiping view
 // TODO -- specify name of activity
-public class EventCard {
+public class EventAdapter {
 
     // setting up layout variables
     protected ImageView ivCardImage;
@@ -32,7 +31,7 @@ public class EventCard {
     protected Context mContext;
     public SwipePlaceHolderView mSwipeView;
 
-    public EventCard(Context context, Event event, SwipePlaceHolderView swipeView) {
+    public EventAdapter(Context context, Event event, SwipePlaceHolderView swipeView) {
         mContext = context;
         mEvent = event;
         mSwipeView = swipeView;
