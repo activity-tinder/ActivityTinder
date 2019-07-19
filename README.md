@@ -60,16 +60,16 @@ This app will help individuals meet people that they want to hang out or do spec
 
 **\*Updated\* Stretch Stories**
 * separate sign-up page
-* location page that asks for city location
-* group chat option
 * color categorized cards for the activities depending on the type of activity
-* organizer can compose a message to be displayed to whoever tries to join the event
-*  delete and event
+* location page that asks for city location
 * type in password to confirm leaving activity
     * warning for user before leaving activity under 24 hours before activity
 * detailed card view features:
     * listing of people who are planning on attending already
     * default images for types of activities
+* group chat option
+* organizer can compose a message to be displayed to whoever tries to join the event
+*  delete an event
 * profile page features:
     * can see person's past events and photos they took there
 * cute sound and animation of adding to an event
