@@ -51,6 +51,7 @@ public class SignUpActivity  extends AppCompatActivity {
     private LocationRequest mLocationRequest;
     double baseLat;
     double baseLong;
+//    double[] mLocation;
     String TAG = "Sign Up Activity";
 
     //TODO Investigate activity destruction/activity clearing
@@ -105,7 +106,10 @@ public class SignUpActivity  extends AppCompatActivity {
                 final String Name = nameOfPerson.getText().toString();
                 final String Email = email.getText().toString();
                 final Date finalBirthday = d;
-                final String BaseLocation = baseLocation.getText().toString();
+                //final String BaseLocation = baseLocation.getText().toString();
+                baseLocation.setText(baseLat +", " + baseLong);
+
+
                 ParseGeoPoint gpBaseLocation = new ParseGeoPoint(baseLat,baseLong);
                 final String Username = usernameInput.getText().toString();
                 final String Password = passwordInput.getText().toString();
@@ -117,6 +121,7 @@ public class SignUpActivity  extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getCurrentLocation();
+                //baseLocation.setText(baseLat +", " + baseLong);
             }
         });
     }
