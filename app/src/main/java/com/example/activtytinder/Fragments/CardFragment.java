@@ -69,7 +69,7 @@ public class CardFragment extends Fragment {
                 Log.d(TAG, "Post: "
                     + event.getKeyName()
                     + " Creator: "
-                    + event.getCreator().getUsername());
+                    + event.getCreator());
             }
         });
 
