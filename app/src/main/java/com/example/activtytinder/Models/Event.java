@@ -5,6 +5,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 //import com.parse.ParseQuery;
@@ -43,8 +44,8 @@ public class Event extends ParseObject{
         put(KEY_DESCRIPTION, description);
     }
 
-    public String getCreator(){
-        return getString(KEY_CREATOR);
+    public ParseUser getCreator(){
+        return getParseUser(KEY_CREATOR);
     }
     public void setKeyCreator(Object creator){
         put(KEY_CREATOR, creator);

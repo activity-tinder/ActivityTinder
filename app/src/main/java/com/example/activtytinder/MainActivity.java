@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
                     break;
             }
+            // TODO -- add if statement to check if fragment isn't null
+
             fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
             return true;
         });

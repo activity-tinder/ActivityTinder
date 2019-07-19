@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // this class binds the event information to the card swiping view
+// TODO -- specify name of activity
 public class EventCard {
 
     // setting up layout variables
