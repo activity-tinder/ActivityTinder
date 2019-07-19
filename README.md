@@ -57,34 +57,34 @@ This app will help individuals meet people that they want to hang out or do spec
 * Activity checkout page
 * Contact us page
 * Profile page
+* separate sign-up page
 
 **\*Updated\* Stretch Stories**
-* separate sign-up page
-* location page that asks for city location
-* group chat option
 * color categorized cards for the activities depending on the type of activity
-* organizer can compose a message to be displayed to whoever tries to join the event
-*  delete and event
+* location page that asks for city location & Directions to event
 * type in password to confirm leaving activity
     * warning for user before leaving activity under 24 hours before activity
 * detailed card view features:
     * listing of people who are planning on attending already
     * default images for types of activities
-* profile page features:
-    * can see person's past events and photos they took there
-* cute sound and animation of adding to an event
-    * toast
+* Filter option where you can choose location, price, number of people, etc.
+* Messenger (intent) chat option
 * export event details to calendar
-* transfer ownership of events
 * checking into event (attendance)
 
 **Optional Nice-to-have Stories**
-* Help page where it describes what the app does
-* Filter option where you can choose location, price, number of people, etc.
+* organizer can compose a message to be displayed to whoever tries to join the event
+*  delete an event
 * After-event survey where you are able to rate the people who went
     * You can add pictures of the event to the survey
-* Optional invite-only events
+* cute sound and animation of adding to an event
+    * toast
+* Help page where it describes what the app does
+* profile page features:
+    * can see person's past events and photos they took there
 * Messenger link in profile picture
+* transfer ownership of events
+* Optional invite-only events
 
 ### 2. Screen Archetypes
 https://guides.codepath.org/android/Mobile-Screen-Archetypes

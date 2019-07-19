@@ -1,25 +1,42 @@
 package com.example.activtytinder.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseQuery;
+
+import org.json.JSONArray;
+
+import java.util.Date;
 
 public class ReceiptFragment extends Fragment {
-
-
 
     private Button directionsButton;
     private Button chatButton;
     private Button calendarButton;
     private Button ditchButton;
+    protected ScrollView scDetails;
+    protected TextView tvEventDetails;
+    private String mName;
+    private Date mDate;
+    private ParseGeoPoint mLocation;
+    private JSONArray mAttendees;
+    private String mDescription;
 
     @Nullable
     @Override
@@ -34,6 +51,50 @@ public class ReceiptFragment extends Fragment {
         chatButton = view.findViewById(R.id.btnChat);
         calendarButton = view.findViewById(R.id.btnCalendar);
         ditchButton = view.findViewById(R.id.btnDitchEvent);
+        scDetails = view.findViewById(R.id.scDetails);
+        tvEventDetails = view.findViewById(R.id.eventDetails);
+        ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
+        query.getInBackground("JOeUTzZOXJ", new GetCallback<Event>() {
+            @Override
+            public void done(Event event, ParseException e) {
+                if(e == null){
+                    mName = event.getKeyName();
+                    mDate = event.getKeyDate();
+                    mLocation = event.getLocation();
+                    mAttendees = event.getKeyAttendees();
+                    mDescription = event.getKeyDescription();
+//                    Log.d("ReceiptFragment", "\nName: "
+//                            + mName
+//                            + "\nDate: "
+//                            + mDate
+//                            +"\nLocation: "
+//                            + mLocation
+//                            + "\nAttendees: "
+//                            + mAttendees
+//                            + "\nDescription: "
+//                            + mDescription);
+                    tvEventDetails.setText("Name: "
+                            + mName
+                            + "\n\nDate: "
+                            + mDate
+                            +"\n\nLocation: "
+                            + mLocation
+                            + "\n\nAttendees: "
+                            + mAttendees
+                            + "\n\nDescription: "
+                            + mDescription
+                            + "\n\n"
+                    );
+                }
+                else{
+                    Log.e("ReceiptFragment", "Girl, you don goofed");
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+
 
 
         directionsButton.setOnClickListener(new View.OnClickListener() {
@@ -64,5 +125,7 @@ public class ReceiptFragment extends Fragment {
             }
         });
     }
+
+
 
 }
