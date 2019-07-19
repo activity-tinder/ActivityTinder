@@ -5,31 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
+    <ImageButton
+        android:id="@+id/rejectBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="#FF0000"
         android:layout_gravity="bottom"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_marginLeft="100dp"
+        android:layout_marginBottom="20dp" />
 
-        <ImageButton
-            android:id="@+id/rejectBtn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="#FF0000"/>
-
-        <ImageButton
-            android:id="@+id/acceptBtn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="100dp"
-            android:background="#00FF00" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    <ImageButton
+        android:id="@+id/acceptBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="250dp"
+        android:layout_marginBottom="20dp"
+        android:background="#00FF00" />
 
     <com.mindorks.placeholderview.SwipePlaceHolderView
         android:id="@+id/swipeView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="521dp">
 
     </com.mindorks.placeholderview.SwipePlaceHolderView>
 
