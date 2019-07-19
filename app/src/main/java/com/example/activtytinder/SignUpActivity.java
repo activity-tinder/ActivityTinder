@@ -118,7 +118,6 @@ public class SignUpActivity  extends AppCompatActivity {
     }
 
     private void makeAccount(String Name, String Email, Date Birthday, ParseGeoPoint BaseLocation, String Username, String Password){
-
         ParseUser user = new ParseUser();
         user.setUsername(Username);
         user.setPassword(Password);
@@ -162,7 +161,9 @@ public class SignUpActivity  extends AppCompatActivity {
         SettingsClient settingsClient = LocationServices.getSettingsClient(SignUpActivity.this);
         settingsClient.checkLocationSettings(locationSettingsRequest);
 
-        if (SignUpActivity.this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(SignUpActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (SignUpActivity.this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(SignUpActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION,
                     android.Manifest.permission.ACCESS_FINE_LOCATION}, 20);
         }else {
@@ -177,7 +178,8 @@ public class SignUpActivity  extends AppCompatActivity {
                                 Double.toString(locationResult.getLastLocation().getLatitude()) + "," +
                                 Double.toString(locationResult.getLastLocation().getLongitude());
                         Toast.makeText(SignUpActivity.this, msg, Toast.LENGTH_SHORT).show();
-                        baseLocation.setText(Double.toString(locationResult.getLastLocation().getLatitude())+", "+Double.toString(locationResult.getLastLocation().getLongitude()));
+                        baseLocation.setText(Double.toString(locationResult.getLastLocation().getLatitude())+", "
+                                +Double.toString(locationResult.getLastLocation().getLongitude()));
                         baseLat = locationResult.getLastLocation().getLatitude();
                         baseLong = locationResult.getLastLocation().getLongitude();
                     }
