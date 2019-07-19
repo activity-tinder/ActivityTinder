@@ -13,9 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.activtytinder.SwipeEventCard;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
+import com.example.activtytinder.SwipeEventCard;
 import com.example.activtytinder.Utils;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
@@ -24,6 +24,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.example.activtytinder.Fragments.ProfileFragment.TAG;
@@ -108,12 +109,12 @@ public class CardFragment extends Fragment {
                 }
                 Toast.makeText(getContext(), "got over done", Toast.LENGTH_SHORT).show();
                 events.addAll(objects);
-
+                Log.d(TAG, "Posts: " + Arrays.toString(events.toArray()));
 
                 for (int i = 0; i < objects.size(); i++) {
 //                Event event = objects.get(i);
 //                events.add(event)
-                  mSwipePlaceHolderView.addView(new SwipeEventCard(CardFragment.this.getContext(), objects.get(i), cardViewHolderSize, (SwipeEventCard.Callback) CardFragment.this));
+                  mSwipePlaceHolderView.addView(new SwipeEventCard(CardFragment.this.getContext(), objects.get(i), cardViewHolderSize));
 
                   Log.d(TAG, "Post: "
                           + objects.get(i).getKeyName()
