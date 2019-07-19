@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.activtytinder.Fragments.CardFragment;
-import com.example.activtytinder.Fragments.CreateFragment;
 import com.example.activtytinder.Fragments.ProfileFragment;
+import com.example.activtytinder.Fragments.ReceiptFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Home!", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.action_create:
-                    fragment = new CreateFragment();
+                    //TODO -- change back to CreateFragment();
+                    fragment = new ReceiptFragment();
                     Toast.makeText(MainActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.action_profile:

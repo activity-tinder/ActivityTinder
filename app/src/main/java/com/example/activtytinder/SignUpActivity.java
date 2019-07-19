@@ -53,6 +53,8 @@ public class SignUpActivity  extends AppCompatActivity {
     double baseLong;
     String TAG = "Sign Up Activity";
 
+    //TODO Investigate activity destruction/activity clearing
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +67,8 @@ public class SignUpActivity  extends AppCompatActivity {
         passwordInput = (EditText) findViewById(R.id.etPassword);
         createAccount = (Button) findViewById(R.id.btnCreateUser);
         getLocationButton = (Button) findViewById(R.id.get_location_btn);
+
+        //TODO test with a breakpoint, if we keep hitting it, we do not need to clear the edit texts
 
 
         birthday.setInputType(InputType.TYPE_NULL);
@@ -147,6 +151,7 @@ public class SignUpActivity  extends AppCompatActivity {
         });
     }
 
+    //TODO Clean up this function, do not have it in 2 places
     @SuppressLint({"MissingPermission", "NewApi"})
     @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
     public void getCurrentLocation() {

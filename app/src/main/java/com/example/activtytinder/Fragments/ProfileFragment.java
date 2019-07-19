@@ -38,8 +38,8 @@ import static com.google.android.gms.location.LocationServices.getFusedLocationP
 public class ProfileFragment extends Fragment{
 
     ParseUser user = ParseUser.getCurrentUser();
-    public Button logoutButton;
-    public Button getLocationButton;
+    public Button btnLogout;
+    public Button btnGetLocation;
     public TextView tvName;
     public TextView tvUsername;
     public TextView tvEmail;
@@ -49,6 +49,7 @@ public class ProfileFragment extends Fragment{
     public static final String TAG = "ProfileFragment";
     private LocationRequest mLocationRequest;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,8 +58,8 @@ public class ProfileFragment extends Fragment{
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        logoutButton = view.findViewById(R.id.logout_btn);
-        getLocationButton = view.findViewById(R.id.get_location_btn);
+        btnLogout = view.findViewById(R.id.logout_btn);
+        btnGetLocation = view.findViewById(R.id.get_location_btn);
         tvName = view.findViewById(R.id.tvName);
         tvUsername = view.findViewById(R.id.tvUsername);
         tvEmail = view.findViewById(R.id.tvEmail);
@@ -68,14 +69,14 @@ public class ProfileFragment extends Fragment{
 
         populateProfile();
 
-        logoutButton.setOnClickListener(new View.OnClickListener() {
+        btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 logout();
             }
         });
 
-        getLocationButton.setOnClickListener(new View.OnClickListener() {
+        btnGetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getCurrentLocation();
@@ -91,7 +92,7 @@ public class ProfileFragment extends Fragment{
         startActivity(intent);
         getActivity().finish();
     }
-
+    //TODO: add a new "utilities" class which stores functions that returns values were user parameters not needed, make it static and public
     @SuppressLint({"MissingPermission", "NewApi"})
     @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
     public void getCurrentLocation() {

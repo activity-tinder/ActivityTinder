@@ -16,15 +16,16 @@ import java.util.Date;
 @ParseClassName("Event")
 public class Event extends ParseObject{
 
-    public static final String KEY_EVENT_DATE = "eventDate";
-    public static final String KEY_NAME= "name";
-    public static final String KEY_CREATOR = "creator";
-    public static final String KEY_ATTENDEES =  "usersAttending";
-    public static final String KEY_LIMIT = "peopleLimit";
-    public static final String KEY_DESCRIPTION = "description";
-    public static final String KEY_LOCATION  = "location";
-    public static final String KEY_CATERGORY = "category";
+    private static final String KEY_EVENT_DATE = "eventDate";
+    private static final String KEY_NAME= "name";
+    private static final String KEY_CREATOR = "creator";
+    private static final String KEY_ATTENDEES =  "usersAttending";
+    private static final String KEY_LIMIT = "peopleLimit";
+    private static final String KEY_DESCRIPTION = "description";
+    private static final String KEY_LOCATION  = "location";
+    private static final String KEY_CATERGORY = "category";
 
+    //TODO -- get the objectID of the event (will not be static)
 
     public Date getKeyDate(){
         return getDate(KEY_EVENT_DATE);
