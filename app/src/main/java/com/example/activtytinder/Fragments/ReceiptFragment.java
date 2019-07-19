@@ -26,8 +26,6 @@ import java.util.Date;
 
 public class ReceiptFragment extends Fragment {
 
-
-
     private Button directionsButton;
     private Button chatButton;
     private Button calendarButton;
