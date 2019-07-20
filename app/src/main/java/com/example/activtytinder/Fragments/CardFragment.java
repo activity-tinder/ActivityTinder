@@ -29,7 +29,6 @@ import static com.example.activtytinder.Fragments.ProfileFragment.TAG;
 
 public class CardFragment extends Fragment {
 
-    // TODO -- change btn names
     private ImageButton btnAccept;
     private ImageButton btnReject;
 
@@ -82,7 +81,8 @@ public class CardFragment extends Fragment {
 
     /*
     Gets the events from the database and puts them into the SwipePlaceHolderView card stack.
-
+    Requires a call to Parse database for the Event object type and will get all of the events
+    and display them in the card stack.
      */
     private void queryEvents() {
         ParseQuery<Event> eventQuery = new ParseQuery<Event>(Event.class);
@@ -101,6 +101,8 @@ public class CardFragment extends Fragment {
 
                 for (int i = 0; i < objects.size(); i++) {
 
+                    // TODO -- call adding and removing views in a multithreading way, synchronized
+                    // figure out if this call is safe or not
                   mSwipePlaceHolderView.addView(new SwipeEventCard(CardFragment.this.getContext(), objects.get(i), cardViewHolderSize));
 
                   Log.d(TAG, "Post: "

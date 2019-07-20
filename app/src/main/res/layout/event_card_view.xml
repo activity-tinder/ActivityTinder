@@ -8,9 +8,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvCards"
-        android:layout_width="390dp"
-        android:layout_height="454dp"
-        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="438dp"
+        android:layout_margin="20dp"
         android:background="#FFFFFF"
         android:orientation="vertical"
         app:cardCornerRadius="5dp"
