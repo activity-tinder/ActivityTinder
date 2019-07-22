@@ -48,16 +48,17 @@ This app will help individuals meet people that they want to hang out or do spec
 ### 1. User Stories (Required and Optional)
 
 **\*Updated\* Required Must-have Stories**
-* App Icon
-* Login/Signup screen
-* Location permissions page
-* Main card stack page with activites on the cards
-    * swipe left and right depending on whether you're interested in activity or not
-* Activity detail page
-* Activity checkout page
-* Contact us page
-* Profile page
-* separate sign-up page
+[ ] App Icon
+[x] Login/Signup page
+[x] Location permissions
+[ ] Event creation page
+[x] Main card stack page with activities on the cards
+[ ] Activity detail page
+[ ] Activity checkout page
+[x] Activity receipt page
+[x] Contact us page
+[x] profile page
+[x] separate signup page
 
 **\*Updated\* Stretch Stories**
 * color categorized cards for the activities depending on the type of activity
