@@ -17,7 +17,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.example.activtytinder.SwipeEventCard;
-import com.example.activtytinder.Utils;
+import com.example.activtytinder.CardUtils;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.parse.FindCallback;
@@ -49,8 +49,8 @@ public class CardFragment extends Fragment {
         btnAccept = view.findViewById(R.id.acceptBtn);
         btnReject = view.findViewById(R.id.rejectBtn);
 
-        int bottomMargin = Utils.dpToPx(160);
-        Point windowSize = Utils.getDisplaySize(getActivity().getWindowManager());
+        int bottomMargin = CardUtils.dpToPx(160);
+        Point windowSize = CardUtils.getDisplaySize(getActivity().getWindowManager());
         cardViewHolderSize = new Point(windowSize.x, windowSize.y - bottomMargin);
 
         mSwipePlaceHolderView = view.findViewById(R.id.swipeView);

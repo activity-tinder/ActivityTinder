@@ -7,23 +7,38 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.bumptech.glide.Glide;
 import com.example.activtytinder.Fragments.CardFragment;
+import com.example.activtytinder.Fragments.CheckoutFragment;
 import com.example.activtytinder.Models.Event;
 import com.mindorks.placeholderview.SwipeDirection;
 import com.mindorks.placeholderview.annotations.Layout;
 import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
 import com.mindorks.placeholderview.annotations.swipe.SwipeCancelState;
+import com.mindorks.placeholderview.annotations.swipe.SwipeIn;
 import com.mindorks.placeholderview.annotations.swipe.SwipeInDirectional;
+import com.mindorks.placeholderview.annotations.swipe.SwipeInState;
+import com.mindorks.placeholderview.annotations.swipe.SwipeOut;
 import com.mindorks.placeholderview.annotations.swipe.SwipeOutDirectional;
+import com.mindorks.placeholderview.annotations.swipe.SwipeOutState;
 import com.mindorks.placeholderview.annotations.swipe.SwipeTouch;
 import com.mindorks.placeholderview.annotations.swipe.SwipingDirection;
 import com.parse.ParseFile;
 
+import com.example.activtytinder.Fragments.CardFragment;
+import com.parse.ParseUser;
+
+import static com.example.activtytinder.CardUtils.*;
+import static com.parse.ParseUser.*;
+
 // this class binds the event information to the card swiping view
 @Layout(R.layout.event_card_view)
-public class SwipeEventCard {
+public class SwipeEventCard extends Fragment {
 
     // setting up layout variables
     @View(R.id.ivCardImage)
@@ -52,11 +67,11 @@ public class SwipeEventCard {
     // loads information on cards
     @Resolve
     public void onResolved() {
-        ParseFile image = mEvent.getEventImage();
-        if (image != null) {
-            Log.d("DEBUG", "in setting image");
-            Glide.with(mContext).load(image.getUrl()).into(ivCardImage);
-        }
+//        ParseFile image = mEvent.getEventImage();
+//        if (image != null) {
+//            Log.d("DEBUG", "in setting image " + image.getUrl());
+//            Glide.with(mContext).load(image.getUrl()).into(ivCardImage);
+//        }
 
         tvCardEventName.setText(mEvent.getKeyName());
 
@@ -69,10 +84,35 @@ public class SwipeEventCard {
         tvCardEventCreator.setText(mEvent.getCreator().getUsername());
     }
 
-    // when card is rejected (left/down)
-    @SwipeOutDirectional
-    public void onSwipeOutDirectional(SwipeDirection direction) {
-        Log.d("DEBUG", "Card swiped out");
+    @SwipeIn
+    public void onSwipeIn(){
+        Log.d("EVENT", "onSwipedIn");
+//        Log.d("EVENT", "this is the current user: " + getCurrentUser().getUsername());
+//        ParseUser user = getCurrentUser();
+//        addUserToEvent(user, mEvent);
+        new CheckoutFragment().show(getFragmentManager(), "CheckoutFragment");
+
+//        FragmentManager fm = getFragmentManager();
+//        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+//        fragmentTransaction.replace(R.layout.event_card_view, R.layout.fragment_checkout)
+//        CheckoutFragment editNameDialogFragment = CheckoutFragment.newInstance("Some Title");
+//        editNameDialogFragment.show(fm, "CheckoutFragment");
+
+    }
+
+    @SwipeInState
+    public void onSwipeInState(){
+        //Log.d("EVENT", "onSwipeInState");
+    }
+
+    @SwipeOutState
+    public void onSwipeOutState(){
+        Log.d("EVENT", "onSwipeOutState");
+    }
+
+    @SwipeOut
+    public void onSwipedOut(){
+        Log.d("EVENT", "onSwipedOut");
     }
 
     // when card is not swiped fully in a direction and swings back onto the deck
@@ -83,11 +123,14 @@ public class SwipeEventCard {
 
     // when card is accepted (right/up)
     // leads to the event checkout fragment
-    @SwipeInDirectional
-    public void onSwipeInDirectional(SwipeDirection direction) {
-        Log.d("DEBUG", "Going to checkout, SwipeInDirectional " + direction.name());
-        // TODO -- connect to CheckoutFragement with correct event being displayed
-    }
+//    @SwipeInDirectional
+//    public void onSwipeInDirectional(SwipeDirection direction) {
+//        Log.d("DEBUG", "Going to checkout, SwipeInDirectional " + direction.name());
+//        // TODO -- connect to CheckoutFragement with correct event being displayed
+//        addUserToEvent(getCurrentUser(), mEvent);
+//    }
+
+
 
     @SwipingDirection
     public void onSwipingDirection(SwipeDirection direction) {
