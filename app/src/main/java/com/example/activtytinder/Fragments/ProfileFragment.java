@@ -59,7 +59,6 @@ public class ProfileFragment extends Fragment{
             }
         });
 
-
     }
 
     private void logout() {
@@ -69,8 +68,6 @@ public class ProfileFragment extends Fragment{
         startActivity(intent);
         getActivity().finish();
     }
-    //TODO: add a new "utilities" class which stores functions that returns values were user parameters not needed, make it static and public
-
 
     public void populateProfile(){
         tvName.setText(user.getString("name"));
@@ -80,7 +77,7 @@ public class ProfileFragment extends Fragment{
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         tvAge.setText(formatter.format(user.getDate("birthday")));
         tvBaseLocation.setText(user.getParseGeoPoint("location").getLatitude()+", "
-                +user.getParseGeoPoint("location").getLongitude());
+                + user.getParseGeoPoint("location").getLongitude());
     }
 }
 
