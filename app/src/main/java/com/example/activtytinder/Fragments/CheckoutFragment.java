@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -20,6 +21,21 @@ public class CheckoutFragment extends DialogFragment {
     private Button btnYes;
     private Button btnNo;
 
+
+    public CheckoutFragment() {
+        // Empty constructor is required for DialogFragment
+        // Make sure not to add arguments to the constructor
+    }
+
+    public static CheckoutFragment newInstance(String eventDetails){
+        CheckoutFragment fragment = new CheckoutFragment();
+        Bundle args = new Bundle();
+        args.putString("Event Details", eventDetails);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -35,6 +51,14 @@ public class CheckoutFragment extends DialogFragment {
         btnYes = view.findViewById(R.id.btnYes);
         btnNo = view.findViewById(R.id.btnNo);
 
+        //Fetch arguments from bundle and set Title
+        String eventDetails = getArguments().getString("Event Details", "Event Detsils");
+        getDialog().setTitle(eventDetails);
+
+        //Show soft keyboard automatically and request focus to field
+        tvEventDetails.requestFocus();
+        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
 
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +71,7 @@ public class CheckoutFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 //TODO -- close overlay and take them back to the cards
+                dismiss();
             }
         });
     }

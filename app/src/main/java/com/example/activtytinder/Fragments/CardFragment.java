@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
@@ -78,6 +79,12 @@ public class CardFragment extends Fragment {
         });
 
     }
+    private void showCheckoutDialog() {
+        FragmentManager fm = getFragmentManager();
+        CheckoutFragment editNameDialogFragment = CheckoutFragment.newInstance("Some Title");
+        editNameDialogFragment.show(fm, "fragment_edit_name");
+    }
+
 
     /*
     Gets the events from the database and puts them into the SwipePlaceHolderView card stack.
