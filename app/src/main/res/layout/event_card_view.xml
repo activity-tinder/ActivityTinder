@@ -9,9 +9,9 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cvCards"
         android:layout_width="match_parent"
-        android:layout_height="438dp"
+        android:layout_height="match_parent"
         android:layout_margin="20dp"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:orientation="vertical"
         app:cardCornerRadius="5dp"
         app:cardElevation="4dp">
@@ -20,13 +20,13 @@
             android:id="@+id/ivCardImage"
 
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="360dp"
             android:layout_marginBottom="75dp"
             app:srcCompat="@drawable/googleg_standard_color_18" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="76dp"
+            android:layout_height="109dp"
             android:layout_gravity="bottom"
             android:gravity="center|left"
             android:orientation="vertical"
@@ -49,6 +49,12 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp"
                 android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/tvCardEventCreator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="event creator" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>
