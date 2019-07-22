@@ -1,6 +1,7 @@
 package com.example.activtytinder.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseQuery;
+
+import java.util.Date;
 
 public class CheckoutFragment extends DialogFragment {
 
@@ -20,6 +28,9 @@ public class CheckoutFragment extends DialogFragment {
     private TextView tvEventDetails;
     private Button btnYes;
     private Button btnNo;
+    private String mName;
+    private Date mDate;
+    private ParseGeoPoint mLocation;
 
 
     public CheckoutFragment() {
@@ -58,6 +69,31 @@ public class CheckoutFragment extends DialogFragment {
         //Show soft keyboard automatically and request focus to field
         tvEventDetails.requestFocus();
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
+        //TODO --  call the event.getObjectID
+        query.getInBackground("JOeUTzZOXJ", new GetCallback<Event>() {
+            @Override
+            public void done(Event event, ParseException e) {
+                if(e == null){
+                    mName = event.getKeyName();
+                    mDate = event.getKeyDate();
+                    mLocation = event.getLocation();
+                    tvEventDetails.setText("Name: "
+                            + mName
+                            + "\n\nDate: "
+                            + mDate
+                            +"\n\nLocation: "
+                            + mLocation
+                            + "\n\n"
+                    );
+                }
+                else{
+                    Log.e("ReceiptFragment", "Girl, you don goofed");
+                    e.printStackTrace();
+                }
+            }
+        });
 
 
         btnYes.setOnClickListener(new View.OnClickListener() {

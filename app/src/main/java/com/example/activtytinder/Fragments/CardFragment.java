@@ -79,7 +79,7 @@ public class CardFragment extends Fragment {
         });
 
     }
-    private void showCheckoutDialog() {
+    public void showCheckoutDialog() {
         FragmentManager fm = getFragmentManager();
         CheckoutFragment editNameDialogFragment = CheckoutFragment.newInstance("Some Title");
         editNameDialogFragment.show(fm, "fragment_edit_name");
