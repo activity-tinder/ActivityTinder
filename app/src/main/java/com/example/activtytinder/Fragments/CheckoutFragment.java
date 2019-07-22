@@ -45,6 +45,9 @@ public class CheckoutFragment extends DialogFragment {
         fragment.setArguments(args);
         return fragment;
     }
+    public interface CheckoutFragmentListener{
+        void onFinishCheckoutDialog(String inputText);
+    }
 
 
     @Nullable
@@ -95,6 +98,9 @@ public class CheckoutFragment extends DialogFragment {
             }
         });
 
+        //Setup a callback when the "Yes!" button is pressed on page
+//        btnYes.setOnEditorActionListener(this);
+
 
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +112,7 @@ public class CheckoutFragment extends DialogFragment {
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO -- close overlay and take them back to the cards
+                //close overlay and take them back to the cards
                 dismiss();
             }
         });
