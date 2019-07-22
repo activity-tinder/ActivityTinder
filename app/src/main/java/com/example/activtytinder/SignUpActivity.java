@@ -52,6 +52,8 @@ public class SignUpActivity  extends AppCompatActivity {
     double baseLat;
     double baseLong;
 
+
+
     String TAG = "Sign Up Activity";
 
     @Override
@@ -66,6 +68,8 @@ public class SignUpActivity  extends AppCompatActivity {
         passwordInput = (EditText) findViewById(R.id.etPassword);
         createAccount = (Button) findViewById(R.id.btnCreateUser);
         getLocationButton = (Button) findViewById(R.id.get_location_btn);
+
+
 
         birthday.setInputType(InputType.TYPE_NULL);
         birthday.setOnClickListener(new View.OnClickListener() {
@@ -177,7 +181,11 @@ public class SignUpActivity  extends AppCompatActivity {
                                 +locationResult.getLastLocation().getLongitude());
                         baseLat = locationResult.getLastLocation().getLatitude();
                         baseLong = locationResult.getLastLocation().getLongitude();
+
+
                     }
                 }, Looper.myLooper());
     }
+
+
 }
