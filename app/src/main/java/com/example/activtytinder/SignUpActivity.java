@@ -18,6 +18,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
@@ -28,6 +34,10 @@ import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -51,10 +61,12 @@ public class SignUpActivity  extends AppCompatActivity {
     private LocationRequest mLocationRequest;
     double baseLat;
     double baseLong;
-
-
-
+    RequestQueue requestQueue;
+    ParseGeoPoint BaseLocationCoordinates;
+    String url ="https://open.mapquestapi.com/geocoding/v1/reverse?key=";
+    String Location = "&location=";
     String TAG = "Sign Up Activity";
+    String API_KEY;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,6 +80,9 @@ public class SignUpActivity  extends AppCompatActivity {
         passwordInput = (EditText) findViewById(R.id.etPassword);
         createAccount = (Button) findViewById(R.id.btnCreateUser);
         getLocationButton = (Button) findViewById(R.id.get_location_btn);
+        getLocationButton.setVisibility(View.INVISIBLE);
+        requestQueue = Volley.newRequestQueue(SignUpActivity.this);
+        API_KEY = getApplicationContext().getResources().getString(R.string.mapquest_api_key);
 
 
 
@@ -90,6 +105,14 @@ public class SignUpActivity  extends AppCompatActivity {
             }
         });
 
+        baseLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getLocationButton.setVisibility(View.VISIBLE);
+
+            }
+        });
+
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,11 +128,11 @@ public class SignUpActivity  extends AppCompatActivity {
                 final String Name = nameOfPerson.getText().toString();
                 final String Email = email.getText().toString();
                 final Date finalBirthday = d;
-                baseLocation.setText(baseLat +", " + baseLong);
-                ParseGeoPoint gpBaseLocation = new ParseGeoPoint(baseLat,baseLong);
                 final String Username = usernameInput.getText().toString();
                 final String Password = passwordInput.getText().toString();
-                makeAccount(Name, Email, finalBirthday, gpBaseLocation, Username, Password);
+                final ParseGeoPoint BaseCoordinates = BaseLocationCoordinates;
+                final String HomeCity = baseLocation.getText().toString();
+                makeAccount(Name, Email, finalBirthday, BaseCoordinates, Username, Password, HomeCity);
             }
         });
 
@@ -117,14 +140,12 @@ public class SignUpActivity  extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getCurrentLocation();
-                //baseLocation.setText(Double.toString(Tools.getCurrentLocation(mLocationRequest, SignUpActivity.this, SignUpActivity.this)));
-                //baseLocation.setText(Double.toString(Tools.getCurrentLocation(mLocationRequest,SignUpActivity.this,SignUpActivity.this)[0]));
-
+                getLocationButton.setVisibility(View.INVISIBLE);
             }
         });
     }
 
-    private void makeAccount(String Name, String Email, Date Birthday, ParseGeoPoint BaseLocation, String Username, String Password){
+    private void makeAccount(String Name, String Email, Date Birthday, ParseGeoPoint BaseLocation, String Username, String Password, String HomeCity){
         ParseUser user = new ParseUser();
         user.setUsername(Username);
         user.setPassword(Password);
@@ -133,6 +154,7 @@ public class SignUpActivity  extends AppCompatActivity {
         user.put("location", BaseLocation);
         user.put("birthday", Birthday);
         user.put("reliabilityScore", 100);
+        user.put("homeCity", HomeCity);
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
@@ -153,14 +175,11 @@ public class SignUpActivity  extends AppCompatActivity {
     public void getCurrentLocation() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
         builder.addLocationRequest(mLocationRequest);
         LocationSettingsRequest locationSettingsRequest = builder.build();
-
         SettingsClient settingsClient = LocationServices.getSettingsClient(SignUpActivity.this);
         settingsClient.checkLocationSettings(locationSettingsRequest);
-
         if (SignUpActivity.this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(SignUpActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -177,15 +196,37 @@ public class SignUpActivity  extends AppCompatActivity {
                                 (locationResult.getLastLocation().getLatitude()) + "," +
                                 (locationResult.getLastLocation().getLongitude());
                         Toast.makeText(SignUpActivity.this, msg, Toast.LENGTH_SHORT).show();
-                        baseLocation.setText(locationResult.getLastLocation().getLatitude()+", "
+                        String coordinates = (locationResult.getLastLocation().getLatitude()+","
                                 +locationResult.getLastLocation().getLongitude());
                         baseLat = locationResult.getLastLocation().getLatitude();
                         baseLong = locationResult.getLastLocation().getLongitude();
-
-
+                        BaseLocationCoordinates = new ParseGeoPoint(baseLat,baseLong);
+                        JsonObjectRequest cityRequest = new JsonObjectRequest(Request.Method.GET, url+API_KEY+Location+coordinates, null,
+                                new Response.Listener<JSONObject>() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        Log.d(TAG, response.toString());
+                                        try {
+                                            JSONArray results = response.getJSONArray("results");
+                                            JSONArray locations = results.getJSONObject(0).getJSONArray("locations");
+                                            String city = locations.getJSONObject(0).get("adminArea5").toString();
+                                            baseLocation.setText(city);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Log.e(TAG,"Error with response");
+                                    }
+                                });
+                        requestQueue.add(cityRequest);
                     }
                 }, Looper.myLooper());
     }
+
 
 
 }
