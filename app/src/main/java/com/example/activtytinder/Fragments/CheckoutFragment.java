@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.DialogFragment;
 
 import com.example.activtytinder.R;
 
-public class CheckoutFragment extends Fragment {
+public class CheckoutFragment extends DialogFragment {
 
     private TextView tvQuestion;
     private TextView tvEventDetails;
