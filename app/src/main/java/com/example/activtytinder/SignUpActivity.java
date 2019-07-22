@@ -51,6 +51,9 @@ public class SignUpActivity  extends AppCompatActivity {
     private LocationRequest mLocationRequest;
     double baseLat;
     double baseLong;
+
+
+
     String TAG = "Sign Up Activity";
 
     @Override
@@ -65,6 +68,7 @@ public class SignUpActivity  extends AppCompatActivity {
         passwordInput = (EditText) findViewById(R.id.etPassword);
         createAccount = (Button) findViewById(R.id.btnCreateUser);
         getLocationButton = (Button) findViewById(R.id.get_location_btn);
+
 
 
         birthday.setInputType(InputType.TYPE_NULL);
@@ -101,7 +105,7 @@ public class SignUpActivity  extends AppCompatActivity {
                 final String Name = nameOfPerson.getText().toString();
                 final String Email = email.getText().toString();
                 final Date finalBirthday = d;
-                final String BaseLocation = baseLocation.getText().toString();
+                baseLocation.setText(baseLat +", " + baseLong);
                 ParseGeoPoint gpBaseLocation = new ParseGeoPoint(baseLat,baseLong);
                 final String Username = usernameInput.getText().toString();
                 final String Password = passwordInput.getText().toString();
@@ -113,12 +117,14 @@ public class SignUpActivity  extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getCurrentLocation();
+                //baseLocation.setText(Double.toString(Tools.getCurrentLocation(mLocationRequest, SignUpActivity.this, SignUpActivity.this)));
+                //baseLocation.setText(Double.toString(Tools.getCurrentLocation(mLocationRequest,SignUpActivity.this,SignUpActivity.this)[0]));
+
             }
         });
     }
 
     private void makeAccount(String Name, String Email, Date Birthday, ParseGeoPoint BaseLocation, String Username, String Password){
-
         ParseUser user = new ParseUser();
         user.setUsername(Username);
         user.setPassword(Password);
@@ -132,14 +138,8 @@ public class SignUpActivity  extends AppCompatActivity {
                 if (e == null) {
                     Toast.makeText(getApplicationContext(), "Sign Up Successful!", Toast.LENGTH_SHORT).show();
                     final Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                    nameOfPerson.setText("");
-                    email.setText("");
-                    birthday.setText("");
-                    baseLocation.setText("");
-                    usernameInput.setText("");
-                    passwordInput.setText("");
-                    baseLocation.setText("");
                     startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "Sign Up Failed!", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
@@ -151,7 +151,6 @@ public class SignUpActivity  extends AppCompatActivity {
     @SuppressLint({"MissingPermission", "NewApi"})
     @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
     public void getCurrentLocation() {
-        // Create the location request to start receiving updates
         mLocationRequest = new LocationRequest();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
@@ -162,7 +161,9 @@ public class SignUpActivity  extends AppCompatActivity {
         SettingsClient settingsClient = LocationServices.getSettingsClient(SignUpActivity.this);
         settingsClient.checkLocationSettings(locationSettingsRequest);
 
-        if (SignUpActivity.this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(SignUpActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (SignUpActivity.this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(SignUpActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION,
                     android.Manifest.permission.ACCESS_FINE_LOCATION}, 20);
         }else {
@@ -172,16 +173,19 @@ public class SignUpActivity  extends AppCompatActivity {
         getFusedLocationProviderClient(SignUpActivity.this).requestLocationUpdates(mLocationRequest, new LocationCallback() {
                     @Override
                     public void onLocationResult(LocationResult locationResult) {
-                        //onLocationChanged(locationResult.getLastLocation());
                         String msg = "Location: " +
-                                Double.toString(locationResult.getLastLocation().getLatitude()) + "," +
-                                Double.toString(locationResult.getLastLocation().getLongitude());
+                                (locationResult.getLastLocation().getLatitude()) + "," +
+                                (locationResult.getLastLocation().getLongitude());
                         Toast.makeText(SignUpActivity.this, msg, Toast.LENGTH_SHORT).show();
-                        baseLocation.setText(Double.toString(locationResult.getLastLocation().getLatitude())+", "+Double.toString(locationResult.getLastLocation().getLongitude()));
+                        baseLocation.setText(locationResult.getLastLocation().getLatitude()+", "
+                                +locationResult.getLastLocation().getLongitude());
                         baseLat = locationResult.getLastLocation().getLatitude();
                         baseLong = locationResult.getLastLocation().getLongitude();
+
+
                     }
-                },
-                Looper.myLooper());
+                }, Looper.myLooper());
     }
+
+
 }

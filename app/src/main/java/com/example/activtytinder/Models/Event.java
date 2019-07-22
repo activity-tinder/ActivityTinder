@@ -27,6 +27,7 @@ public class Event extends ParseObject{
 
     public Event() {}
 
+
     public Date getKeyDate(){
         return getDate(KEY_EVENT_DATE);
     }
@@ -90,4 +91,3 @@ public class Event extends ParseObject{
         }
     }
 }
-

@@ -54,6 +54,7 @@ public class ReceiptFragment extends Fragment {
         scDetails = view.findViewById(R.id.scDetails);
         tvEventDetails = view.findViewById(R.id.eventDetails);
         ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
+        //TODO --  call the event.getObjectID
         query.getInBackground("JOeUTzZOXJ", new GetCallback<Event>() {
             @Override
             public void done(Event event, ParseException e) {
