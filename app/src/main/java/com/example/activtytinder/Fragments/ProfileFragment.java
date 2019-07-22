@@ -29,7 +29,7 @@ public class ProfileFragment extends Fragment{
     public TextView tvEmail;
     public TextView tvScore;
     public TextView tvAge;
-    public TextView tvBaseLocation;
+    public TextView tvHomeCity;
     public static final String TAG = "ProfileFragment";
     private LocationRequest mLocationRequest;
 
@@ -48,7 +48,7 @@ public class ProfileFragment extends Fragment{
         tvEmail = view.findViewById(R.id.tvEmail);
         tvScore = view.findViewById(R.id.tvScore);
         tvAge = view.findViewById(R.id.tvAge);
-        tvBaseLocation = view.findViewById(R.id.tvBaseLocation);
+        tvHomeCity = view.findViewById(R.id.tvHomeCity);
 
         populateProfile();
 
@@ -76,8 +76,7 @@ public class ProfileFragment extends Fragment{
         tvScore.setText(user.getNumber("reliabilityScore").toString());
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         tvAge.setText(formatter.format(user.getDate("birthday")));
-        tvBaseLocation.setText(user.getParseGeoPoint("location").getLatitude()+", "
-                + user.getParseGeoPoint("location").getLongitude());
+        tvHomeCity.setText(user.getString("homeCity"));
     }
 }
 

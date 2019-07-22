@@ -44,6 +44,8 @@
         android:ems="10"
         android:hint="Birthday"
         android:inputType="date"
+        android:cursorVisible="false"
+        android:focusable="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
@@ -58,6 +60,8 @@
         android:ems="10"
         android:hint="Home Location"
         android:inputType="textPersonName"
+        android:cursorVisible="false"
+        android:focusable="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
