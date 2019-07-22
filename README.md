@@ -48,23 +48,23 @@ This app will help individuals meet people that they want to hang out or do spec
 ### 1. User Stories (Required and Optional)
 
 **\*Updated\* Required Must-have Stories**
-[ ] App Icon
-[x] Login/Signup page
-[x] Location permissions
-[ ] Event creation page
-[x] Main card stack page with activities on the cards
-[ ] Activity detail page
-[ ] Activity checkout page
-[x] Activity receipt page
-[x] Contact us page
-[x] profile page
-[x] separate signup page
+* [ ] App Icon
+* [x] Login/Signup page
+* [x] Location permissions
+* [ ] Event creation page
+* [x] Main card stack page with activities on the cards
+* [ ] Activity detail page
+* [ ] Activity checkout page
+* [x] Activity receipt page
+* [x] Contact us page
+* [x] profile page
+* [x] separate signup page
 
-**\*Updated\* Stretch Stories**
-* color categorized cards for the activities depending on the type of activity
-* location page that asks for city location & Directions to event
-* type in password to confirm leaving activity
-    * warning for user before leaving activity under 24 hours before activity
+**\*Updated\* Stretch Stories** 
+* [ ] color categorized cards for the activities depending on the type of activity
+* [ ] location page that asks for city location & Directions to event
+* [ ] type in password to confirm leaving activity
+   * [ ] warning for user before leaving activity under 24 hours before activity
 * detailed card view features:
     * listing of people who are planning on attending already
     * default images for types of activities
