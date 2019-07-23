@@ -87,11 +87,11 @@ public class SwipeEventCard extends Fragment {
     @SwipeIn
     public void onSwipeIn(){
         Log.d("EVENT", "onSwipedIn");
-//        Log.d("EVENT", "this is the current user: " + getCurrentUser().getUsername());
-//        ParseUser user = getCurrentUser();
-//        addUserToEvent(user, mEvent);
-        new CheckoutFragment().show(getFragmentManager(), "CheckoutFragment");
-
+        Log.d("EVENT", "this is the current user: " + getCurrentUser().getUsername());
+        ParseUser user = getCurrentUser();
+        if (user != null) {
+            addUserToEvent(user.getObjectId(), mEvent);
+        }
 //        FragmentManager fm = getFragmentManager();
 //        FragmentTransaction fragmentTransaction = fm.beginTransaction();
 //        fragmentTransaction.replace(R.layout.event_card_view, R.layout.fragment_checkout)

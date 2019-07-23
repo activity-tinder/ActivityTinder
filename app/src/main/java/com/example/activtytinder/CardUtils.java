@@ -12,6 +12,7 @@ import com.example.activtytinder.Models.Event;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.List;
 
@@ -37,10 +38,14 @@ public class CardUtils {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 
-    public static void addUserToEvent(ParseUser user, Event event) {
+    public static void addUserToEvent(String userId, Event event) {
         JSONArray currentAttendees = event.getKeyAttendees();
         //Log.d("DEBUG", "Users before: " + currentAttendees.toString());
-        currentAttendees.put(user);
+        if (userId != null) {
+            Log.d("DEBUG", "user is not null " + userId);
+            currentAttendees.put(userId);
+        }
+
         Log.d("DEBUG", "Users: " + currentAttendees.toString());
         event.setKeyAttendees(currentAttendees);
     }
