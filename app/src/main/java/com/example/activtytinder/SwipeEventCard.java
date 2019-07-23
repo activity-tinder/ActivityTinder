@@ -12,8 +12,10 @@ import com.mindorks.placeholderview.annotations.Layout;
 import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
 import com.mindorks.placeholderview.annotations.swipe.SwipeCancelState;
-import com.mindorks.placeholderview.annotations.swipe.SwipeInDirectional;
-import com.mindorks.placeholderview.annotations.swipe.SwipeOutDirectional;
+import com.mindorks.placeholderview.annotations.swipe.SwipeIn;
+import com.mindorks.placeholderview.annotations.swipe.SwipeInState;
+import com.mindorks.placeholderview.annotations.swipe.SwipeOut;
+import com.mindorks.placeholderview.annotations.swipe.SwipeOutState;
 import com.mindorks.placeholderview.annotations.swipe.SwipeTouch;
 import com.mindorks.placeholderview.annotations.swipe.SwipingDirection;
 
@@ -21,7 +23,12 @@ import com.mindorks.placeholderview.annotations.swipe.SwipingDirection;
 @Layout(R.layout.event_card_view)
 public class SwipeEventCard {
 
+
+    public static boolean swipedRight = false;
+    MyListener listener;
+
     // setting up layout variables
+    @View(R.id.ivCardImage)
     protected ImageView ivCardImage;
 
     @View(R.id.tvCardEventName)
@@ -30,48 +37,106 @@ public class SwipeEventCard {
     @View(R.id.tvCardEventLocation)
     protected TextView tvCardLocation;
 
+    @View(R.id.tvCardEventCreator)
+    protected TextView tvCardEventCreator;
+
     protected Event mEvent;
     protected Context mContext;
 //    public SwipePlaceHolderView mSwipeView;
     public Point mCardViewHolderSize;
-//    protected Callback mCallback;
 
     public SwipeEventCard(Context context, Event event, Point cardViewHolderSize) {
         mContext = context;
         mEvent = event;
         mCardViewHolderSize = cardViewHolderSize;
-//        mCallback = callback;
     }
 
+    public void setOnSwipeListener(MyListener listener){
+        this.listener = listener;
+    }
+
+    // loads information on cards
     @Resolve
     public void onResolved() {
-        tvCardEventName.setText(mEvent.getKeyName());
-        tvCardLocation.setText(mEvent.getLocation().toString());
-    }
-
-    @SwipeOutDirectional
-    public void onSwipeOutDirectional(SwipeDirection direction) {
-        Log.d("DEBUG", "SwipeOutDirectional " + direction.name());
-//        if (direction.getDirection() == SwipeDirection.TOP.getDirection()) {
-//            mCallback.onSwipeUp();
+//        ParseFile image = mEvent.getEventImage();
+//        if (image != null) {
+//            Log.d("DEBUG", "in setting image " + image.getUrl());
+//            Glide.with(mContext).load(image.getUrl()).into(ivCardImage);
 //        }
+
+        tvCardEventName.setText(mEvent.getKeyName());
+
+        if (mEvent.getLocation() == null) {
+            tvCardLocation.setText("no address given");
+        } else {
+            tvCardLocation.setText(mEvent.getLocation().toString());
+        }
+
+        tvCardEventCreator.setText(mEvent.getCreator().getUsername());
     }
 
+    @SwipeIn
+    public void onSwipeIn(){
+        Log.d("EVENT", "onSwipedIn");
+//        Log.d("EVENT", "this is the current user: " + getCurrentUser().getUsername());
+//        ParseUser user = getCurrentUser();
+//        addUserToEvent(user, mEvent);
+        swipedRight = true;
+        listener.onSwiped();
+        //TODO -- set up our own callback
+//        DialogFragment dialog = CheckoutFragment.instantiate(getParentFragment(), "help");
+//        CheckoutFragment fragment = new CheckoutFragment();
+//        fragment.show(getFragmentManager(), "CheckoutFragment");
+//        fragment.show(getChildFragmentManager(), "send help");
+//
+//        new CheckoutFragment().show(getFragmentManager(), "CheckoutFragment");
+//
+//        FragmentManager fm = getFragmentManager();
+//        CheckoutFragment dialog = CheckoutFragment.instantiate(getActivity(), "Hello world");
+//        dialog.show(getFragmentManager(), "dialog");
+//        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+//        fragmentTransaction.replace(R.layout.event_card_view, R.layout.fragment_checkout)
+//        CheckoutFragment editNameDialogFragment = CheckoutFragment.newInstance("Some Title");
+//        editNameDialogFragment.show(fm, "CheckoutFragment");
+
+    }
+
+    @SwipeInState
+    public void onSwipeInState(){
+        //Log.d("EVENT", "onSwipeInState");
+    }
+
+    @SwipeOutState
+    public void onSwipeOutState(){
+        Log.d("EVENT", "onSwipeOutState");
+    }
+
+    @SwipeOut
+    public void onSwipedOut(){
+        Log.d("EVENT", "onSwipedOut");
+    }
+
+    // when card is not swiped fully in a direction and swings back onto the deck
     @SwipeCancelState
     public void onSwipeCancelState(){
         Log.d("EVENT", "onSwipeCancelState");
     }
 
-    @SwipeInDirectional
-    public void onSwipeInDirectional(SwipeDirection direction) {
-        Log.d("DEBUG", "SwipeInDirectional " + direction.name());
-    }
+    // when card is accepted (right/up)
+    // leads to the event checkout fragment
+//    @SwipeInDirectional
+//    public void onSwipeInDirectional(SwipeDirection direction) {
+//        Log.d("DEBUG", "Going to checkout, SwipeInDirectional " + direction.name());
+//        // TODO -- connect to CheckoutFragement with correct event being displayed
+//        addUserToEvent(getCurrentUser(), mEvent);
+//    }
+
+
 
     @SwipingDirection
     public void onSwipingDirection(SwipeDirection direction) {
         Log.d("DEBUG", "SwipingDirection " + direction.name());
     }
-
 
     @SwipeTouch
     public void onSwipeTouch(float xStart, float yStart, float xCurrent, float yCurrent) {
@@ -92,8 +157,8 @@ public class SwipeEventCard {
                 + " alpha : " + alpha
         );
     }
-//
-//    public interface Callback {
-//        void onSwipeUp();
-//    }
+
+    public interface MyListener {
+        void onSwiped();
+    }
 }

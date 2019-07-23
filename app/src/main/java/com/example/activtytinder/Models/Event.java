@@ -3,6 +3,7 @@ package com.example.activtytinder.Models;
 //import com.parse.ParseClassName;
 
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -23,7 +24,8 @@ public class Event extends ParseObject{
     public static final String KEY_LIMIT = "peopleLimit";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_LOCATION  = "location";
-    public static final String KEY_CATERGORY = "category";
+    public static final String KEY_CATEGORY = "category";
+    public static final String KEY_EVENT_IMAGE = "eventPhoto";
 
     public Event() {}
 
@@ -76,8 +78,16 @@ public class Event extends ParseObject{
         return getParseGeoPoint(KEY_LOCATION);
     }
 
+    public String getCategory() {
+        return getString(KEY_CATEGORY);
+    }
+
     public void setKeyLocation(ParseGeoPoint location){
         put(KEY_LOCATION, location);
+    }
+
+    public ParseFile getEventImage() {
+        return getParseFile(KEY_EVENT_IMAGE);
     }
 
     public static class Query extends ParseQuery<ParseUser>{
