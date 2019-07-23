@@ -13,8 +13,6 @@ import com.parse.ParseUser;
 
 import org.json.JSONArray;
 
-import java.util.List;
-
 public class CardUtils {
 
     public static Point getDisplaySize(WindowManager windowManager) {
@@ -38,11 +36,28 @@ public class CardUtils {
     }
 
     public static void addUserToEvent(ParseUser user, Event event) {
+        // add the current user to the list of people attending the event in the event
+        // class
+
         JSONArray currentAttendees = event.getKeyAttendees();
-        //Log.d("DEBUG", "Users before: " + currentAttendees.toString());
-        currentAttendees.put(user);
-        Log.d("DEBUG", "Users: " + currentAttendees.toString());
+        Log.d("DEBUG", "Users before: " + currentAttendees.toString());
+        if (user != null) {
+            currentAttendees.put(user.getObjectId());
+        }
+
         event.setKeyAttendees(currentAttendees);
+        event.saveInBackground();
+        JSONArray newAttendees = event.getKeyAttendees();
+        Log.d("DEBUG", "Users after: " + newAttendees.toString());
+
+        // TODO --  fix null pointer error
+        // adding event id to user's willAttend list
+        JSONArray eventsAttending = user.getJSONArray("willAttend");
+        Log.d("DEBUG", "events before: " + eventsAttending.toString());
+        eventsAttending.put(event.getObjectId());
+        user.put("willAttend", eventsAttending);
+        user.saveInBackground();
+
     }
 
 }
