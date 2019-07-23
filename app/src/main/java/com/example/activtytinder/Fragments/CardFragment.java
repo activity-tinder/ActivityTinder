@@ -76,6 +76,9 @@ public class CardFragment extends Fragment {
             mSwipePlaceHolderView.doSwipe(false);
         });
 
+        if(SwipeEventCard.swipedRight){
+            showCheckoutDialog();
+        }
     }
     public void showCheckoutDialog() {
         FragmentManager fm = getFragmentManager();
@@ -108,7 +111,16 @@ public class CardFragment extends Fragment {
 
                     // TODO -- call adding and removing views in a multithreading way, synchronized
                     // figure out if this call is safe or not
-                  mSwipePlaceHolderView.addView(new SwipeEventCard(CardFragment.this.getContext(), objects.get(i), cardViewHolderSize));
+                    SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), objects.get(i), cardViewHolderSize);
+                    card.setOnSwipeListener(new SwipeEventCard.MyListener() {
+                        @Override
+                        public void onSwiped() {
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            fragmentManager.beginTransaction().show(new CheckoutFragment());
+
+                        }
+                    });
+                  mSwipePlaceHolderView.addView(card);
 
                   Log.d(TAG, "Post: "
                           + objects.get(i).getKeyName()

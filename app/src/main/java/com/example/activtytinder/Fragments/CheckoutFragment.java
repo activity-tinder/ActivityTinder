@@ -1,5 +1,6 @@
 package com.example.activtytinder.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,9 +32,11 @@ public class CheckoutFragment extends DialogFragment {
     private String mName;
     private Date mDate;
     private ParseGeoPoint mLocation;
+    Context context;
 
 
     public CheckoutFragment() {
+
         // Empty constructor is required for DialogFragment
         // Make sure not to add arguments to the constructor
     }
@@ -56,7 +59,6 @@ public class CheckoutFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         tvQuestion = view.findViewById(R.id.tvQuestion);
         tvEventDetails = view.findViewById(R.id.tvEventDetails);
         btnYes = view.findViewById(R.id.btnYes);

@@ -5,15 +5,7 @@ import android.graphics.Point;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import com.bumptech.glide.Glide;
-import com.example.activtytinder.Fragments.CardFragment;
-import com.example.activtytinder.Fragments.CheckoutFragment;
 import com.example.activtytinder.Models.Event;
 import com.mindorks.placeholderview.SwipeDirection;
 import com.mindorks.placeholderview.annotations.Layout;
@@ -21,24 +13,19 @@ import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
 import com.mindorks.placeholderview.annotations.swipe.SwipeCancelState;
 import com.mindorks.placeholderview.annotations.swipe.SwipeIn;
-import com.mindorks.placeholderview.annotations.swipe.SwipeInDirectional;
 import com.mindorks.placeholderview.annotations.swipe.SwipeInState;
 import com.mindorks.placeholderview.annotations.swipe.SwipeOut;
-import com.mindorks.placeholderview.annotations.swipe.SwipeOutDirectional;
 import com.mindorks.placeholderview.annotations.swipe.SwipeOutState;
 import com.mindorks.placeholderview.annotations.swipe.SwipeTouch;
 import com.mindorks.placeholderview.annotations.swipe.SwipingDirection;
-import com.parse.ParseFile;
-
-import com.example.activtytinder.Fragments.CardFragment;
-import com.parse.ParseUser;
-
-import static com.example.activtytinder.CardUtils.*;
-import static com.parse.ParseUser.*;
 
 // this class binds the event information to the card swiping view
 @Layout(R.layout.event_card_view)
-public class SwipeEventCard extends Fragment {
+public class SwipeEventCard {
+
+
+    public static boolean swipedRight = false;
+    MyListener listener;
 
     // setting up layout variables
     @View(R.id.ivCardImage)
@@ -62,6 +49,10 @@ public class SwipeEventCard extends Fragment {
         mContext = context;
         mEvent = event;
         mCardViewHolderSize = cardViewHolderSize;
+    }
+
+    public void setOnSwipeListener(MyListener listener){
+        this.listener = listener;
     }
 
     // loads information on cards
@@ -90,9 +81,19 @@ public class SwipeEventCard extends Fragment {
 //        Log.d("EVENT", "this is the current user: " + getCurrentUser().getUsername());
 //        ParseUser user = getCurrentUser();
 //        addUserToEvent(user, mEvent);
-        new CheckoutFragment().show(getFragmentManager(), "CheckoutFragment");
-
+        swipedRight = true;
+        listener.onSwiped();
+        //TODO -- set up our own callback
+//        DialogFragment dialog = CheckoutFragment.instantiate(getParentFragment(), "help");
+//        CheckoutFragment fragment = new CheckoutFragment();
+//        fragment.show(getFragmentManager(), "CheckoutFragment");
+//        fragment.show(getChildFragmentManager(), "send help");
+//
+//        new CheckoutFragment().show(getFragmentManager(), "CheckoutFragment");
+//
 //        FragmentManager fm = getFragmentManager();
+//        CheckoutFragment dialog = CheckoutFragment.instantiate(getActivity(), "Hello world");
+//        dialog.show(getFragmentManager(), "dialog");
 //        FragmentTransaction fragmentTransaction = fm.beginTransaction();
 //        fragmentTransaction.replace(R.layout.event_card_view, R.layout.fragment_checkout)
 //        CheckoutFragment editNameDialogFragment = CheckoutFragment.newInstance("Some Title");
@@ -155,5 +156,9 @@ public class SwipeEventCard extends Fragment {
                 + " TotalLength : " + cardHolderDiagonalLength
                 + " alpha : " + alpha
         );
+    }
+
+    public interface MyListener {
+        void onSwiped();
     }
 }
