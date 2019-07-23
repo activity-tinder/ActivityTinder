@@ -112,13 +112,12 @@ public class CardFragment extends Fragment {
                     // TODO -- call adding and removing views in a multithreading way, synchronized
                     // figure out if this call is safe or not
                     SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), objects.get(i), cardViewHolderSize);
+
+                    // Listener that shows the checkout dialog when a user swipes right on a card
                     card.setOnSwipeListener(new SwipeEventCard.MyListener() {
                         @Override
                         public void onSwiped() {
-//                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                            fragmentManager.beginTransaction().show(new CheckoutFragment());
                             showCheckoutDialog();
-
                         }
                     });
                   mSwipePlaceHolderView.addView(card);
