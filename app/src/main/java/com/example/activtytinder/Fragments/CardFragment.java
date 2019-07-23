@@ -113,6 +113,7 @@ public class CardFragment extends Fragment {
                     // figure out if this call is safe or not
                     SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), objects.get(i), cardViewHolderSize);
 
+                    // TODO -- make listener naming better, make documentation
                     // Listener that shows the checkout dialog when a user swipes right on a card
                     card.setOnSwipeListener(new SwipeEventCard.MyListener() {
                         @Override

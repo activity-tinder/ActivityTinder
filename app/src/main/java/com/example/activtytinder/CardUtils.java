@@ -51,10 +51,14 @@ public class CardUtils {
         Log.d("DEBUG", "Users after: " + newAttendees.toString());
 
         // TODO --  fix null pointer error
+        // currently buggy
         // adding event id to user's willAttend list
         JSONArray eventsAttending = user.getJSONArray("willAttend");
         Log.d("DEBUG", "events before: " + eventsAttending.toString());
-        eventsAttending.put(event.getObjectId());
+        if (event != null) {
+            eventsAttending.put(event.getObjectId());
+        }
+
         user.put("willAttend", eventsAttending);
         user.saveInBackground();
 
