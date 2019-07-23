@@ -76,9 +76,9 @@ public class CardFragment extends Fragment {
             mSwipePlaceHolderView.doSwipe(false);
         });
 
-        if(SwipeEventCard.swipedRight){
-            showCheckoutDialog();
-        }
+//        if(SwipeEventCard.swipedRight){
+//            showCheckoutDialog();
+//        }
     }
     public void showCheckoutDialog() {
         FragmentManager fm = getFragmentManager();
@@ -115,8 +115,9 @@ public class CardFragment extends Fragment {
                     card.setOnSwipeListener(new SwipeEventCard.MyListener() {
                         @Override
                         public void onSwiped() {
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            fragmentManager.beginTransaction().show(new CheckoutFragment());
+//                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                            fragmentManager.beginTransaction().show(new CheckoutFragment());
+                            showCheckoutDialog();
 
                         }
                     });
