@@ -23,8 +23,6 @@ import com.mindorks.placeholderview.annotations.swipe.SwipingDirection;
 @Layout(R.layout.event_card_view)
 public class SwipeEventCard {
 
-
-    public static boolean swipedRight = false;
     MyListener listener;
 
     // setting up layout variables
@@ -49,6 +47,10 @@ public class SwipeEventCard {
         mContext = context;
         mEvent = event;
         mCardViewHolderSize = cardViewHolderSize;
+    }
+
+    public interface MyListener {
+        void onSwiped();
     }
 
     public void setOnSwipeListener(MyListener listener){
@@ -78,27 +80,7 @@ public class SwipeEventCard {
     @SwipeIn
     public void onSwipeIn(){
         Log.d("EVENT", "onSwipedIn");
-//        Log.d("EVENT", "this is the current user: " + getCurrentUser().getUsername());
-//        ParseUser user = getCurrentUser();
-//        addUserToEvent(user, mEvent);
-        swipedRight = true;
         listener.onSwiped();
-        //TODO -- set up our own callback
-//        DialogFragment dialog = CheckoutFragment.instantiate(getParentFragment(), "help");
-//        CheckoutFragment fragment = new CheckoutFragment();
-//        fragment.show(getFragmentManager(), "CheckoutFragment");
-//        fragment.show(getChildFragmentManager(), "send help");
-//
-//        new CheckoutFragment().show(getFragmentManager(), "CheckoutFragment");
-//
-//        FragmentManager fm = getFragmentManager();
-//        CheckoutFragment dialog = CheckoutFragment.instantiate(getActivity(), "Hello world");
-//        dialog.show(getFragmentManager(), "dialog");
-//        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-//        fragmentTransaction.replace(R.layout.event_card_view, R.layout.fragment_checkout)
-//        CheckoutFragment editNameDialogFragment = CheckoutFragment.newInstance("Some Title");
-//        editNameDialogFragment.show(fm, "CheckoutFragment");
-
     }
 
     @SwipeInState
@@ -158,7 +140,4 @@ public class SwipeEventCard {
         );
     }
 
-    public interface MyListener {
-        void onSwiped();
-    }
 }
