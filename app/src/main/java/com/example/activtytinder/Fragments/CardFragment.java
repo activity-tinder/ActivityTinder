@@ -76,10 +76,12 @@ public class CardFragment extends Fragment {
             mSwipePlaceHolderView.doSwipe(false);
         });
 
-//        if(SwipeEventCard.swipedRight){
-//            showCheckoutDialog();
-//        }
     }
+
+    public void onCancelCheckoutClicked() {
+        mSwipePlaceHolderView.undoLastSwipe();
+    }
+
     public void showCheckoutDialog() {
         FragmentManager fm = getFragmentManager();
         CheckoutFragment editNameDialogFragment = CheckoutFragment.newInstance("Some Title");
@@ -115,18 +117,13 @@ public class CardFragment extends Fragment {
 
                     // TODO -- make listener naming better, make documentation
                     // Listener that shows the checkout dialog when a user swipes right on a card
-                    card.setOnSwipeListener(new SwipeEventCard.MyListener() {
+                    card.setOnSwipeListener(new SwipeEventCard.SwipeListener() {
                         @Override
                         public void onSwiped() {
                             showCheckoutDialog();
                         }
                     });
                   mSwipePlaceHolderView.addView(card);
-
-                  Log.d(TAG, "Post: "
-                          + objects.get(i).getKeyName()
-                          + " Creator: "
-                          + objects.get(i).getCreator().getUsername());
                 }
             }
         });

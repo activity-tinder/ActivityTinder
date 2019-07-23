@@ -25,7 +25,7 @@ public class SwipeEventCard {
 
 
     public static boolean swipedRight = false;
-    MyListener listener;
+    SwipeListener listener;
 
     // setting up layout variables
     @View(R.id.ivCardImage)
@@ -51,7 +51,7 @@ public class SwipeEventCard {
         mCardViewHolderSize = cardViewHolderSize;
     }
 
-    public void setOnSwipeListener(MyListener listener){
+    public void setOnSwipeListener(SwipeListener listener){
         this.listener = listener;
     }
 
@@ -136,7 +136,7 @@ public class SwipeEventCard {
         );
     }
 
-    public interface MyListener {
+    public interface SwipeListener {
         void onSwiped();
     }
 }
