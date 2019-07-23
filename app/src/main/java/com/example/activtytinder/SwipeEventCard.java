@@ -90,7 +90,7 @@ public class SwipeEventCard extends Fragment {
         Log.d("EVENT", "this is the current user: " + getCurrentUser().getUsername());
         ParseUser user = getCurrentUser();
         if (user != null) {
-            addUserToEvent(user.getObjectId(), mEvent);
+            addUserToEvent(user, mEvent);
         }
 //        FragmentManager fm = getFragmentManager();
 //        FragmentTransaction fragmentTransaction = fm.beginTransaction();

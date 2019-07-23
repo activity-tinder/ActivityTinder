@@ -16,6 +16,8 @@ import org.json.JSONException;
 
 import java.util.List;
 
+import static com.parse.ParseUser.*;
+
 public class CardUtils {
 
     public static Point getDisplaySize(WindowManager windowManager) {
@@ -38,16 +40,29 @@ public class CardUtils {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 
-    public static void addUserToEvent(String userId, Event event) {
+    public static void addUserToEvent(ParseUser user, Event event) {
+        // add the current user to the list of people attending the event in the event
+        // class
+
         JSONArray currentAttendees = event.getKeyAttendees();
-        //Log.d("DEBUG", "Users before: " + currentAttendees.toString());
-        if (userId != null) {
-            Log.d("DEBUG", "user is not null " + userId);
-            currentAttendees.put(userId);
+        Log.d("DEBUG", "Users before: " + currentAttendees.toString());
+        if (user != null) {
+            currentAttendees.put(user.getObjectId());
         }
 
-        Log.d("DEBUG", "Users: " + currentAttendees.toString());
         event.setKeyAttendees(currentAttendees);
+        event.saveInBackground();
+        JSONArray newAttendees = event.getKeyAttendees();
+        Log.d("DEBUG", "Users after: " + newAttendees.toString());
+
+        // TODO --  fix null pointer error
+        // adding event id to user's willAttend list
+        JSONArray eventsAttending = user.getJSONArray("willAttend");
+        Log.d("DEBUG", "events before: " + eventsAttending.toString());
+        eventsAttending.put(event.getObjectId());
+        user.put("willAttend", eventsAttending);
+        user.saveInBackground();
+
     }
 
 }
