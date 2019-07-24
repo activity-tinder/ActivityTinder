@@ -17,7 +17,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.example.activtytinder.SwipeEventCard;
-import com.example.activtytinder.Utils;
+import com.example.activtytinder.CardUtils;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.parse.FindCallback;
@@ -49,13 +49,11 @@ public class CardFragment extends Fragment {
         btnAccept = view.findViewById(R.id.acceptBtn);
         btnReject = view.findViewById(R.id.rejectBtn);
 
-        int bottomMargin = Utils.dpToPx(160);
-        Point windowSize = Utils.getDisplaySize(getActivity().getWindowManager());
+        int bottomMargin = CardUtils.dpToPx(160);
+        Point windowSize = CardUtils.getDisplaySize(getActivity().getWindowManager());
         cardViewHolderSize = new Point(windowSize.x, windowSize.y - bottomMargin);
 
         mSwipePlaceHolderView = view.findViewById(R.id.swipeView);
-
-
 
         queryEvents();
 
@@ -78,6 +76,9 @@ public class CardFragment extends Fragment {
             mSwipePlaceHolderView.doSwipe(false);
         });
 
+//        if(SwipeEventCard.swipedRight){
+//            showCheckoutDialog();
+//        }
     }
     public void showCheckoutDialog() {
         FragmentManager fm = getFragmentManager();
@@ -110,7 +111,17 @@ public class CardFragment extends Fragment {
 
                     // TODO -- call adding and removing views in a multithreading way, synchronized
                     // figure out if this call is safe or not
-                  mSwipePlaceHolderView.addView(new SwipeEventCard(CardFragment.this.getContext(), objects.get(i), cardViewHolderSize));
+                    SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), objects.get(i), cardViewHolderSize);
+                    card.setOnSwipeListener(new SwipeEventCard.MyListener() {
+                        @Override
+                        public void onSwiped() {
+//                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                            fragmentManager.beginTransaction().show(new CheckoutFragment());
+                            showCheckoutDialog();
+
+                        }
+                    });
+                  mSwipePlaceHolderView.addView(card);
 
                   Log.d(TAG, "Post: "
                           + objects.get(i).getKeyName()
