@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="50dp"
@@ -8,7 +9,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvCards"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="438dp"
         android:layout_margin="20dp"
         android:background="@color/white"
@@ -24,7 +25,7 @@
             android:layout_marginBottom="75dp"
             app:srcCompat="@drawable/googleg_standard_color_18" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="109dp"
             android:layout_gravity="bottom"
@@ -34,27 +35,37 @@
 
             <TextView
                 android:id="@+id/tvCardEventName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="Sample Event"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvCardEventLocation"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="sample location"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp"
-                android:textStyle="normal" />
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvCardEventName" />
 
             <TextView
                 android:id="@+id/tvCardEventCreator"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="event creator" />
-        </LinearLayout>
+                android:text="event creator"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvCardEventLocation" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

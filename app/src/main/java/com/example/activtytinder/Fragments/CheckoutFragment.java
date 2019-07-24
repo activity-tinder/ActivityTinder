@@ -36,7 +36,7 @@ public class CheckoutFragment extends DialogFragment {
     private Button btnYes;
     private Button btnNo;
     private String mName;
-    private Date mDate;
+    private String mDate;
     private ParseGeoPoint mLocation;
     Context context;
 
@@ -144,7 +144,8 @@ public class CheckoutFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 //TODO -- close overlay and take them back to the cards
-//                btnNoListener.onNoClicked();
+                //btnNoListener.onNoClicked();
+
                 dismiss();
             }
         });

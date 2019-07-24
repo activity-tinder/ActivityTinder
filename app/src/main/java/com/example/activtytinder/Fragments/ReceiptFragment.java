@@ -23,8 +23,6 @@ import com.parse.ParseQuery;
 import org.json.JSONArray;
 import org.parceler.Parcels;
 
-import java.util.Date;
-
 public class ReceiptFragment extends Fragment {
 
     private Button btnDirections;
@@ -34,8 +32,8 @@ public class ReceiptFragment extends Fragment {
     private ScrollView scDetails;
     private TextView tvEventDetails;
     private String mName;
-    private Date mDate;
     private String mCreator;
+    private String mDate;
     private ParseGeoPoint mLocation;
     private JSONArray mAttendees;
     private String mDescription;

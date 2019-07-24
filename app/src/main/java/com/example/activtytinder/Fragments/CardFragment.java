@@ -22,6 +22,7 @@ import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
@@ -60,8 +61,8 @@ public class CardFragment extends Fragment {
         queryEvents();
 
         mSwipePlaceHolderView.getBuilder()
-                .setDisplayViewCount(3)
-                .setHeightSwipeDistFactor(10)
+                .setDisplayViewCount(4)
+                .setHeightSwipeDistFactor(8)
                 .setWidthSwipeDistFactor(5)
                 .setSwipeDecor(new SwipeDecor()
                     .setPaddingTop(10)
@@ -98,7 +99,6 @@ public class CardFragment extends Fragment {
         ParseQuery<Event> eventQuery = new ParseQuery<Event>(Event.class);
         //Toast.makeText(getContext(), "got into queryEvents", Toast.LENGTH_SHORT).show();
         eventQuery.include(Event.KEY_CREATOR);
-        eventQuery.setLimit(5);
         eventQuery.findInBackground(new FindCallback<Event>() {
             @Override
             public void done(List<Event> event, ParseException e) {

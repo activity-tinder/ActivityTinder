@@ -68,11 +68,12 @@ public class SignUpActivity  extends AppCompatActivity {
     String TAG = "Sign Up Activity";
     String API_KEY;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        nameOfPerson = (EditText) findViewById(R.id.etName);
+        nameOfPerson = (EditText) findViewById(R.id.etEventName);
         email = (EditText) findViewById(R.id.etEmail);
         birthday = (EditText) findViewById(R.id.etBirthday);
         baseLocation = (EditText) findViewById(R.id.etBaseLocation);
@@ -125,9 +126,9 @@ public class SignUpActivity  extends AppCompatActivity {
                 } catch (java.text.ParseException e) {
                     e.printStackTrace();
                 }
+                final Date finalBirthday = d;
                 final String Name = nameOfPerson.getText().toString();
                 final String Email = email.getText().toString();
-                final Date finalBirthday = d;
                 final String Username = usernameInput.getText().toString();
                 final String Password = passwordInput.getText().toString();
                 final ParseGeoPoint BaseCoordinates = BaseLocationCoordinates;
