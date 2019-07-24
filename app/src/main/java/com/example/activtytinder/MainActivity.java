@@ -32,17 +32,17 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.action_card:
                     fragment = new CardFragment();
-                    Toast.makeText(MainActivity.this, "Home!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "Home!", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.action_create:
                     //TODO -- change back to CreateFragment();
                     fragment = new ReceiptFragment();
-                    Toast.makeText(MainActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.action_profile:
                 default:
                     fragment = new ProfileFragment();
-                    Toast.makeText(MainActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
                     break;
             }
             // TODO -- add if statement to check if fragment isn't null
