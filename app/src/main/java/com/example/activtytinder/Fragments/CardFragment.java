@@ -23,6 +23,7 @@ import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
