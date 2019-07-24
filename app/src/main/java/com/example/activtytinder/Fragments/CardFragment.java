@@ -116,7 +116,7 @@ public class CardFragment extends Fragment {
                     // figure out if this call is safe or not
                     SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), event.get(i), cardViewHolderSize);
                     Event eventToSend = event.get(i);
-                    card.setOnSwipeListener(new SwipeEventCard.MyListener() {
+                    card.setOnSwipeListener(new SwipeEventCard.SwipeListener() {
                         @Override
                         public void onSwiped() {
                             Event event = new Event();
