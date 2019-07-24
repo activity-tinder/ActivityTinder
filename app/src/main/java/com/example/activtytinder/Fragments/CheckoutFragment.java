@@ -18,7 +18,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
-import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -58,6 +57,21 @@ public class CheckoutFragment extends DialogFragment {
         return fragment;
     }
 
+    public void showReceiptFragment(Event event) {
+//        FragmentManager fm = getFragmentManager();
+//        CheckoutFragment editNameDialogFragment = CheckoutFragment.newInstance("Event", event);
+//        editNameDialogFragment.show(fm, "CheckoutFragment");
+        ReceiptFragment receiptFragment = new ReceiptFragment();
+        Bundle eventBundle = new Bundle();
+        eventBundle.putParcelable("Event", Parcels.wrap(event));
+        receiptFragment.setArguments(eventBundle);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.flContainer, receiptFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 
     @Nullable
     @Override
@@ -119,13 +133,10 @@ public class CheckoutFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 //TODO -- take them to the receipt fragment page
+
+                showReceiptFragment(event);
                 dismiss();
-                ReceiptFragment receiptFragment = new ReceiptFragment();
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                fragmentTransaction.replace(R.id.flContainer, receiptFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+
             }
         });
 
@@ -133,7 +144,7 @@ public class CheckoutFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 //TODO -- close overlay and take them back to the cards
-                btnNoListener.onNoClicked();
+//                btnNoListener.onNoClicked();
                 dismiss();
             }
         });
