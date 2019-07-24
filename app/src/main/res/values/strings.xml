@@ -9,8 +9,15 @@
     <string name="event_details">Event Details</string>
     <string name="directions_to_event">Directions to Event</string>
     <string name="group_chat_for_attendees">Group Chat for Attendees</string>
+    <string name="categories">Choose Event Category</string>
     <string name="export_to_calendar">Export to Calendar</string>
     <string name="name">Name</string>
+    <string-array name="categories_array">
+        <item>Choose Category</item>
+        <item>Food</item>
+        <item>Nature</item>
+        <item>Active</item>
+    </string-array>
 
 
 

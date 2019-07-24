@@ -9,8 +9,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
-
-import java.util.Date;
 //import com.parse.ParseQuery;
 
 @ParseClassName("Event")
@@ -23,13 +21,16 @@ public class Event extends ParseObject{
     public static final String KEY_LIMIT = "peopleLimit";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_LOCATION  = "location";
-    public static final String KEY_CATERGORY = "category";
+    public static final String KEY_CATEGORY = "category";
+    public static final String KEY_START_TIME = "startTime";
+    public static final String KEY_END_TIME = "endTime";
+    public static final String KEY_ADDRESS = "address";
 
     public Event() {}
 
 
-    public Date getKeyDate(){
-        return getDate(KEY_EVENT_DATE);
+    public String getKeyDate(){
+        return getString(KEY_EVENT_DATE);
     }
     public void setKeyDate(String eventDate){
         put(KEY_EVENT_DATE, eventDate);
@@ -79,6 +80,22 @@ public class Event extends ParseObject{
     public void setKeyLocation(ParseGeoPoint location){
         put(KEY_LOCATION, location);
     }
+
+    public String getKeyStartTime(){return getString(KEY_START_TIME);}
+
+    public void setKeyStartTime(String eventStartTime){put(KEY_START_TIME, eventStartTime);}
+
+    public String getKeyEndTime(){return  getString(KEY_END_TIME);}
+
+    public void setKeyEndTime(String eventEndTime){put(KEY_END_TIME, eventEndTime);}
+
+    public String getKeyCategory(){return getString(KEY_CATEGORY);}
+
+    public void setKeyCategory(String category){put(KEY_CATEGORY, category);}
+
+    public String getKeyAddress(){return getString(KEY_ADDRESS);}
+
+    public void setKeyAddress(String address){put(KEY_ADDRESS, address);}
 
     public static class Query extends ParseQuery<ParseUser>{
         public Query(Class<ParseUser> subclass) {

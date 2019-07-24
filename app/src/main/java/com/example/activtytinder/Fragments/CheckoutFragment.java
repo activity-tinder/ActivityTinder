@@ -20,8 +20,6 @@ import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 
-import java.util.Date;
-
 public class CheckoutFragment extends DialogFragment {
 
     private TextView tvQuestion;
@@ -29,7 +27,7 @@ public class CheckoutFragment extends DialogFragment {
     private Button btnYes;
     private Button btnNo;
     private String mName;
-    private Date mDate;
+    private String mDate;
     private ParseGeoPoint mLocation;
 
 
