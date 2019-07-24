@@ -7,5 +7,6 @@
     <color name="pink">#CE0F55</color>
     <color name="red">#EB0505</color>
     <color name="blue">#0945EC</color>
+    <color name="black">#000000 </color>
     <color name="white">#FFFFFF</color>
 </resources>
