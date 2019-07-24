@@ -55,7 +55,6 @@ public class SwipeEventCard {
         void onSwiped();
     }
 
-
     public void setOnSwipeListener(SwipeListener listener){
         this.listener = listener;
     }
@@ -74,7 +73,7 @@ public class SwipeEventCard {
         if (mEvent.getLocation() == null) {
             tvCardLocation.setText("no address given");
         } else {
-            tvCardLocation.setText(mEvent.getLocation().toString());
+            tvCardLocation.setText(mEvent.getKeyAddress());
         }
 
         tvCardEventCreator.setText(mEvent.getCreator().getUsername());

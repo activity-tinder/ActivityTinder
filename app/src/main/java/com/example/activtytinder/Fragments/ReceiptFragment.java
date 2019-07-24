@@ -17,65 +17,78 @@ import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 
 import org.json.JSONArray;
+import org.parceler.Parcels;
 
 public class ReceiptFragment extends Fragment {
 
-    private Button directionsButton;
-    private Button chatButton;
-    private Button calendarButton;
-    private Button ditchButton;
-    protected ScrollView scDetails;
-    protected TextView tvEventDetails;
+    private Button btnDirections;
+    private Button btnChat;
+    private Button btnCalendar;
+    private Button btnDitch;
+    private ScrollView scDetails;
+    private TextView tvEventDetails;
     private String mName;
+    private String mCreator;
     private String mDate;
-    private ParseGeoPoint mLocation;
+    private String mLocation;
     private JSONArray mAttendees;
     private String mDescription;
+    private Event mEvent;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Bundle eventBundle = this.getArguments();
+        if(eventBundle != null){
+            mEvent = Parcels.unwrap(eventBundle.getParcelable("Event"));
+        }
         return inflater.inflate(R.layout.fragment_receipt, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        directionsButton = view.findViewById(R.id.btnMaps);
-        chatButton = view.findViewById(R.id.btnChat);
-        calendarButton = view.findViewById(R.id.btnCalendar);
-        ditchButton = view.findViewById(R.id.btnDitchEvent);
+        btnDirections = view.findViewById(R.id.btnMaps);
+        btnChat = view.findViewById(R.id.btnChat);
+        btnCalendar = view.findViewById(R.id.btnCalendar);
+        btnDitch = view.findViewById(R.id.btnDitchEvent);
         scDetails = view.findViewById(R.id.scDetails);
         tvEventDetails = view.findViewById(R.id.eventDetails);
         ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
+        query.include(Event.KEY_CREATOR);
+
+
+
         //TODO --  call the event.getObjectID
-        query.getInBackground("JOeUTzZOXJ", new GetCallback<Event>() {
+        query.getInBackground(mEvent.getObjectId(), new GetCallback<Event>() {
             @Override
             public void done(Event event, ParseException e) {
                 if(e == null){
                     mName = event.getKeyName();
                     mDate = event.getKeyDate();
-                    mLocation = event.getLocation();
+                    mCreator = event.getCreator().getUsername();
+                    mLocation = event.getKeyAddress();
                     mAttendees = event.getKeyAttendees();
                     mDescription = event.getKeyDescription();
-//                    Log.d("ReceiptFragment", "\nName: "
-//                            + mName
-//                            + "\nDate: "
-//                            + mDate
-//                            +"\nLocation: "
-//                            + mLocation
-//                            + "\nAttendees: "
-//                            + mAttendees
-//                            + "\nDescription: "
-//                            + mDescription);
+//                    for (int x = 0; x <event.getKeyAttendees().length(); x++){
+//                        try {
+//                            String userId = event.getKeyAttendees().getString(x);
+                    //Make mAttendees an arraylist
+//                            mAttendees.add(userId);
+//                        } catch (JSONException e1) {
+//                            e1.printStackTrace();
+//                        }
+//
+//                    }
                     tvEventDetails.setText("Name: "
                             + mName
                             + "\n\nDate: "
                             + mDate
+                            + "\n\nCreated by: "
+                            + mCreator
                             +"\n\nLocation: "
                             + mLocation
                             + "\n\nAttendees: "
@@ -96,28 +109,28 @@ public class ReceiptFragment extends Fragment {
 
 
 
-        directionsButton.setOnClickListener(new View.OnClickListener() {
+        btnDirections.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO -- open google maps application and input the locaiton of the event into the destination textview
             }
         });
 
-        chatButton.setOnClickListener(new View.OnClickListener(){
+        btnChat.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 //TODO -- open internal chat option or if we're feeling bold open Facebook Messenger
             }
         });
 
-        calendarButton.setOnClickListener(new View.OnClickListener() {
+        btnCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO-- open overlay that gives a bunch of calendar options that one can export the event name, details, location, and time to the calendar app of their choice
             }
         });
 
-        ditchButton.setOnClickListener(new View.OnClickListener() {
+        btnDitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO -- give User a warning message/confirmation overlay. If they choose to leave, take User's name off of the users attending. Lower their score if it's 24 hours before event will occur.

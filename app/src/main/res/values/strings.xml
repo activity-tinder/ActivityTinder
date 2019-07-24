@@ -12,6 +12,7 @@
     <string name="categories">Choose Event Category</string>
     <string name="export_to_calendar">Export to Calendar</string>
     <string name="name">Name</string>
+    <string name="question">Are you sure you want to attend</string>
     <string-array name="categories_array">
         <item>Choose Category</item>
         <item>Food</item>
