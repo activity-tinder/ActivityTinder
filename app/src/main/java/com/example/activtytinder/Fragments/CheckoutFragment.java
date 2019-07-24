@@ -13,9 +13,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
+import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -27,6 +30,7 @@ import java.util.Date;
 
 public class CheckoutFragment extends DialogFragment {
 
+    public BtnNoListener btnNoListener;
     private TextView tvQuestion;
     private TextView tvEventDetails;
     private Event event;
@@ -64,6 +68,7 @@ public class CheckoutFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         tvQuestion = view.findViewById(R.id.tvQuestion);
         tvEventDetails = view.findViewById(R.id.tvEventDetails);
         btnYes = view.findViewById(R.id.btnYes);
@@ -114,6 +119,13 @@ public class CheckoutFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 //TODO -- take them to the receipt fragment page
+                dismiss();
+                ReceiptFragment receiptFragment = new ReceiptFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                fragmentTransaction.replace(R.id.flContainer, receiptFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 
@@ -121,8 +133,14 @@ public class CheckoutFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 //TODO -- close overlay and take them back to the cards
+                btnNoListener.onNoClicked();
                 dismiss();
             }
         });
+
+    }
+
+    public interface BtnNoListener {
+        void onNoClicked();
     }
 }

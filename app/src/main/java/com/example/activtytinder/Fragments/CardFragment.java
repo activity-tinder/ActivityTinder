@@ -65,7 +65,7 @@ public class CardFragment extends Fragment {
                 .setHeightSwipeDistFactor(10)
                 .setWidthSwipeDistFactor(5)
                 .setSwipeDecor(new SwipeDecor()
-                    .setPaddingTop(20)
+                    .setPaddingTop(10)
                     .setRelativeScale(0.01f));
 
         //TODO -- figure out what v is
@@ -85,6 +85,9 @@ public class CardFragment extends Fragment {
         CheckoutFragment editNameDialogFragment = CheckoutFragment.newInstance("Event", event);
         editNameDialogFragment.show(fm, "CheckoutFragment");
     }
+   public void onCancelCheckoutClicked() {
+        mSwipePlaceHolderView.undoLastSwipe();
+    }
 
 
     /*
@@ -94,7 +97,7 @@ public class CardFragment extends Fragment {
      */
     private void queryEvents() {
         ParseQuery<Event> eventQuery = new ParseQuery<Event>(Event.class);
-        Toast.makeText(getContext(), "got into queryEvents", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "got into queryEvents", Toast.LENGTH_SHORT).show();
         eventQuery.include(Event.KEY_CREATOR);
         eventQuery.setLimit(5);
         eventQuery.findInBackground(new FindCallback<Event>() {

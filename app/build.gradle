@@ -69,4 +69,7 @@ dependencies {
     // card visuals
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.0.2'
+
+    //Volley for GET requests
+    implementation 'com.android.volley:volley:1.1.1'
 }

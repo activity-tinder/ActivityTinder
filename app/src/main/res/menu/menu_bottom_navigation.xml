@@ -4,17 +4,21 @@
 
     <item
         android:id="@+id/action_card"
+        android:enabled="true"
         android:icon="@android:drawable/ic_search_category_default"
-        android:title="Cards"
+        android:iconTint="@color/black"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_create"
+        android:enabled="true"
         android:icon="@android:drawable/ic_menu_add"
-        android:title="Create"
+        android:iconTint="@color/black"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_profile"
         android:icon="@drawable/ic_profile_pic"
+        android:enabled="true"
         android:title="Profile"
+        android:iconTint="@color/black"
         app:showAsAction="always" />
 </menu>

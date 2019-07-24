@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cvCards"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="438dp"
         android:layout_margin="20dp"
         android:background="@color/white"
         android:orientation="vertical"
@@ -20,7 +20,7 @@
             android:id="@+id/ivCardImage"
 
             android:layout_width="match_parent"
-            android:layout_height="360dp"
+            android:layout_height="328dp"
             android:layout_marginBottom="75dp"
             app:srcCompat="@drawable/googleg_standard_color_18" />
 
