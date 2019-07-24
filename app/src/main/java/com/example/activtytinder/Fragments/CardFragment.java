@@ -19,17 +19,13 @@ import com.example.activtytinder.R;
 import com.example.activtytinder.SwipeEventCard;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
-import java.util.List;
-
 import static com.example.activtytinder.Fragments.ProfileFragment.TAG;
 
+//TODO -- documentation for class
 public class CardFragment extends Fragment {
 
     private ImageButton btnAccept;
@@ -61,10 +57,10 @@ public class CardFragment extends Fragment {
         queryEvents();
 
         mSwipePlaceHolderView.getBuilder()
-                .setDisplayViewCount(4)
-                .setHeightSwipeDistFactor(8)
-                .setWidthSwipeDistFactor(5)
-                .setSwipeDecor(new SwipeDecor()
+                    .setDisplayViewCount(4)
+                    .setHeightSwipeDistFactor(8)
+                    .setWidthSwipeDistFactor(5)
+                    .setSwipeDecor(new SwipeDecor()
                     .setPaddingTop(10)
                     .setRelativeScale(0.01f));
 
@@ -80,56 +76,52 @@ public class CardFragment extends Fragment {
         });
 
     }
+    //TODO -- documentation for the method
     public void showCheckoutDialog(Event event) {
-        FragmentManager fm = getFragmentManager();
-        CheckoutFragment editNameDialogFragment = CheckoutFragment.newInstance("Event", event);
-        editNameDialogFragment.show(fm, "CheckoutFragment");
+        FragmentManager fragmentManager = getFragmentManager();
+        CheckoutFragment checkoutDialogFragment = CheckoutFragment.newInstance("Event", event);
+        checkoutDialogFragment.show(fragmentManager, "CheckoutFragment");
     }
+    //TODO -- documentation for the method
    public void onCancelCheckoutClicked() {
         mSwipePlaceHolderView.undoLastSwipe();
     }
 
 
-    /*
+    /**
     Gets the events from the database and puts them into the SwipePlaceHolderView card stack.
     Requires a call to Parse database for the Event object type and will get all of the events
     and display them in the card stack.
-     */
+     **/
     private void queryEvents() {
         ParseQuery<Event> eventQuery = new ParseQuery<Event>(Event.class);
         //Toast.makeText(getContext(), "got into queryEvents", Toast.LENGTH_SHORT).show();
         eventQuery.include(Event.KEY_CREATOR);
-        eventQuery.findInBackground(new FindCallback<Event>() {
-            @Override
-            public void done(List<Event> event, ParseException e) {
+        eventQuery.findInBackground((event, e) -> {
 
-                if (e != null) {
-                    Log.d(TAG, "Error with Parse Query");
-                    e.printStackTrace();
-                    return;
-                }
+            if (e != null) {
+                Log.d(TAG, "Error with Parse Query");
+                e.printStackTrace();
+                return;
+            }
 
-                for (int i = 0; i < event.size(); i++) {
+            for (int i = 0; i < event.size(); i++) {
 
-                    // TODO -- call adding and removing views in a multithreading way, synchronized
-                    // figure out if this call is safe or not
-                    SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), event.get(i), cardViewHolderSize);
-                    Event eventToSend = event.get(i);
-                    card.setOnSwipeListener(new SwipeEventCard.SwipeListener() {
-                        @Override
-                        public void onSwiped() {
-                            Bundle eventBundle = new Bundle();
-                            eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
-                            showCheckoutDialog(eventToSend);
-                        }
-                    });
-                  mSwipePlaceHolderView.addView(card);
+                // TODO -- call adding and removing views in a multithreading way, synchronized
+                // figure out if this call is safe or not
+                SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), event.get(i), cardViewHolderSize);
+                Event eventToSend = event.get(i);
+                card.setOnSwipeListener(() -> {
+                    Bundle eventBundle = new Bundle();
+                    eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
+                    showCheckoutDialog(eventToSend);
+                });
+              mSwipePlaceHolderView.addView(card);
 
-                  Log.d(TAG, "Post: "
-                          + event.get(i).getKeyName()
-                          + " Creator: "
-                          + event.get(i).getCreator().getUsername());
-                }
+//              Log.d(TAG, "Post: "
+//                      + event.get(i).getKeyName()
+//                      + " Creator: "
+//                      + event.get(i).getCreator().getUsername());
             }
         });
     }

@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
                     //Toast.makeText(MainActivity.this, "Home!", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.action_create:
-                    //TODO -- change back to CreateFragment();
                     fragment = new CreateFragment();
                     //Toast.makeText(MainActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
                     break;

@@ -17,7 +17,6 @@ import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 
 import org.json.JSONArray;
@@ -34,7 +33,7 @@ public class ReceiptFragment extends Fragment {
     private String mName;
     private String mCreator;
     private String mDate;
-    private ParseGeoPoint mLocation;
+    private String mLocation;
     private JSONArray mAttendees;
     private String mDescription;
     private Event mEvent;
@@ -63,15 +62,6 @@ public class ReceiptFragment extends Fragment {
 
 
 
-
-
-//        CheckoutFragment fragment = new CheckoutFragment();
-//        //Event event = (Event) eventBundle.getSerializable("event");
-//        Bundle args = new Bundle();
-//        args.putString("Event Details", eventDetails);
-//        args.putParcelable("Event", Parcels.wrap(event));
-//        fragment.setArguments(args);
-
         //TODO --  call the event.getObjectID
         query.getInBackground(mEvent.getObjectId(), new GetCallback<Event>() {
             @Override
@@ -80,7 +70,7 @@ public class ReceiptFragment extends Fragment {
                     mName = event.getKeyName();
                     mDate = event.getKeyDate();
                     mCreator = event.getCreator().getUsername();
-                    mLocation = event.getLocation();
+                    mLocation = event.getKeyAddress();
                     mAttendees = event.getKeyAttendees();
                     mDescription = event.getKeyDescription();
 //                    for (int x = 0; x <event.getKeyAttendees().length(); x++){
@@ -93,21 +83,11 @@ public class ReceiptFragment extends Fragment {
 //                        }
 //
 //                    }
-//                    Log.d("ReceiptFragment", "\nName: "
-//                            + mName
-//                            + "\nDate: "
-//                            + mDate
-//                            +"\nLocation: "
-//                            + mLocation
-//                            + "\nAttendees: "
-//                            + mAttendees
-//                            + "\nDescription: "
-//                            + mDescription);
                     tvEventDetails.setText("Name: "
                             + mName
                             + "\n\nDate: "
                             + mDate
-                            + "\n\nCreated by:"
+                            + "\n\nCreated by: "
                             + mCreator
                             +"\n\nLocation: "
                             + mLocation
