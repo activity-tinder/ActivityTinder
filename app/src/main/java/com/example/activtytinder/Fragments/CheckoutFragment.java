@@ -37,7 +37,7 @@ public class CheckoutFragment extends DialogFragment {
     private Button btnYes;
     private Button btnNo;
     private String mName;
-    private Date mDate;
+    private String mDate;
     private ParseGeoPoint mLocation;
     Context context;
 
