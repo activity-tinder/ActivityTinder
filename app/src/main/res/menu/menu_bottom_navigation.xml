@@ -16,8 +16,9 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/action_profile"
+        android:icon="@drawable/ic_profile_pic"
         android:enabled="true"
-        android:icon="@drawable/instagram_user_outline"
+        android:title="Profile"
         android:iconTint="@color/black"
         app:showAsAction="always" />
 </menu>

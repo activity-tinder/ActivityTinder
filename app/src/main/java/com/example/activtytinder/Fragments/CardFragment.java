@@ -14,15 +14,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.activtytinder.CardUtils;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.example.activtytinder.SwipeEventCard;
-import com.example.activtytinder.CardUtils;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -32,6 +34,7 @@ public class CardFragment extends Fragment {
 
     private ImageButton btnAccept;
     private ImageButton btnReject;
+
 
     SwipePlaceHolderView mSwipePlaceHolderView;
     Point cardViewHolderSize;
@@ -77,15 +80,13 @@ public class CardFragment extends Fragment {
         });
 
     }
-
-    public void onCancelCheckoutClicked() {
-        mSwipePlaceHolderView.undoLastSwipe();
-    }
-
-    public void showCheckoutDialog() {
+    public void showCheckoutDialog(Event event) {
         FragmentManager fm = getFragmentManager();
-        CheckoutFragment editNameDialogFragment = CheckoutFragment.newInstance("Some Title");
-        editNameDialogFragment.show(fm, "fragment_edit_name");
+        CheckoutFragment editNameDialogFragment = CheckoutFragment.newInstance("Event", event);
+        editNameDialogFragment.show(fm, "CheckoutFragment");
+    }
+   public void onCancelCheckoutClicked() {
+        mSwipePlaceHolderView.undoLastSwipe();
     }
 
 
@@ -101,29 +102,36 @@ public class CardFragment extends Fragment {
         eventQuery.setLimit(5);
         eventQuery.findInBackground(new FindCallback<Event>() {
             @Override
-            public void done(List<Event> objects, ParseException kms) {
+            public void done(List<Event> event, ParseException e) {
 
-                if (kms != null) {
+                if (e != null) {
                     Log.d(TAG, "Error with Parse Query");
-                    kms.printStackTrace();
+                    e.printStackTrace();
                     return;
                 }
 
-                for (int i = 0; i < objects.size(); i++) {
+                for (int i = 0; i < event.size(); i++) {
 
                     // TODO -- call adding and removing views in a multithreading way, synchronized
                     // figure out if this call is safe or not
-                    SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), objects.get(i), cardViewHolderSize);
-
-                    // TODO -- make listener naming better, make documentation
-                    // Listener that shows the checkout dialog when a user swipes right on a card
-                    card.setOnSwipeListener(new SwipeEventCard.SwipeListener() {
+                    SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), event.get(i), cardViewHolderSize);
+                    Event eventToSend = event.get(i);
+                    card.setOnSwipeListener(new SwipeEventCard.MyListener() {
                         @Override
                         public void onSwiped() {
-                            showCheckoutDialog();
+                            Event event = new Event();
+                            Bundle eventBundle = new Bundle();
+//                            eventBundle.putParcelable("Event", eventToSend);
+                            eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
+                            showCheckoutDialog(eventToSend);
                         }
                     });
                   mSwipePlaceHolderView.addView(card);
+
+                  Log.d(TAG, "Post: "
+                          + event.get(i).getKeyName()
+                          + " Creator: "
+                          + event.get(i).getCreator().getUsername());
                 }
             }
         });

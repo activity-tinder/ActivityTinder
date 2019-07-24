@@ -24,8 +24,8 @@ import com.mindorks.placeholderview.annotations.swipe.SwipingDirection;
 public class SwipeEventCard {
 
 
-    public static boolean swipedRight = false;
     SwipeListener listener;
+
 
     // setting up layout variables
     @View(R.id.ivCardImage)
@@ -50,6 +50,11 @@ public class SwipeEventCard {
         mEvent = event;
         mCardViewHolderSize = cardViewHolderSize;
     }
+
+ public interface SwipeListener {
+        void onSwiped();
+    }
+
 
     public void setOnSwipeListener(SwipeListener listener){
         this.listener = listener;
@@ -85,7 +90,6 @@ public class SwipeEventCard {
 //        swipedRight = true;
         // TODO -- document the workaround
         listener.onSwiped();
-
     }
 
     @SwipeInState
@@ -136,7 +140,5 @@ public class SwipeEventCard {
         );
     }
 
-    public interface SwipeListener {
-        void onSwiped();
-    }
+
 }
