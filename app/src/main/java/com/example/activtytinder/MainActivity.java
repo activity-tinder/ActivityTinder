@@ -1,7 +1,6 @@
 package com.example.activtytinder;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.action_create:
                     //TODO -- change back to CreateFragment();
                     fragment = new CreateFragment();
-                    Toast.makeText(MainActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.action_profile:
                 default:
