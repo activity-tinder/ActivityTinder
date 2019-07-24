@@ -12,6 +12,7 @@ import com.example.activtytinder.Models.Event;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 public class CardUtils {
 
@@ -43,6 +44,12 @@ public class CardUtils {
         Log.d("DEBUG", "Users before: " + currentAttendees.toString());
         if (user != null) {
             currentAttendees.put(user.getObjectId());
+            currentAttendees.put(user);
+        }
+        try {
+            currentAttendees.getString(0);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
         event.setKeyAttendees(currentAttendees);
@@ -56,7 +63,7 @@ public class CardUtils {
         JSONArray eventsAttending = user.getJSONArray("willAttend");
         Log.d("DEBUG", "events before: " + eventsAttending.toString());
         if (event != null) {
-            eventsAttending.put(event.getObjectId());
+            eventsAttending.put(event);
         }
 
         user.put("willAttend", eventsAttending);
