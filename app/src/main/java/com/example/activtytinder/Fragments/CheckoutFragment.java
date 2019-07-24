@@ -13,20 +13,27 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
+import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 
+import org.parceler.Parcels;
+
 import java.util.Date;
 
 public class CheckoutFragment extends DialogFragment {
 
+    public BtnNoListener btnNoListener;
     private TextView tvQuestion;
     private TextView tvEventDetails;
+    private Event event;
     private Button btnYes;
     private Button btnNo;
     private String mName;
@@ -41,10 +48,12 @@ public class CheckoutFragment extends DialogFragment {
         // Make sure not to add arguments to the constructor
     }
 
-    public static CheckoutFragment newInstance(String eventDetails){
+    public static CheckoutFragment newInstance(String eventDetails, Event event){
         CheckoutFragment fragment = new CheckoutFragment();
+        //Event event = (Event) eventBundle.getSerializable("event");
         Bundle args = new Bundle();
         args.putString("Event Details", eventDetails);
+        args.putParcelable("Event", Parcels.wrap(event));
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,13 +68,21 @@ public class CheckoutFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         tvQuestion = view.findViewById(R.id.tvQuestion);
         tvEventDetails = view.findViewById(R.id.tvEventDetails);
         btnYes = view.findViewById(R.id.btnYes);
         btnNo = view.findViewById(R.id.btnNo);
 
+//        event = getArguments().getParcelable("Event");
+        Bundle eventBundle = this.getArguments();
+        if(eventBundle != null){
+            event = Parcels.unwrap(eventBundle.getParcelable("Event"));
+//            event = eventBundle.getParcelable("Event");
+        }
+
         //Fetch arguments from bundle and set Title
-        String eventDetails = getArguments().getString("Event Details", "Event Detsils");
+        String eventDetails = getArguments().getString("Event Details", "Event Details");
         getDialog().setTitle(eventDetails);
 
         //Show soft keyboard automatically and request focus to field
@@ -74,7 +91,7 @@ public class CheckoutFragment extends DialogFragment {
 
         ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
         //TODO --  call the event.getObjectID
-        query.getInBackground("JOeUTzZOXJ", new GetCallback<Event>() {
+        query.getInBackground(event.getObjectId(), new GetCallback<Event>() {
             @Override
             public void done(Event event, ParseException e) {
                 if(e == null){
@@ -102,6 +119,13 @@ public class CheckoutFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 //TODO -- take them to the receipt fragment page
+                dismiss();
+                ReceiptFragment receiptFragment = new ReceiptFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                fragmentTransaction.replace(R.id.flContainer, receiptFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 
@@ -109,8 +133,14 @@ public class CheckoutFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 //TODO -- close overlay and take them back to the cards
+                btnNoListener.onNoClicked();
                 dismiss();
             }
         });
+
+    }
+
+    public interface BtnNoListener {
+        void onNoClicked();
     }
 }

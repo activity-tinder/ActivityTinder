@@ -2,6 +2,8 @@ package com.example.activtytinder.Models;
 
 //import com.parse.ParseClassName;
 
+import android.os.Parcelable;
+
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -10,12 +12,14 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
+import org.parceler.Parcel;
 
 import java.util.Date;
 //import com.parse.ParseQuery;
 
+@Parcel(analyze = Event.class)
 @ParseClassName("Event")
-public class Event extends ParseObject{
+public class Event extends ParseObject implements Parcelable {
 
     public static final String KEY_EVENT_DATE = "eventDate";
     public static final String KEY_NAME= "name";
