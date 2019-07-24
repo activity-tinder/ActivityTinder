@@ -80,9 +80,9 @@ public class CardFragment extends Fragment {
         });
 
     }
-    public void showCheckoutDialog() {
+    public void showCheckoutDialog(Event event) {
         FragmentManager fm = getFragmentManager();
-        CheckoutFragment editNameDialogFragment = CheckoutFragment.newInstance("Event");
+        CheckoutFragment editNameDialogFragment = CheckoutFragment.newInstance("Event", event);
         editNameDialogFragment.show(fm, "CheckoutFragment");
     }
 
@@ -120,7 +120,7 @@ public class CardFragment extends Fragment {
                             Bundle eventBundle = new Bundle();
 //                            eventBundle.putParcelable("Event", eventToSend);
                             eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
-                            showCheckoutDialog();
+                            showCheckoutDialog(eventToSend);
                         }
                     });
                   mSwipePlaceHolderView.addView(card);

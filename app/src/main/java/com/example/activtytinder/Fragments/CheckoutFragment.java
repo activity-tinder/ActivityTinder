@@ -44,12 +44,13 @@ public class CheckoutFragment extends DialogFragment {
         // Make sure not to add arguments to the constructor
     }
 
-    public static CheckoutFragment newInstance(String eventDetails){
+    public static CheckoutFragment newInstance(String eventDetails, Event event){
         CheckoutFragment fragment = new CheckoutFragment();
         //Event event = (Event) eventBundle.getSerializable("event");
-//        Bundle args = new Bundle();
-//        args.putString("Event Details", eventDetails);
-//        fragment.setArguments(args);
+        Bundle args = new Bundle();
+        args.putString("Event Details", eventDetails);
+        args.putParcelable("Event", Parcels.wrap(event));
+        fragment.setArguments(args);
         return fragment;
     }
 
