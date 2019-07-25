@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.example.activtytinder.Models.Event;
 import com.mindorks.placeholderview.SwipeDirection;
+import com.mindorks.placeholderview.annotations.Click;
 import com.mindorks.placeholderview.annotations.Layout;
 import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
@@ -35,6 +36,7 @@ public class SwipeEventCard {
 
 
     SwipeListener listener;
+    onClickListener clickListener;
 
 
     // setting up layout variables
@@ -78,9 +80,15 @@ public class SwipeEventCard {
      * Sets swipe listener on a SwipeEventCard object.
      * @param listener
      */
+    public interface onClickListener{
+        void onClick();
+    }
+
     public void setOnSwipeListener(SwipeListener listener){
         this.listener = listener;
     }
+
+    public void setOnClickListener(onClickListener clickListener) {this.clickListener = clickListener;}
 
     // loads information on cards
     @Resolve
@@ -121,6 +129,12 @@ public class SwipeEventCard {
     public void onSwipeIn(){
         Log.d("EVENT", "onSwipedIn");
         listener.onSwiped();
+    }
+
+
+    @Click(R.id.cvCards)
+    public void onCardClick() {
+        clickListener.onClick();
     }
 
     @SwipeInState

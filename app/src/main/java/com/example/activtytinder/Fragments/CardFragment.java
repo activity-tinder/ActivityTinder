@@ -91,6 +91,13 @@ public class CardFragment extends Fragment {
 
 
     }
+
+    private void showDetailFragment(Event event) {
+        FragmentManager fragmentManager = getFragmentManager();
+        DetailsFragment detailsDialogFragment = DetailsFragment.newInstance("Event", event);
+        detailsDialogFragment.show(fragmentManager, "CheckoutFragment");
+
+    }
     //TODO -- documentation for the method
    public void onCancelCheckoutClicked() {
         mSwipePlaceHolderView.undoLastSwipe();
@@ -129,10 +136,19 @@ public class CardFragment extends Fragment {
                         CardFragment.this.showCheckoutDialog(eventToSend);
                     }
                 });
-
-
+                card.setOnClickListener(new SwipeEventCard.onClickListener() {
+                    @Override
+                    public void onClick() {
+                        Bundle eventBundle = new Bundle();
+                        eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
+                        showDetailFragment(eventToSend);
+                    }
+                });
               mSwipePlaceHolderView.addView(card);
             }
         });
     }
+
+
+
 }
