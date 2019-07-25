@@ -101,17 +101,15 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         btnCreateEvent = view.findViewById(R.id.btnCreateEvent);
         btnGetEventLocation = view.findViewById(R.id.btnConfirmLocation);
         ivImage = view.findViewById(R.id.ivImage);
-        API_KEY = getActivity().getResources().getString(R.string.mapquest_api_key);
-        requestQueue = Volley.newRequestQueue(getContext());
-        spinner = (Spinner) view.findViewById(R.id.spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
+
+        spinner = view.findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.categories_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
+        API_KEY = getActivity().getResources().getString(R.string.mapquest_api_key);
+        requestQueue = Volley.newRequestQueue(getContext());
 
 
 

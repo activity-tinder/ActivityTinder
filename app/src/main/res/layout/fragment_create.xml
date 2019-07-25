@@ -6,163 +6,190 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/etEventName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="Event Name"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
-    <EditText
-        android:id="@+id/etEventDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="96dp"
-        android:ems="10"
-        android:hint="Event Description"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
-    <EditText
-        android:id="@+id/etEventDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="164dp"
-        android:cursorVisible="false"
-        android:ems="10"
-        android:focusable="false"
-        android:hint="Event Date"
-        android:inputType="date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
-    <EditText
-        android:id="@+id/etStartTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="232dp"
-        android:cursorVisible="false"
-        android:ems="10"
-        android:focusable="false"
-        android:hint="Event Start Time"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
-    <EditText
-        android:id="@+id/etEndTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="300dp"
-        android:cursorVisible="false"
-        android:ems="10"
-        android:focusable="false"
-        android:hint="Event End Time"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
-    <EditText
-        android:id="@+id/etEventLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="368dp"
-        android:ems="10"
-        android:hint="Event Address"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
-    <EditText
-        android:id="@+id/etPeopleLimit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="436dp"
-        android:ems="10"
-        android:hint="Max Amount of People"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="20dp"
-        android:prompt="@string/categories"
-        android:spinnerMode="dropdown"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPeopleLimit"
-        app:layout_constraintVertical_bias="0.1" />
-
-    <Button
-        android:id="@+id/btnCreateEvent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="72dp"
-        android:text="Create Event"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.916"
-        app:layout_constraintStart_toEndOf="@+id/spinner"
-        app:layout_constraintTop_toBottomOf="@+id/etPeopleLimit" />
-
-    <Button
-        android:id="@+id/btnConfirmLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="264dp"
-        android:layout_marginLeft="264dp"
-        android:layout_marginTop="20dp"
-        android:text="Check Location"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEndTime" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/ivImage"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="204dp"
-        android:layout_marginLeft="204dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:color/background_dark" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/etEventName"
+                android:layout_width="328dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:ems="10"
+                android:hint="Event Name"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
+            <EditText
+                android:id="@+id/etEventDescription"
+                android:layout_width="328dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:ems="10"
+                android:hint="Event Description"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etEventName"
+                tools:visibility="visible" />
+
+            <EditText
+                android:id="@+id/etEventDate"
+                android:layout_width="328dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:cursorVisible="false"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="Event Date"
+                android:inputType="date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
+            <EditText
+                android:id="@+id/etStartTime"
+                android:layout_width="328dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:cursorVisible="false"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="Event Start Time"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
+            <EditText
+                android:id="@+id/etEndTime"
+                android:layout_width="328dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:cursorVisible="false"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="Event End Time"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
+            <EditText
+                android:id="@+id/etEventLocation"
+                android:layout_width="328dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:ems="10"
+                android:hint="Event Address"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
+            <Button
+                android:id="@+id/btnConfirmLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="264dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:text="Check Location"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etEndTime" />
+
+            <EditText
+                android:id="@+id/etPeopleLimit"
+                android:layout_width="328dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:ems="10"
+                android:hint="Max Amount of People"
+                android:inputType="number"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:prompt="@string/categories"
+                android:spinnerMode="dropdown"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etPeopleLimit"
+                app:layout_constraintVertical_bias="0.1" />
+
+            <ImageView
+                android:id="@+id/ivImage"
+                android:layout_width="320dp"
+                android:layout_height="328dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginLeft="44dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:color/background_dark" />
+
+            <Button
+                android:id="@+id/btnCreateEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="146dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="72dp"
+                android:text="Create Event"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.916"
+                app:layout_constraintStart_toEndOf="@+id/spinner"
+                app:layout_constraintTop_toBottomOf="@+id/etPeopleLimit" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
