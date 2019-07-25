@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,11 +11,12 @@
         android:id="@+id/rejectBtn"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_gravity="bottom"
+        android:layout_gravity="bottom|left"
         android:layout_marginStart="112dp"
         android:layout_marginLeft="112dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="0dp"
         android:background="#FF0000"
+        android:elevation="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -22,13 +24,14 @@
         android:id="@+id/acceptBtn"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_gravity="bottom"
+        android:layout_gravity="bottom|right"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="112dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="0dp"
         android:background="#00FF00"
+        android:elevation="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/rejectBtn" />
@@ -37,7 +40,8 @@
         android:id="@+id/swipeView"
         android:layout_width="match_parent"
         android:layout_height="516dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
+        android:elevation="2dp"
         app:layout_constraintBottom_toTopOf="@+id/rejectBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,4 +49,25 @@
 
     </com.mindorks.placeholderview.SwipePlaceHolderView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:elevation="1dp"
+        android:text="No more events!"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/swipeView"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="@+id/swipeView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.427" />
+
+</FrameLayout>

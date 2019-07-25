@@ -61,8 +61,8 @@ public class CardFragment extends Fragment {
                     .setHeightSwipeDistFactor(8)
                     .setWidthSwipeDistFactor(5)
                     .setSwipeDecor(new SwipeDecor()
-                    .setPaddingTop(10)
-                    .setRelativeScale(0.01f));
+                        .setPaddingTop(15)
+                        .setRelativeScale(0.01f));
 
         //TODO -- figure out what v is
         btnAccept.setOnClickListener(v -> {

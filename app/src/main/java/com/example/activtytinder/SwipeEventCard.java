@@ -76,14 +76,15 @@ public class SwipeEventCard {
         void onSwiped();
     }
 
-    /**
-     * Sets swipe listener on a SwipeEventCard object.
-     * @param listener
-     */
+
     public interface onClickListener{
         void onClick();
     }
 
+    /**
+     * Sets swipe listener on a SwipeEventCard object.
+     * @param listener
+     */
     public void setOnSwipeListener(SwipeListener listener){
         this.listener = listener;
     }
