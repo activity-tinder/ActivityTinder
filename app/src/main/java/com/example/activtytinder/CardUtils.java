@@ -43,13 +43,7 @@ public class CardUtils {
         JSONArray currentAttendees = event.getKeyAttendees();
         Log.d("DEBUG", "Users before: " + currentAttendees.toString());
         if (user != null) {
-            currentAttendees.put(user.getObjectId());
             currentAttendees.put(user);
-        }
-        try {
-            currentAttendees.getString(0);
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
 
         event.setKeyAttendees(currentAttendees);

@@ -32,7 +32,7 @@ public class CardFragment extends Fragment {
     private ImageButton btnReject;
 
 
-    SwipePlaceHolderView mSwipePlaceHolderView;
+    public SwipePlaceHolderView mSwipePlaceHolderView;
     Point cardViewHolderSize;
 
     @Nullable
@@ -75,12 +75,16 @@ public class CardFragment extends Fragment {
             mSwipePlaceHolderView.doSwipe(false);
         });
 
+
     }
     //TODO -- documentation for the method
+    // TODO -- 7/24 - make sure onClick works when person declines in the checkout fragment
     public void showCheckoutDialog(Event event) {
         FragmentManager fragmentManager = getFragmentManager();
         CheckoutFragment checkoutDialogFragment = CheckoutFragment.newInstance("Event", event);
         checkoutDialogFragment.show(fragmentManager, "CheckoutFragment");
+
+
     }
     //TODO -- documentation for the method
    public void onCancelCheckoutClicked() {
@@ -88,10 +92,12 @@ public class CardFragment extends Fragment {
     }
 
 
+
     /**
     Gets the events from the database and puts them into the SwipePlaceHolderView card stack.
     Requires a call to Parse database for the Event object type and will get all of the events
-    and display them in the card stack.
+    and display them in the card stack. This function also contains a swipe listener for the cards
+     to
      **/
     private void queryEvents() {
         ParseQuery<Event> eventQuery = new ParseQuery<Event>(Event.class);
@@ -111,17 +117,17 @@ public class CardFragment extends Fragment {
                 // figure out if this call is safe or not
                 SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), event.get(i), cardViewHolderSize);
                 Event eventToSend = event.get(i);
-                card.setOnSwipeListener(() -> {
-                    Bundle eventBundle = new Bundle();
-                    eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
-                    showCheckoutDialog(eventToSend);
+                card.setOnSwipeListener(new SwipeEventCard.SwipeListener() {
+                    @Override
+                    public void onSwiped() {
+                        Bundle eventBundle = new Bundle();
+                        eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
+                        CardFragment.this.showCheckoutDialog(eventToSend);
+                    }
                 });
-              mSwipePlaceHolderView.addView(card);
 
-//              Log.d(TAG, "Post: "
-//                      + event.get(i).getKeyName()
-//                      + " Creator: "
-//                      + event.get(i).getCreator().getUsername());
+
+              mSwipePlaceHolderView.addView(card);
             }
         });
     }

@@ -51,7 +51,7 @@ public class SwipeEventCard {
         mCardViewHolderSize = cardViewHolderSize;
     }
 
- public interface SwipeListener {
+    public interface SwipeListener {
         void onSwiped();
     }
 
