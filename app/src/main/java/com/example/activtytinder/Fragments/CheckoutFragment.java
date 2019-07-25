@@ -29,7 +29,7 @@ public class CheckoutFragment extends DialogFragment {
     private TextView tvEventDetails;
     private Event event;
     private Button btnYes;
-    private Button btnNo;
+    public Button btnNo;
     private String mName;
     private String mDate;
     private String mLocation;

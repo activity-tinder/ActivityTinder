@@ -60,6 +60,7 @@ public class CardFragment extends Fragment {
                     .setDisplayViewCount(4)
                     .setHeightSwipeDistFactor(8)
                     .setWidthSwipeDistFactor(5)
+                    .setIsUndoEnabled(true)
                     .setSwipeDecor(new SwipeDecor()
                         .setPaddingTop(15)
                         .setRelativeScale(0.01f));
@@ -77,8 +78,6 @@ public class CardFragment extends Fragment {
 
 
     }
-    //TODO -- documentation for the method
-    // TODO -- 7/24 - make sure onClick works when person declines in the checkout fragment
 
     /**
      * Creates an overlaid checkout fragment instance
@@ -89,7 +88,12 @@ public class CardFragment extends Fragment {
         CheckoutFragment checkoutDialogFragment = CheckoutFragment.newInstance("Event", event);
         checkoutDialogFragment.show(fragmentManager, "CheckoutFragment");
 
-
+        checkoutDialogFragment.setOnBtnNoListener(new CheckoutFragment.BtnNoListener() {
+            @Override
+            public void onNoClicked() {
+                mSwipePlaceHolderView.undoLastSwipe();
+            }
+        });
     }
 
     private void showDetailFragment(Event event) {
@@ -128,6 +132,10 @@ public class CardFragment extends Fragment {
                 // figure out if this call is safe or not
                 SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), event.get(i), cardViewHolderSize);
                 Event eventToSend = event.get(i);
+
+                /**
+                 * Listens for card being swiped affirmative and opens a checkout dialog overlay.
+                 */
                 card.setOnSwipeListener(new SwipeEventCard.SwipeListener() {
                     @Override
                     public void onSwiped() {
@@ -136,6 +144,10 @@ public class CardFragment extends Fragment {
                         CardFragment.this.showCheckoutDialog(eventToSend);
                     }
                 });
+
+                /**
+                 * Listens for card being clicked and opens the card detail overlay.
+                 */
                 card.setOnClickListener(new SwipeEventCard.onClickListener() {
                     @Override
                     public void onClick() {
