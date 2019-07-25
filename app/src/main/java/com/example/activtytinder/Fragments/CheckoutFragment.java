@@ -51,6 +51,10 @@ public class CheckoutFragment extends DialogFragment {
         return fragment;
     }
 
+    public interface BtnNoListener {
+        void onNoClicked();
+    }
+
     public void showReceiptFragment(Event event) {
         ReceiptFragment receiptFragment = new ReceiptFragment();
         Bundle eventBundle = new Bundle();
@@ -126,7 +130,7 @@ public class CheckoutFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 //TODO -- close overlay and take them back to the cards
-                btnNoListener.onNoClicked();
+                //btnNoListener.onNoClicked();
                 dismiss();
             }
         });
@@ -137,7 +141,4 @@ public class CheckoutFragment extends DialogFragment {
         this.btnNoListener = listener;
     }
 
-    public interface BtnNoListener {
-        void onNoClicked();
-    }
 }
