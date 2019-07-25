@@ -51,6 +51,10 @@ public class CheckoutFragment extends DialogFragment {
         return fragment;
     }
 
+    public interface BtnNoListener {
+        void onNoClicked();
+    }
+
     public void showReceiptFragment(Event event) {
         ReceiptFragment receiptFragment = new ReceiptFragment();
         Bundle eventBundle = new Bundle();
@@ -137,7 +141,4 @@ public class CheckoutFragment extends DialogFragment {
         this.btnNoListener = listener;
     }
 
-    public interface BtnNoListener {
-        void onNoClicked();
-    }
 }
