@@ -1,7 +1,6 @@
 package com.example.activtytinder.Fragments;
 
 import android.app.DatePickerDialog;
-import android.app.SearchManager;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -214,7 +213,6 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         event.setKeyLocation(EventCoordinates);
         event.setKeyCategory(Category);
         event.put("eventPhoto", EventPhoto);
-        searchWeb(Address);
         JSONArray attending = new JSONArray();
         attending.put(ParseUser.getCurrentUser().getObjectId());
         event.put("usersAttending", attending);
@@ -279,14 +277,6 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
-    }
-
-    private void searchWeb(String query) {
-        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-        intent.putExtra(SearchManager.QUERY, query);
-        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivity(intent);
-        }
     }
 
     private void selectImage() {

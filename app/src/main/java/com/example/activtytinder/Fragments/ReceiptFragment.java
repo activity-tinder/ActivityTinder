@@ -1,5 +1,7 @@
 package com.example.activtytinder.Fragments;
 
+import android.app.SearchManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -113,6 +115,8 @@ public class ReceiptFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //TODO -- open google maps application and input the locaiton of the event into the destination textview
+                searchWeb(mLocation);
+
             }
         });
 
@@ -136,6 +140,14 @@ public class ReceiptFragment extends Fragment {
                 //TODO -- give User a warning message/confirmation overlay. If they choose to leave, take User's name off of the users attending. Lower their score if it's 24 hours before event will occur.
             }
         });
+    }
+
+    private void searchWeb(String query) {
+        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+        intent.putExtra(SearchManager.QUERY, query);
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
 
