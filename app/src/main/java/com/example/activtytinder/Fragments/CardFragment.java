@@ -1,6 +1,7 @@
 package com.example.activtytinder.Fragments;
 
 import android.graphics.Point;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,7 +31,7 @@ public class CardFragment extends Fragment {
 
     private ImageButton btnAccept;
     private ImageButton btnReject;
-
+    private ImageButton btnUndo;
 
     public SwipePlaceHolderView mSwipePlaceHolderView;
     Point cardViewHolderSize;
@@ -45,8 +46,9 @@ public class CardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        btnAccept = view.findViewById(R.id.acceptBtn);
-        btnReject = view.findViewById(R.id.rejectBtn);
+        btnAccept = view.findViewById(R.id.btnAccept);
+        btnReject = view.findViewById(R.id.btnReject);
+        btnUndo = view.findViewById(R.id.btnUndo);
 
         int bottomMargin = CardUtils.dpToPx(160);
         Point windowSize = CardUtils.getDisplaySize(getActivity().getWindowManager());
@@ -74,6 +76,11 @@ public class CardFragment extends Fragment {
         btnReject.setOnClickListener(v -> {
             Log.d(TAG, "reject clicked!");
             mSwipePlaceHolderView.doSwipe(false);
+        });
+
+        btnUndo.setOnClickListener(v -> {
+            Log.d(TAG, "undo clicked!");
+            mSwipePlaceHolderView.undoLastSwipe();
         });
     }
 
