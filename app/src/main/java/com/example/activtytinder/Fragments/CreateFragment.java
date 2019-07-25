@@ -167,6 +167,10 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         });
 
         btnCreateEvent.setOnClickListener(view15 -> {
+            if(etEventMaxPeople.getText().toString().equals("")){
+                Toast.makeText(getContext(), "Please enter valid amount of people!", Toast.LENGTH_SHORT).show();
+                return;
+            }
             final String EventName = etEventName.getText().toString();
             final String EventDescription = etEventDescription.getText().toString();
             final String EventDate = etEventDate.getText().toString();
@@ -188,7 +192,16 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         });
     }
 
-    private void makeEvent(String Name, String Description, String Date, String StartTime, String EndTime, String Address, Integer PeopleLimit, ParseGeoPoint EventCoordinates, String Category, ParseFile EventPhoto){
+    private void makeEvent(String Name, String Description, String Date, String StartTime, String EndTime, String Address,
+                           Integer PeopleLimit, ParseGeoPoint EventCoordinates, String Category, ParseFile EventPhoto)
+    {
+        if (Name.equals("") || Description.equals("") || Date.equals("") || StartTime.equals("") || EndTime.equals("")
+                || Address.equals("") || PeopleLimit == null || EventCoordinates == null || Category.equals("")
+                || EventPhoto == null || Category.equals("Choose Category"))
+        {
+            Toast.makeText(getContext(), "ERROR IN REQUIRED FIELD! REVIEW EVENT!",Toast.LENGTH_SHORT).show();
+            return;
+        }
         Event event = new Event();
         event.setKeyCreator(ParseUser.getCurrentUser());
         event.setKeyName(Name);
@@ -224,10 +237,6 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
                 Toast.makeText(getContext(),"Event Creation Successful!",Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
     }
 
     public void getEventAddress(){
@@ -305,7 +314,8 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
             byte[] image = outputStream.toByteArray();
             ParseFile file = new ParseFile("EVENT_IMAGE", image);
             eventImageFile = file;
-
         }
     }
+
+
 }
