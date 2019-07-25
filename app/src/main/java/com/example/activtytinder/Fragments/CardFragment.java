@@ -75,8 +75,6 @@ public class CardFragment extends Fragment {
             Log.d(TAG, "reject clicked!");
             mSwipePlaceHolderView.doSwipe(false);
         });
-
-
     }
 
     /**
@@ -88,6 +86,10 @@ public class CardFragment extends Fragment {
         CheckoutFragment checkoutDialogFragment = CheckoutFragment.newInstance("Event", event);
         checkoutDialogFragment.show(fragmentManager, "CheckoutFragment");
 
+        /**
+         * Undoes the user's last swipe and returns the card if the user clicks no in the
+         * checkout fragment.
+         */
         checkoutDialogFragment.setOnBtnNoListener(new CheckoutFragment.BtnNoListener() {
             @Override
             public void onNoClicked() {
@@ -96,17 +98,16 @@ public class CardFragment extends Fragment {
         });
     }
 
+    /**
+     * Shows and overlaid fragment that contains more details about the event that the user clicked
+     * on.
+     * @param event - event that should be shown in the detail fragment
+     */
     private void showDetailFragment(Event event) {
         FragmentManager fragmentManager = getFragmentManager();
         DetailsFragment detailsDialogFragment = DetailsFragment.newInstance("Event", event);
         detailsDialogFragment.show(fragmentManager, "CheckoutFragment");
-
     }
-    //TODO -- documentation for the method
-   public void onCancelCheckoutClicked() {
-        mSwipePlaceHolderView.undoLastSwipe();
-    }
-
 
     /**
      * Gets the events from the database and puts them into the SwipePlaceHolderView card stack.
@@ -136,31 +137,22 @@ public class CardFragment extends Fragment {
                 /**
                  * Listens for card being swiped affirmative and opens a checkout dialog overlay.
                  */
-                card.setOnSwipeListener(new SwipeEventCard.SwipeListener() {
-                    @Override
-                    public void onSwiped() {
-                        Bundle eventBundle = new Bundle();
-                        eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
-                        CardFragment.this.showCheckoutDialog(eventToSend);
-                    }
+                card.setOnSwipeListener(() -> {
+                    Bundle eventBundle = new Bundle();
+                    eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
+                    CardFragment.this.showCheckoutDialog(eventToSend);
                 });
 
                 /**
                  * Listens for card being clicked and opens the card detail overlay.
                  */
-                card.setOnClickListener(new SwipeEventCard.onClickListener() {
-                    @Override
-                    public void onClick() {
-                        Bundle eventBundle = new Bundle();
-                        eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
-                        showDetailFragment(eventToSend);
-                    }
+                card.setOnClickListener(() -> {
+                    Bundle eventBundle = new Bundle();
+                    eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
+                    showDetailFragment(eventToSend);
                 });
               mSwipePlaceHolderView.addView(card);
             }
         });
     }
-
-
-
 }

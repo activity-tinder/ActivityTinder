@@ -34,10 +34,8 @@ import java.net.URI;
 @Layout(R.layout.event_card_view)
 public class SwipeEventCard {
 
-
     SwipeListener listener;
     onClickListener clickListener;
-
 
     // setting up layout variables
     @View(R.id.ivCardImage)
@@ -100,6 +98,10 @@ public class SwipeEventCard {
 
             // TODO -- make nonsecure links secure without cutting strings
 
+            /**
+             * Alters image url from Parse to begin with https instead of http to pass
+             * Android security requirements.
+             */
             String security = "https";
             String url = image.getUrl().substring(4);
 
@@ -132,7 +134,6 @@ public class SwipeEventCard {
         listener.onSwiped();
     }
 
-
     @Click(R.id.cvCards)
     public void onCardClick() {
         clickListener.onClick();
@@ -159,8 +160,6 @@ public class SwipeEventCard {
         Log.d("EVENT", "onSwipeCancelState");
     }
 
-
-
     @SwipingDirection
     public void onSwipingDirection(SwipeDirection direction) {
         Log.d("DEBUG", "SwipingDirection " + direction.name());
@@ -185,6 +184,4 @@ public class SwipeEventCard {
                 + " alpha : " + alpha
         );
     }
-
-
 }

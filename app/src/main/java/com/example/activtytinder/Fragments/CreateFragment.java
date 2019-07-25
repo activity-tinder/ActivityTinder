@@ -76,12 +76,6 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
     private ImageView ivImage;
     private ParseFile eventImageFile;
 
-
-
-
-
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
