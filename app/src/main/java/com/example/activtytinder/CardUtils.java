@@ -36,6 +36,12 @@ public class CardUtils {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 
+    /**
+     * Adds the user to the list of people attending the event and adds the event to the
+     * user's list of events they are attending.
+     * @param user - the current user, must be a ParseUser
+     * @param event - event user wants to attend, must be an Event
+     */
     public static void addUserToEvent(ParseUser user, Event event) {
         // add the current user to the list of people attending the event in the event
         // class

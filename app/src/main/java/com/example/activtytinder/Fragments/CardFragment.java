@@ -79,6 +79,11 @@ public class CardFragment extends Fragment {
     }
     //TODO -- documentation for the method
     // TODO -- 7/24 - make sure onClick works when person declines in the checkout fragment
+
+    /**
+     * Creates an overlaid checkout fragment instance
+     * @param event - the event that the checkout fragment should contain the information of
+     */
     public void showCheckoutDialog(Event event) {
         FragmentManager fragmentManager = getFragmentManager();
         CheckoutFragment checkoutDialogFragment = CheckoutFragment.newInstance("Event", event);
@@ -92,13 +97,12 @@ public class CardFragment extends Fragment {
     }
 
 
-
     /**
-    Gets the events from the database and puts them into the SwipePlaceHolderView card stack.
-    Requires a call to Parse database for the Event object type and will get all of the events
-    and display them in the card stack. This function also contains a swipe listener for the cards
-     to
-     **/
+     * Gets the events from the database and puts them into the SwipePlaceHolderView card stack.
+     * Requires a call to Parse database for the Event object type and will get all of the events
+     * and display them in the card stack. This function also contains a swipe listener for when the
+     * card is swiped in, and the checkout menu for the card appears as an overlay.
+     */
     private void queryEvents() {
         ParseQuery<Event> eventQuery = new ParseQuery<Event>(Event.class);
         //Toast.makeText(getContext(), "got into queryEvents", Toast.LENGTH_SHORT).show();

@@ -45,16 +45,29 @@ public class SwipeEventCard {
 //    public SwipePlaceHolderView mSwipeView;
     public Point mCardViewHolderSize;
 
+    /**
+     *
+     * @param context
+     * @param event
+     * @param cardViewHolderSize
+     */
     public SwipeEventCard(Context context, Event event, Point cardViewHolderSize) {
         mContext = context;
         mEvent = event;
         mCardViewHolderSize = cardViewHolderSize;
     }
 
+    /**
+     * Listener interface created to detect when the user swipes the card in affirmation.
+     */
     public interface SwipeListener {
         void onSwiped();
     }
 
+    /**
+     * Sets swipe listener on a SwipeEventCard object.
+     * @param listener
+     */
     public void setOnSwipeListener(SwipeListener listener){
         this.listener = listener;
     }
@@ -79,15 +92,12 @@ public class SwipeEventCard {
         tvCardEventCreator.setText(mEvent.getCreator().getUsername());
     }
 
-    // TODO -- write documentation for the structure of the fragment calling
+    /**
+     * SwipePlaceHolderView library's listener for detecting if a card is swiped in (right/up)
+     */
     @SwipeIn
     public void onSwipeIn(){
         Log.d("EVENT", "onSwipedIn");
-//        Log.d("EVENT", "this is the current user: " + getCurrentUser().getUsername());
-//        ParseUser user = getCurrentUser();
-//        addUserToEvent(user, mEvent);
-//        swipedRight = true;
-        // TODO -- document the workaround
         listener.onSwiped();
     }
 
