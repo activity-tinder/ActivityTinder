@@ -13,8 +13,6 @@ import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.parceler.Parcel;
-
-import java.util.Date;
 //import com.parse.ParseQuery;
 
 @Parcel(analyze = Event.class)
@@ -33,6 +31,7 @@ public class Event extends ParseObject implements Parcelable {
     public static final String KEY_START_TIME = "startTime";
     public static final String KEY_END_TIME = "endTime";
     public static final String KEY_ADDRESS = "address";
+    public static final String KEY_IMAGE = "eventPhoto";
 
     public Event() {}
 
@@ -111,6 +110,13 @@ public class Event extends ParseObject implements Parcelable {
     public String getKeyAddress(){return getString(KEY_ADDRESS);}
 
     public void setKeyAddress(String address){put(KEY_ADDRESS, address);}
+
+    public ParseFile getKeyImage (){ //data types should match with parse file data types
+        return getParseFile(KEY_IMAGE);
+    }
+    public void setKeyImage (ParseFile image){
+        put(KEY_IMAGE, image);
+    }
 
     public static class Query extends ParseQuery<ParseUser>{
         public Query(Class<ParseUser> subclass) {

@@ -17,12 +17,21 @@
         android:theme="@style/Platform.MaterialComponents.Light">
         <activity android:name=".ContactUsActivity"></activity>
         <activity android:name=".DetailActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity" >
+            <intent-filter>
+                <action android:name="com.google.android.gms.actions.SEARCH_ACTION"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.GET_CONTENT" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <category android:name="android.intent.category.OPENABLE" />
+            </intent-filter>
+        </activity>
         <activity android:name=".SignUpActivity"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
