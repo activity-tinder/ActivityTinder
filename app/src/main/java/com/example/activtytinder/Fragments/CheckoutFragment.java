@@ -129,8 +129,7 @@ public class CheckoutFragment extends DialogFragment {
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO -- close overlay and take them back to the cards
-                //btnNoListener.onNoClicked();
+                btnNoListener.onNoClicked();
                 dismiss();
             }
         });
