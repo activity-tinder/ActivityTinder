@@ -48,6 +48,7 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
     ParseGeoPoint gpEventCoordinates;
     private DatePickerDialog dpdPicker;
     private TimePickerDialog tpdClock;
+    Spinner spinner;
     public String AM_PM;
     public String searchQuery;
     public static final String TAG = "Create Fragment";
@@ -81,7 +82,7 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         btnGetEventLocation = view.findViewById(R.id.btnConfirmLocation);
         API_KEY = getActivity().getResources().getString(R.string.mapquest_api_key);
         requestQueue = Volley.newRequestQueue(getContext());
-        Spinner spinner = (Spinner) view.findViewById(R.id.spinner);
+        spinner = (Spinner) view.findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.categories_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -175,8 +176,21 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         JSONArray attending = new JSONArray();
         attending.put(ParseUser.getCurrentUser().getObjectId());
         event.put("usersAttending", attending);
-
+        etEventAddress.setText("");
+        etEventName.setText("");
+        etEventDescription.setText("");
+        etEventDate.setText("");
+        etEventStartTime.setText("");
+        etEventEndTime.setText("");
+        etEventMaxPeople.setText("");
+//        CardFragment Home = new CardFragment();
+//        FragmentManager fragmentManager = getFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(android.R.id.content, Home);
+//        fragmentTransaction.back;
+//        fragmentTransaction.commit();
         event.saveInBackground();
+        Toast.makeText(getContext(),"Event Creation Successful!",Toast.LENGTH_SHORT).show();
 
     }
 
