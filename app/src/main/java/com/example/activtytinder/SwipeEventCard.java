@@ -2,10 +2,15 @@ package com.example.activtytinder;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.FileProvider;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.example.activtytinder.Models.Event;
 import com.mindorks.placeholderview.SwipeDirection;
 import com.mindorks.placeholderview.annotations.Layout;
@@ -18,6 +23,11 @@ import com.mindorks.placeholderview.annotations.swipe.SwipeOut;
 import com.mindorks.placeholderview.annotations.swipe.SwipeOutState;
 import com.mindorks.placeholderview.annotations.swipe.SwipeTouch;
 import com.mindorks.placeholderview.annotations.swipe.SwipingDirection;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+
+import java.io.File;
+import java.net.URI;
 
 // this class binds the event information to the card swiping view
 @Layout(R.layout.event_card_view)
@@ -75,11 +85,23 @@ public class SwipeEventCard {
     // loads information on cards
     @Resolve
     public void onResolved() {
-//        ParseFile image = mEvent.getEventImage();
-//        if (image != null) {
-//            Log.d("DEBUG", "in setting image " + image.getUrl());
-//            Glide.with(mContext).load(image.getUrl()).into(ivCardImage);
-//        }
+        ParseFile image = mEvent.getEventImage();
+        if (image != null) {
+            Uri imageUri = Uri.fromFile(new File(image.getUrl()));
+
+            // TODO -- make nonsecure links secure without cutting strings
+
+            String security = "https";
+            String url = image.getUrl().substring(4);
+
+            Log.d("DEBUG", "in setting image " + security + url);
+            Glide.with(mContext)
+                    .load(security + url)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .dontAnimate()
+                    .into(ivCardImage);
+        }
 
         tvCardEventName.setText(mEvent.getKeyName());
 
