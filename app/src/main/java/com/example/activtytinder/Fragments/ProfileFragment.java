@@ -184,6 +184,7 @@ public class ProfileFragment extends Fragment{
                 // Load the taken image into a preview
                 ivImage.setImageBitmap(takenImage);
                 user.put("profileImage", new ParseFile(photoFile));
+                user.saveInBackground();
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
