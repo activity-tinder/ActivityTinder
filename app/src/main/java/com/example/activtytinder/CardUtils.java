@@ -4,16 +4,17 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.activtytinder.Models.Event;
+import com.parse.ParseException;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import static com.parse.Parse.getApplicationContext;
 
 public class CardUtils {
 
@@ -53,7 +54,17 @@ public class CardUtils {
 
         ParseRelation<Event> eventInUser = user.getRelation("willAttend");
         eventInUser.add(event);
-        user.saveInBackground();
+        user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Toast.makeText(getApplicationContext(), "Inputting user Successful!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "inputting user Failed!", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 }

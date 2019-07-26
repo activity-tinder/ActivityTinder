@@ -166,6 +166,7 @@
                 android:layout_marginLeft="264dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginBottom="0dp"
+                android:background="@color/mid_purple"
                 android:text="Check Location"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etEndTime" />
@@ -222,19 +223,23 @@
             <Button
                 android:id="@+id/btnCreateEvent"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginStart="146dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="72dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/bright_green"
                 android:text="Create Event"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.916"
                 app:layout_constraintStart_toEndOf="@+id/spinner"
                 app:layout_constraintTop_toBottomOf="@+id/etPeopleLimit" />
+
+            <Button
+                android:id="@+id/btnJoin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:background="@color/light_purple"
+                android:text="Join Event" />
 
         </LinearLayout>
     </ScrollView>
