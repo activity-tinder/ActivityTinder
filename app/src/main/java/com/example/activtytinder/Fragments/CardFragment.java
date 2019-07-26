@@ -132,6 +132,7 @@ public class CardFragment extends Fragment {
         ParseQuery<Event> eventQuery = new ParseQuery<Event>(Event.class);
         //Toast.makeText(getContext(), "got into queryEvents", Toast.LENGTH_SHORT).show();
         eventQuery.include(Event.KEY_CREATOR);
+        eventQuery.orderByAscending("eventDate");
         eventQuery.findInBackground((event, e) -> {
 
             if (e != null) {
