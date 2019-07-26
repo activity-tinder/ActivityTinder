@@ -16,20 +16,20 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
 
-    final Fragment fragment1 = new CardFragment();
-    final Fragment fragment2 = new CreateFragment();
-    final Fragment fragment3 = new ProfileFragment();
+    final Fragment cardFragment = new CardFragment();
+    final Fragment createFragment = new CreateFragment();
+    final Fragment profileFragment = new ProfileFragment();
     final FragmentManager fm = getSupportFragmentManager();
-    Fragment active = fragment1;
+    Fragment active = cardFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fm.beginTransaction().add(R.id.flContainer, fragment3, "3").hide(fragment3).commit();
-        fm.beginTransaction().add(R.id.flContainer, fragment2, "2").hide(fragment2).commit();
-        fm.beginTransaction().add(R.id.flContainer, fragment1, "1").commit();
+        fm.beginTransaction().add(R.id.flContainer, profileFragment, "3").hide(profileFragment).commit();
+        fm.beginTransaction().add(R.id.flContainer, createFragment, "2").hide(createFragment).commit();
+        fm.beginTransaction().add(R.id.flContainer, cardFragment, "1").commit();
 
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -37,17 +37,17 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.action_card:
-                    fm.beginTransaction().hide(active).show(fragment1).commit();
-                    active = fragment1;
+                    fm.beginTransaction().hide(active).show(cardFragment).commit();
+                    active = cardFragment;
                     break;
                 case R.id.action_create:
-                    fm.beginTransaction().hide(active).show(fragment2).commit();
-                    active = fragment2;
+                    fm.beginTransaction().hide(active).show(createFragment).commit();
+                    active = createFragment;
                     break;
                 case R.id.action_profile:
                 default:
-                    fm.beginTransaction().hide(active).show(fragment3).commit();
-                    active = fragment3;
+                    fm.beginTransaction().hide(active).show(profileFragment).commit();
+                    active = profileFragment;
                     break;
             }
 

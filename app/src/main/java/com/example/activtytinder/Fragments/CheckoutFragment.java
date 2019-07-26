@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.activtytinder.CardUtils;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -36,6 +37,9 @@ public class CheckoutFragment extends DialogFragment {
     private String mName;
     private String mDate;
     private String mLocation;
+
+
+    BottomNavigationView bottomNavigationView;
 
 
     public CheckoutFragment() {
@@ -80,6 +84,8 @@ public class CheckoutFragment extends DialogFragment {
         fragmentTransaction.replace(R.id.flContainer, receiptFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+        bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setVisibility(View.INVISIBLE);
     }
 
     @Nullable
@@ -141,6 +147,7 @@ public class CheckoutFragment extends DialogFragment {
             btnNoListener.onNoClicked();
             dismiss();
         });
+
 
     }
 
