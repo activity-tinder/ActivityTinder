@@ -180,7 +180,18 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
             myEvent = makeEvent(EventName, EventDescription, EventDate, StartTime, EndTime, Address, PeopleLimit, EventCoordinates, Category, EventPhoto);
         });
 
-        btnJoin.setOnClickListener(view16 -> CardUtils.addUserToEvent(ParseUser.getCurrentUser(), myEvent));
+        /**
+         * Adds user to event and vice versa if the user has already created an event.
+         */
+        btnJoin.setOnClickListener(view16 -> {
+            if (myEvent != null) {
+                CardUtils.addUserToEvent(ParseUser.getCurrentUser(), myEvent);
+                myEvent = null;
+            } else {
+                Toast.makeText(getContext(), "Make an event first!", Toast.LENGTH_SHORT).show();
+            }
+
+        });
 
         ivImage.setOnClickListener(view17 -> selectImage());
 
