@@ -15,9 +15,11 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.activtytinder.CardUtils;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
@@ -128,6 +130,7 @@ public class CheckoutFragment extends DialogFragment {
         });
 
         btnYes.setOnClickListener(view1 -> {
+            CardUtils.addUserToEvent(ParseUser.getCurrentUser(), event);
             showReceiptFragment(event);
             dismiss();
 

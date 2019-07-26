@@ -148,6 +148,7 @@ public class CardFragment extends Fragment {
                 SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), event.get(i), cardViewHolderSize);
                 Event eventToSend = event.get(i);
 
+                // TODO -- figure out how to dynamically set colors
 //                if (event.get(i).getCategory().equals("Active") && event.get(i).getCategory() != null) {
 //                    clCardStack.setBackgroundColor(23163377);
 //                }
