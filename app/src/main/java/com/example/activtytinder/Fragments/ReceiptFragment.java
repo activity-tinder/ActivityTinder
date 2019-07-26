@@ -1,5 +1,9 @@
 package com.example.activtytinder.Fragments;
 
+import android.app.SearchManager;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -112,7 +117,12 @@ public class ReceiptFragment extends Fragment {
         btnDirections.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO -- open google maps application and input the locaiton of the event into the destination textview
+                //searchWeb(mLocation);
+                Uri gmmIntentUri = Uri.parse("geo:" + 0 +"," + 0 +"?q="+ mLocation);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
+
             }
         });
 
@@ -120,6 +130,22 @@ public class ReceiptFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //TODO -- open internal chat option or if we're feeling bold open Facebook Messenger
+                Intent intent= new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_TEXT, "Hello");
+                intent.setType("text/plain");
+                intent.setPackage("com.facebook.orca");
+
+                try
+                {
+                    startActivity(intent);
+                }
+                catch (ActivityNotFoundException ex)
+                {
+                    Toast.makeText(getContext(),
+                            "Oups!Can't open Facebook messenger right now. Please try again later.",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -136,6 +162,14 @@ public class ReceiptFragment extends Fragment {
                 //TODO -- give User a warning message/confirmation overlay. If they choose to leave, take User's name off of the users attending. Lower their score if it's 24 hours before event will occur.
             }
         });
+    }
+
+    private void searchWeb(String query) {
+        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+        intent.putExtra(SearchManager.QUERY, query);
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
 

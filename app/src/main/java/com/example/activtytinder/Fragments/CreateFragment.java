@@ -2,6 +2,10 @@ package com.example.activtytinder.Fragments;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -12,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -23,18 +28,27 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Calendar;
 
-public class CreateFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+import static android.app.Activity.RESULT_OK;
+
+public class CreateFragment extends Fragment implements AdapterView.OnItemSelectedListener{
 
     private EditText etEventName;
     private EditText etEventDescription;
@@ -45,21 +59,21 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
     private EditText etEventMaxPeople;
     private Button btnCreateEvent;
     private Button btnGetEventLocation;
-    ParseGeoPoint gpEventCoordinates;
+    private ParseGeoPoint gpEventCoordinates;
     private DatePickerDialog dpdPicker;
     private TimePickerDialog tpdClock;
-    public String AM_PM;
-    public String searchQuery;
-    public static final String TAG = "Create Fragment";
-    String API_KEY;
-    RequestQueue requestQueue;
-    String url ="https://www.mapquestapi.com/geocoding/v1/address?key=";
-    String Location = "&location=";
-    String eventCategory;
-
-
-
-
+    private Spinner spinner;
+    private String AM_PM;
+    private String searchQuery;
+    private static final String TAG = "Create Fragment";
+    private String API_KEY;
+    private RequestQueue requestQueue;
+    private String url ="https://www.mapquestapi.com/geocoding/v1/address?key=";
+    private String Location = "&location=";
+    private String eventCategory;
+    private static final int REQUEST_IMAGE_GET = 1;
+    private ImageView ivImage;
+    private ParseFile eventImageFile;
 
     @Nullable
     @Override
@@ -79,17 +93,16 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         etEventMaxPeople = view.findViewById(R.id.etPeopleLimit);
         btnCreateEvent = view.findViewById(R.id.btnCreateEvent);
         btnGetEventLocation = view.findViewById(R.id.btnConfirmLocation);
-        API_KEY = getActivity().getResources().getString(R.string.mapquest_api_key);
-        requestQueue = Volley.newRequestQueue(getContext());
-        Spinner spinner = (Spinner) view.findViewById(R.id.spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
+        ivImage = view.findViewById(R.id.ivImage);
+
+        spinner = view.findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.categories_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
+        API_KEY = getActivity().getResources().getString(R.string.mapquest_api_key);
+        requestQueue = Volley.newRequestQueue(getContext());
 
 
 
@@ -147,6 +160,10 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         });
 
         btnCreateEvent.setOnClickListener(view15 -> {
+            if(etEventMaxPeople.getText().toString().equals("")){
+                Toast.makeText(getContext(), "Please enter valid amount of people!", Toast.LENGTH_SHORT).show();
+                return;
+            }
             final String EventName = etEventName.getText().toString();
             final String EventDescription = etEventDescription.getText().toString();
             final String EventDate = etEventDate.getText().toString();
@@ -156,11 +173,28 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
             final String Category = eventCategory;
             final Integer PeopleLimit = Integer.parseInt(etEventMaxPeople.getText().toString());
             final ParseGeoPoint EventCoordinates = gpEventCoordinates;
-            makeEvent(EventName, EventDescription, EventDate, StartTime, EndTime, Address, PeopleLimit, EventCoordinates, Category);
+            final ParseFile EventPhoto = eventImageFile;
+            makeEvent(EventName, EventDescription, EventDate, StartTime, EndTime, Address, PeopleLimit, EventCoordinates, Category, EventPhoto);
+        });
+
+        ivImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectImage();
+            }
         });
     }
 
-    private void makeEvent(String Name, String Description, String Date, String StartTime, String EndTime, String Address, Integer PeopleLimit, ParseGeoPoint EventCoordinates, String Category){
+    private void makeEvent(String Name, String Description, String Date, String StartTime, String EndTime, String Address,
+                           Integer PeopleLimit, ParseGeoPoint EventCoordinates, String Category, ParseFile EventPhoto)
+    {
+        if (Name.equals("") || Description.equals("") || Date.equals("") || StartTime.equals("") || EndTime.equals("")
+                || Address.equals("") || PeopleLimit == null || EventCoordinates == null || Category.equals("")
+                || EventPhoto == null || Category.equals("Choose Category"))
+        {
+            Toast.makeText(getContext(), "ERROR IN REQUIRED FIELD! REVIEW EVENT!",Toast.LENGTH_SHORT).show();
+            return;
+        }
         Event event = new Event();
         event.setKeyCreator(ParseUser.getCurrentUser());
         event.setKeyName(Name);
@@ -172,12 +206,29 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         event.setKeyLimit(PeopleLimit);
         event.setKeyLocation(EventCoordinates);
         event.setKeyCategory(Category);
+        event.put("eventPhoto", EventPhoto);
         JSONArray attending = new JSONArray();
         attending.put(ParseUser.getCurrentUser().getObjectId());
         event.put("usersAttending", attending);
-
-        event.saveInBackground();
-
+        event.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null){
+                    Log.d("Create Fragment", "Error while saving");
+                    e.printStackTrace();
+                    return;
+                }
+                etEventAddress.setText("");
+                etEventName.setText("");
+                etEventDescription.setText("");
+                etEventDate.setText("");
+                etEventStartTime.setText("");
+                etEventEndTime.setText("");
+                etEventMaxPeople.setText("");
+                ivImage.setImageResource(0);
+                Toast.makeText(getContext(),"Event Creation Successful!",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void getEventAddress(){
@@ -221,4 +272,34 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
+    private void selectImage() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(intent, REQUEST_IMAGE_GET);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
+            Uri photoUri = data.getData();
+            Glide.with(getContext()).load(photoUri).into(ivImage);
+            InputStream inputStream = null;
+            try {
+                inputStream = getActivity().getContentResolver().openInputStream(photoUri);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Bitmap thumbnail = BitmapFactory.decodeStream(inputStream);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            thumbnail.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            byte[] image = outputStream.toByteArray();
+            ParseFile file = new ParseFile("EVENT_IMAGE", image);
+            eventImageFile = file;
+        }
+    }
+
+
 }

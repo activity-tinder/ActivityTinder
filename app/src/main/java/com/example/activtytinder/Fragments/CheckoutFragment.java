@@ -30,7 +30,7 @@ public class CheckoutFragment extends DialogFragment {
     private TextView tvEventDetails;
     private Event event;
     private Button btnYes;
-    private Button btnNo;
+    public Button btnNo;
     private String mName;
     private String mDate;
     private String mLocation;
@@ -52,10 +52,21 @@ public class CheckoutFragment extends DialogFragment {
         return fragment;
     }
 
+    /**
+     * Listener interface for detecting if the no button in the checkout fragment is clicked.
+     */
     public interface BtnNoListener {
         void onNoClicked();
     }
 
+    public void setOnBtnNoListener(BtnNoListener listener){
+        this.btnNoListener = listener;
+    }
+
+    /**
+     *
+     * @param event
+     */
     public void showReceiptFragment(Event event) {
         ReceiptFragment receiptFragment = new ReceiptFragment();
         Bundle eventBundle = new Bundle();
@@ -79,16 +90,13 @@ public class CheckoutFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        tvQuestion = view.findViewById(R.id.tvQuestion);
         tvEventDetails = view.findViewById(R.id.tvEventDetails);
         btnYes = view.findViewById(R.id.btnYes);
         btnNo = view.findViewById(R.id.btnNo);
 
-//        event = getArguments().getParcelable("Event");
         Bundle eventBundle = this.getArguments();
         if(eventBundle != null){
             event = Parcels.unwrap(eventBundle.getParcelable("Event"));
-//            event = eventBundle.getParcelable("Event");
         }
 
         //Fetch arguments from bundle and set Title
@@ -120,26 +128,17 @@ public class CheckoutFragment extends DialogFragment {
             }
         });
 
-
         btnYes.setOnClickListener(view1 -> {
             showReceiptFragment(event);
             dismiss();
 
         });
 
-        btnNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO -- close overlay and take them back to the cards
-                //btnNoListener.onNoClicked();
-                dismiss();
-            }
+        btnNo.setOnClickListener(view12 -> {
+            btnNoListener.onNoClicked();
+            dismiss();
         });
 
-    }
-
-    public void setOnBtnNoListener(BtnNoListener listener){
-        this.btnNoListener = listener;
     }
 
 }

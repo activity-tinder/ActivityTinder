@@ -12,7 +12,6 @@
         android:layout_width="320dp"
         android:layout_height="438dp"
         android:layout_margin="20dp"
-        android:background="@color/white"
         android:orientation="vertical"
         app:cardCornerRadius="5dp"
         app:cardElevation="4dp">
@@ -26,9 +25,11 @@
             app:srcCompat="@drawable/googleg_standard_color_18" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clCardStack"
             android:layout_width="match_parent"
             android:layout_height="109dp"
             android:layout_gravity="bottom"
+            android:background="@color/light_purple"
             android:gravity="center|left"
             android:orientation="vertical"
             android:paddingLeft="20dp">

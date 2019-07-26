@@ -1,6 +1,8 @@
 package com.example.activtytinder.Fragments;
 
+import android.graphics.Color;
 import android.graphics.Point;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -30,7 +33,9 @@ public class CardFragment extends Fragment {
 
     private ImageButton btnAccept;
     private ImageButton btnReject;
+    private ImageButton btnUndo;
 
+    private ConstraintLayout clCardStack;
 
     public SwipePlaceHolderView mSwipePlaceHolderView;
     Point cardViewHolderSize;
@@ -45,8 +50,11 @@ public class CardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        btnAccept = view.findViewById(R.id.acceptBtn);
-        btnReject = view.findViewById(R.id.rejectBtn);
+
+        btnAccept = view.findViewById(R.id.btnAccept);
+        btnReject = view.findViewById(R.id.btnReject);
+        btnUndo = view.findViewById(R.id.btnUndo);
+        clCardStack = view.findViewById(R.id.clCardStack);
 
         int bottomMargin = CardUtils.dpToPx(160);
         Point windowSize = CardUtils.getDisplaySize(getActivity().getWindowManager());
@@ -60,6 +68,7 @@ public class CardFragment extends Fragment {
                     .setDisplayViewCount(4)
                     .setHeightSwipeDistFactor(8)
                     .setWidthSwipeDistFactor(5)
+                    .setIsUndoEnabled(true)
                     .setSwipeDecor(new SwipeDecor()
                         .setPaddingTop(15)
                         .setRelativeScale(0.01f));
@@ -75,10 +84,11 @@ public class CardFragment extends Fragment {
             mSwipePlaceHolderView.doSwipe(false);
         });
 
-
+        btnUndo.setOnClickListener(v -> {
+            Log.d(TAG, "undo clicked!");
+            mSwipePlaceHolderView.undoLastSwipe();
+        });
     }
-    //TODO -- documentation for the method
-    // TODO -- 7/24 - make sure onClick works when person declines in the checkout fragment
 
     /**
      * Creates an overlaid checkout fragment instance
@@ -89,20 +99,28 @@ public class CardFragment extends Fragment {
         CheckoutFragment checkoutDialogFragment = CheckoutFragment.newInstance("Event", event);
         checkoutDialogFragment.show(fragmentManager, "CheckoutFragment");
 
-
+        /**
+         * Undoes the user's last swipe and returns the card if the user clicks no in the
+         * checkout fragment.
+         */
+        checkoutDialogFragment.setOnBtnNoListener(new CheckoutFragment.BtnNoListener() {
+            @Override
+            public void onNoClicked() {
+                mSwipePlaceHolderView.undoLastSwipe();
+            }
+        });
     }
 
+    /**
+     * Shows and overlaid fragment that contains more details about the event that the user clicked
+     * on.
+     * @param event - event that should be shown in the detail fragment
+     */
     private void showDetailFragment(Event event) {
         FragmentManager fragmentManager = getFragmentManager();
         DetailsFragment detailsDialogFragment = DetailsFragment.newInstance("Event", event);
         detailsDialogFragment.show(fragmentManager, "CheckoutFragment");
-
     }
-    //TODO -- documentation for the method
-   public void onCancelCheckoutClicked() {
-        mSwipePlaceHolderView.undoLastSwipe();
-    }
-
 
     /**
      * Gets the events from the database and puts them into the SwipePlaceHolderView card stack.
@@ -114,6 +132,7 @@ public class CardFragment extends Fragment {
         ParseQuery<Event> eventQuery = new ParseQuery<Event>(Event.class);
         //Toast.makeText(getContext(), "got into queryEvents", Toast.LENGTH_SHORT).show();
         eventQuery.include(Event.KEY_CREATOR);
+        eventQuery.orderByAscending("eventDate");
         eventQuery.findInBackground((event, e) -> {
 
             if (e != null) {
@@ -128,27 +147,30 @@ public class CardFragment extends Fragment {
                 // figure out if this call is safe or not
                 SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), event.get(i), cardViewHolderSize);
                 Event eventToSend = event.get(i);
-                card.setOnSwipeListener(new SwipeEventCard.SwipeListener() {
-                    @Override
-                    public void onSwiped() {
-                        Bundle eventBundle = new Bundle();
-                        eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
-                        CardFragment.this.showCheckoutDialog(eventToSend);
-                    }
+
+//                if (event.get(i).getCategory().equals("Active") && event.get(i).getCategory() != null) {
+//                    clCardStack.setBackgroundColor(23163377);
+//                }
+
+                /**
+                 * Listens for card being swiped affirmative and opens a checkout dialog overlay.
+                 */
+                card.setOnSwipeListener(() -> {
+                    Bundle eventBundle = new Bundle();
+                    eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
+                    CardFragment.this.showCheckoutDialog(eventToSend);
                 });
-                card.setOnClickListener(new SwipeEventCard.onClickListener() {
-                    @Override
-                    public void onClick() {
-                        Bundle eventBundle = new Bundle();
-                        eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
-                        showDetailFragment(eventToSend);
-                    }
+
+                /**
+                 * Listens for card being clicked and opens the card detail overlay.
+                 */
+                card.setOnClickListener(() -> {
+                    Bundle eventBundle = new Bundle();
+                    eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
+                    showDetailFragment(eventToSend);
                 });
               mSwipePlaceHolderView.addView(card);
             }
         });
     }
-
-
-
 }

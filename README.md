@@ -1,5 +1,4 @@
 Activity Tinder - README
-Hello World pls work
 ===
 
 ## Table of Contents
@@ -51,10 +50,10 @@ This app will help individuals meet people that they want to hang out or do spec
 * [ ] App Icon
 * [x] Login/Signup page
 * [x] Location permissions
-* [ ] Event creation page
+* [x] Event creation page
 * [x] Main card stack page with activities on the cards
 * [ ] Activity detail page
-* [ ] Activity checkout page
+* [x] Activity checkout page
 * [x] Activity receipt page
 * [x] Contact us page
 * [x] profile page
@@ -65,13 +64,13 @@ This app will help individuals meet people that they want to hang out or do spec
 * [ ] location page that asks for city location & Directions to event
 * [ ] type in password to confirm leaving activity
    * [ ] warning for user before leaving activity under 24 hours before activity
-* detailed card view features:
-    * listing of people who are planning on attending already
-    * default images for types of activities
-* Filter option where you can choose location, price, number of people, etc.
-* Messenger (intent) chat option
-* export event details to calendar
-* checking into event (attendance)
+* [ ] detailed card view features:
+    * [ ] listing of people who are planning on attending already
+    * [ ] default images for types of activities
+* [ ] Filter option where you can choose location, price, number of people, etc.
+* [ ] Messenger (intent) chat option
+* [ ] export event details to calendar
+* [ ] checking into event (attendance)
 
 **Optional Nice-to-have Stories**
 * organizer can compose a message to be displayed to whoever tries to join the event
