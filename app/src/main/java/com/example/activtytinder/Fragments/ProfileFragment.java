@@ -1,23 +1,35 @@
 package com.example.activtytinder.Fragments;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.activtytinder.LoginActivity;
 import com.example.activtytinder.R;
 import com.google.android.gms.location.LocationRequest;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment{
 
@@ -32,6 +44,8 @@ public class ProfileFragment extends Fragment{
     public TextView tvHomeCity;
     public Button btnTakeImage;
     public Button btnUploadImage;
+    public ImageView ivImage;
+    private static final int REQUEST_IMAGE_GET = 1;
     public static final String TAG = "ProfileFragment";
     private LocationRequest mLocationRequest;
 
@@ -53,6 +67,7 @@ public class ProfileFragment extends Fragment{
         tvHomeCity = view.findViewById(R.id.tvHomeCity);
         btnTakeImage = view.findViewById(R.id.btnTakeImage);
         btnUploadImage = view.findViewById(R.id.btnUploadImage);
+        ivImage = view.findViewById(R.id.ivImage);
 
         populateProfile();
 
@@ -60,6 +75,13 @@ public class ProfileFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 logout();
+            }
+        });
+
+        btnUploadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectImage();
             }
         });
 
@@ -81,6 +103,54 @@ public class ProfileFragment extends Fragment{
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         tvAge.setText(formatter.format(user.getDate("birthday")));
         tvHomeCity.setText(user.getString("homeCity"));
+
+        ParseFile image = user.getParseFile("profileImage");
+        String url;
+
+        String security = "https";
+        try {
+            url = image.getUrl().substring(4);
+        }
+        catch (Exception e){
+            return;
+        }
+
+        Log.d("DEBUG", "in setting image " + security + url);
+        Glide.with(getContext())
+                .load(security + url)
+                .centerCrop()
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .dontAnimate()
+                .into(ivImage);
+    }
+
+    private void selectImage() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(intent, REQUEST_IMAGE_GET);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
+            Uri photoUri = data.getData();
+            Glide.with(getContext()).load(photoUri).into(ivImage);
+            InputStream inputStream = null;
+            try {
+                inputStream = getActivity().getContentResolver().openInputStream(photoUri);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Bitmap thumbnail = BitmapFactory.decodeStream(inputStream);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            thumbnail.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            byte[] image = outputStream.toByteArray();
+            ParseFile file = new ParseFile("EVENT_IMAGE", image);
+            user.put("profileImage", file);
+            user.saveInBackground();
+        }
     }
 }
 
