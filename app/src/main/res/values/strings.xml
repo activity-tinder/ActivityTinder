@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Activity Tinder</string>
+    <string name="app_name">bud-E</string>
 
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -12,7 +12,7 @@
     <string name="categories">Choose Event Category</string>
     <string name="export_to_calendar">Export to Calendar</string>
     <string name="name">Name</string>
-    <string name="question">Are you sure you want to attend</string>
+    <string name="question">Are you sure you want to attend?</string>
     <string name="close">Close</string>
     <string-array name="categories_array">
         <item>Choose Category</item>

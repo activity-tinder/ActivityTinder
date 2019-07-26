@@ -38,10 +38,8 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -90,10 +88,6 @@ public class ProfileFragment extends Fragment{
         rvProfile = view.findViewById(R.id.rvEvents);
         mEvents = new ArrayList<>();
 
-
-
-
-
         adapter = new ProfileAdapter(getContext(), mEvents);
         rvProfile.setLayoutManager(new LinearLayoutManager(getContext()));
         rvProfile.setAdapter(adapter);
@@ -106,6 +100,7 @@ public class ProfileFragment extends Fragment{
         ivImage = view.findViewById(R.id.ivProfilePicture);
 
         populateProfile();
+        populateEventAdapter();
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -278,35 +273,18 @@ public class ProfileFragment extends Fragment{
     }
 
     public void populateEventAdapter(){
-        ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
-        query.findInBackground(new FindCallback<ParseUser>() {
+        ParseRelation<Event> eventsToAttend = user.getRelation("willAttend");
+
+        ParseQuery<Event> girlWhat = eventsToAttend.getQuery();
+        girlWhat.findInBackground(new FindCallback<Event>() {
             @Override
-            public void done(List<ParseUser> objects, ParseException e) {
-                if (e == null){
-                    JSONArray eventsToAttend = ParseUser.getCurrentUser().getJSONArray("willAttend");
-                    for(int x = 0; x < eventsToAttend.length(); x++){
-                        try {
-                            Event event =(Event) eventsToAttend.get(x);
-                            mEvents.add(event);
-                            adapter.notifyItemInserted(mEvents.size() -1);
-                        } catch (JSONException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                }else{
-                    Log.e("PostsFragment", "Error with query");
-                    e.printStackTrace();
-                    return;
-                }
+            public void done(List<Event> events, ParseException e) {
+                mEvents.addAll(events);
+                adapter.notifyDataSetChanged();
             }
         });
 
+
     }
-
-
-//        query.getInBackground(ParseUser.getCurrentUser().getObjectId(), (ParseUser parseUser, ParseException error) -> {
-//            if(error == null){
-//                JSONArray eventsToAttend = ParseUser.getCurrentUser().getJSONArray("willAttend");
-
 
 }
