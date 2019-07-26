@@ -9,10 +9,8 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.os.Environment;
 import android.provider.MediaStore;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,28 +34,22 @@ import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.ProfileAdapter;
 import com.example.activtytinder.R;
 import com.google.android.gms.location.LocationRequest;
-
-import com.parse.ParseFile;
-import com.parse.ParseUser;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import static android.app.Activity.RESULT_OK;
 
@@ -111,7 +103,7 @@ public class ProfileFragment extends Fragment{
         tvHomeCity = view.findViewById(R.id.tvHomeCity);
         btnTakeImage = view.findViewById(R.id.btnTakeImage);
         btnUploadImage = view.findViewById(R.id.btnUploadImage);
-        ivImage = view.findViewById(R.id.ivImage);
+        ivImage = view.findViewById(R.id.ivProfilePicture);
 
         populateProfile();
 

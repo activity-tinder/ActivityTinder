@@ -29,6 +29,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.activtytinder.CardUtils;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.parse.ParseException;
@@ -216,9 +217,13 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         event.setKeyLocation(EventCoordinates);
         event.setKeyCategory(Category);
         event.put("eventPhoto", EventPhoto);
-        JSONArray attending = new JSONArray();
-        attending.put(ParseUser.getCurrentUser().getObjectId());
-        event.put("usersAttending", attending);
+
+//        JSONArray attending = new JSONArray();
+//        attending.put(ParseUser.getCurrentUser().getObjectId());
+//        event.put("usersAttending", attending);
+
+        CardUtils.addUserToEvent(ParseUser.getCurrentUser(), event);
+
         event.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

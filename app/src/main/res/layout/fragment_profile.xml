@@ -32,7 +32,7 @@
         android:layout_marginTop="24dp"
         android:text="TextView"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/profile_picture"
+        app:layout_constraintStart_toEndOf="@+id/ivProfilePicture"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Your Name Here" />
 
@@ -45,7 +45,7 @@
         android:layout_marginTop="16dp"
         android:text="TextView"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/profile_picture"
+        app:layout_constraintStart_toEndOf="@+id/ivProfilePicture"
         app:layout_constraintTop_toBottomOf="@+id/tvName"
         tools:text="Your Username Here" />
 
@@ -58,7 +58,7 @@
         android:layout_marginTop="16dp"
         android:text="TextView"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/profile_picture"
+        app:layout_constraintStart_toEndOf="@+id/ivProfilePicture"
         app:layout_constraintTop_toBottomOf="@+id/tvUsername"
         tools:text="Your Score Here" />
 
@@ -71,16 +71,16 @@
         android:layout_marginTop="16dp"
         android:text="TextView"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/profile_picture"
+        app:layout_constraintStart_toEndOf="@+id/ivProfilePicture"
         app:layout_constraintTop_toBottomOf="@+id/tvScore"
         tools:text="Your Base Location Here" />
 
     <ImageView
-        android:id="@+id/profile_picture"
-        android:layout_width="219dp"
-        android:layout_height="184dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
+        android:id="@+id/ivProfilePicture"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -92,15 +92,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="Events you are currently attending!"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintHorizontal_bias="0.072"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_picture" />
+        app:layout_constraintTop_toBottomOf="@+id/ivProfilePicture" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvEvents"
@@ -116,24 +116,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/attendingEvent" />
 
-    <ImageView
-        android:id="@+id/ivImage"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="108dp"
-        android:layout_marginLeft="108dp"
-        android:layout_marginTop="216dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:color/background_dark" />
-
     <Button
         android:id="@+id/btnTakeImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginLeft="72dp"
-        android:layout_marginTop="436dp"
+        android:layout_marginTop="232dp"
         android:text="Take Image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -142,9 +129,9 @@
         android:id="@+id/btnUploadImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="232dp"
-        android:layout_marginLeft="232dp"
-        android:layout_marginTop="436dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginLeft="108dp"
+        android:layout_marginTop="232dp"
         android:text="Upload Image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
