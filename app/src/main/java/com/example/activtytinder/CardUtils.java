@@ -9,6 +9,7 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.example.activtytinder.Models.Event;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
@@ -46,29 +47,13 @@ public class CardUtils {
         // add the current user to the list of people attending the event in the event
         // class
 
-        JSONArray currentAttendees = event.getKeyAttendees();
-        Log.d("DEBUG", "Users before: " + currentAttendees.toString());
-        if (user != null) {
-            currentAttendees.put(user);
-        }
-
-        event.setKeyAttendees(currentAttendees);
+        ParseRelation<ParseUser> userInEvent = event.getRelation("usersAttending");
+        userInEvent.add(user);
         event.saveInBackground();
-        JSONArray newAttendees = event.getKeyAttendees();
-        Log.d("DEBUG", "Users after: " + newAttendees.toString());
 
-        // TODO --  fix null pointer error
-        // currently buggy
-        // adding event id to user's willAttend list
-        JSONArray eventsAttending = user.getJSONArray("willAttend");
-        Log.d("DEBUG", "events before: " + eventsAttending.toString());
-        if (event != null) {
-            eventsAttending.put(event);
-        }
-
-        user.put("willAttend", eventsAttending);
+        ParseRelation<Event> eventInUser = user.getRelation("willAttend");
+        eventInUser.add(event);
         user.saveInBackground();
-
     }
 
 }
