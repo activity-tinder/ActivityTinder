@@ -32,11 +32,9 @@ import com.bumptech.glide.Glide;
 import com.example.activtytinder.CardUtils;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,6 +59,7 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
     private EditText etEventMaxPeople;
     private Button btnCreateEvent;
     private Button btnGetEventLocation;
+    private Button btnJoin;
     private ParseGeoPoint gpEventCoordinates;
     private DatePickerDialog dpdPicker;
     private TimePickerDialog tpdClock;
@@ -77,7 +76,8 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
     private ImageView ivImage;
     private ParseFile eventImageFile;
     private List <String> myData;
-    View view;
+
+    Event myEvent;
 
     @Nullable
     @Override
@@ -97,6 +97,7 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         etEventMaxPeople = view.findViewById(R.id.etPeopleLimit);
         btnCreateEvent = view.findViewById(R.id.btnCreateEvent);
         btnGetEventLocation = view.findViewById(R.id.btnConfirmLocation);
+        btnJoin = view.findViewById(R.id.btnJoin);
         ivImage = view.findViewById(R.id.ivImage);
 
         spinner = view.findViewById(R.id.spinner);
@@ -107,8 +108,6 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
 
         API_KEY = getActivity().getResources().getString(R.string.mapquest_api_key);
         requestQueue = Volley.newRequestQueue(getContext());
-
-
 
         etEventDate.setInputType(InputType.TYPE_NULL);
         etEventDate.setOnClickListener(new View.OnClickListener() {
@@ -178,24 +177,17 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
             final Integer PeopleLimit = Integer.parseInt(etEventMaxPeople.getText().toString());
             final ParseGeoPoint EventCoordinates = gpEventCoordinates;
             final ParseFile EventPhoto = eventImageFile;
-            Event myEvent = makeEvent(EventName, EventDescription, EventDate, StartTime, EndTime, Address, PeopleLimit, EventCoordinates, Category, EventPhoto);
-            CardUtils.addUserToEvent(ParseUser.getCurrentUser(), myEvent);
-
+            myEvent = makeEvent(EventName, EventDescription, EventDate, StartTime, EndTime, Address, PeopleLimit, EventCoordinates, Category, EventPhoto);
         });
 
-        ivImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectImage();
-            }
-        });
+        btnJoin.setOnClickListener(view16 -> CardUtils.addUserToEvent(ParseUser.getCurrentUser(), myEvent));
+
+        ivImage.setOnClickListener(view17 -> selectImage());
 
         if(savedInstanceState != null){
             myData = (List<String>) savedInstanceState.getSerializable("list");
         }
     }
-
-
 
     private Event makeEvent(String Name, String Description, String Date, String StartTime, String EndTime, String Address,
                            Integer PeopleLimit, ParseGeoPoint EventCoordinates, String Category, ParseFile EventPhoto)
@@ -220,32 +212,23 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         event.put("eventPhoto", EventPhoto);
         event.saveInBackground();
 
-//        JSONArray attending = new JSONArray();
-//        attending.put(ParseUser.getCurrentUser().getObjectId());
-//        event.put("usersAttending", attending);
-
-        event.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null){
-                    Log.d("Create Fragment", "Error while saving");
-                    e.printStackTrace();
-                    return;
-                }
-                etEventAddress.setText("");
-                etEventName.setText("");
-                etEventDescription.setText("");
-                etEventDate.setText("");
-                etEventStartTime.setText("");
-                etEventEndTime.setText("");
-                etEventMaxPeople.setText("");
-                ivImage.setImageResource(0);
-                Toast.makeText(getContext(),"Event Creation Successful!",Toast.LENGTH_SHORT).show();
+        event.saveInBackground(e -> {
+            if (e != null){
+                Log.d("Create Fragment", "Error while saving");
+                e.printStackTrace();
+                return;
             }
+            etEventAddress.setText("");
+            etEventName.setText("");
+            etEventDescription.setText("");
+            etEventDate.setText("");
+            etEventStartTime.setText("");
+            etEventEndTime.setText("");
+            etEventMaxPeople.setText("");
+            ivImage.setImageResource(0);
+            Toast.makeText(getContext(),"Event Creation Successful!",Toast.LENGTH_SHORT).show();
         });
-
         return event;
-
     }
 
     public void getEventAddress(){
@@ -281,13 +264,15 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             adapterView.getItemAtPosition(i);
             eventCategory = adapterView.getItemAtPosition(i).toString();
-
-
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    public void addUser(ParseUser user, Event event) {
+        CardUtils.addUserToEvent(user, event);
     }
 
     private void selectImage() {
@@ -317,6 +302,4 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
             eventImageFile = file;
         }
     }
-
-
 }
