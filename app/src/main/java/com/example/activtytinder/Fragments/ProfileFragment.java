@@ -94,6 +94,7 @@ public class ProfileFragment extends Fragment{
         tvUsername.setText(user.getUsername());
         tvScore.setText(user.getNumber("reliabilityScore").toString());
         tvHomeCity.setText(user.getString("homeCity"));
+
     }
 
     public void populateEventAdapter(){

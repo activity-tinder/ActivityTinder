@@ -23,6 +23,7 @@ import com.example.activtytinder.R;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 
 import org.json.JSONArray;
 import org.parceler.Parcels;
@@ -72,6 +73,24 @@ public class ReceiptFragment extends Fragment {
             @Override
             public void done(Event event, ParseException e) {
                 if(e == null){
+                    ParseRelation relation = event.getRelation("usersAttending");
+                    for(int x =0; x< relation.describeContents(); x++){
+                    }
+//                    ParseRelation relation = event.getRelation("usersAttending");
+//                    ParseQuery attendeesQuery = relation.getQuery();
+//                    attendeesQuery.findInBackground(new FindCallback() {
+//                        @Override
+//                        public void done(List<Event> usersList, ParseException e) {
+//                            if(e == null){
+//                                for(int x =0; x < usersList.size(); x++){
+//                                    mAttendees.add(usersList.get(x).getUsername());
+//                                }
+//                            }
+//                        }
+//
+//                    });
+//                    ParseQuery queryAttendees = relation.getQuery();
+//                    queryAttendees.getInBackground();
                     mName = event.getKeyName();
                     mDate = event.getKeyDate();
                     mCreator = event.getCreator().getUsername();
