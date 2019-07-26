@@ -9,8 +9,10 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+
 import android.os.Environment;
 import android.provider.MediaStore;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,11 +27,16 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.activtytinder.LoginActivity;
+import com.example.activtytinder.Models.Event;
+import com.example.activtytinder.ProfileAdapter;
 import com.example.activtytinder.R;
 import com.google.android.gms.location.LocationRequest;
+
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -40,18 +47,30 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment{
 
     ParseUser user = ParseUser.getCurrentUser();
     public Button btnLogout;
-    public Button btnGetLocation;
+    public ProfileAdapter adapter;
+    List<Event> mEvents;
+    public RecyclerView rvProfile;
     public TextView tvName;
     public TextView tvUsername;
-    public TextView tvEmail;
     public TextView tvScore;
-    public TextView tvAge;
     public TextView tvHomeCity;
     public Button btnTakeImage;
     public Button btnUploadImage;
@@ -76,11 +95,19 @@ public class ProfileFragment extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         btnLogout = view.findViewById(R.id.logout_btn);
+        rvProfile = view.findViewById(R.id.rvEvents);
+        mEvents = new ArrayList<>();
+
+
+
+
+
+        adapter = new ProfileAdapter(getContext(), mEvents);
+        rvProfile.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvProfile.setAdapter(adapter);
         tvName = view.findViewById(R.id.tvName);
         tvUsername = view.findViewById(R.id.tvUsername);
-        tvEmail = view.findViewById(R.id.tvEmail);
         tvScore = view.findViewById(R.id.tvScore);
-        tvAge = view.findViewById(R.id.tvAge);
         tvHomeCity = view.findViewById(R.id.tvHomeCity);
         btnTakeImage = view.findViewById(R.id.btnTakeImage);
         btnUploadImage = view.findViewById(R.id.btnUploadImage);
@@ -122,11 +149,9 @@ public class ProfileFragment extends Fragment{
     public void populateProfile(){
         tvName.setText(user.getString("name"));
         tvUsername.setText(user.getUsername());
-        tvEmail.setText(user.getEmail());
         tvScore.setText(user.getNumber("reliabilityScore").toString());
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-        tvAge.setText(formatter.format(user.getDate("birthday")));
         tvHomeCity.setText(user.getString("homeCity"));
+
 
         ParseFile image = user.getParseFile("profileImage");
         String url;
@@ -257,7 +282,39 @@ public class ProfileFragment extends Fragment{
         Bitmap rotatedBitmap = Bitmap.createBitmap(bm, 0, 0, bounds.outWidth, bounds.outHeight, matrix, true);
         // Return result
         return rotatedBitmap;
+
     }
+
+    public void populateEventAdapter(){
+        ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
+        query.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> objects, ParseException e) {
+                if (e == null){
+                    JSONArray eventsToAttend = ParseUser.getCurrentUser().getJSONArray("willAttend");
+                    for(int x = 0; x < eventsToAttend.length(); x++){
+                        try {
+                            Event event =(Event) eventsToAttend.get(x);
+                            mEvents.add(event);
+                            adapter.notifyItemInserted(mEvents.size() -1);
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }else{
+                    Log.e("PostsFragment", "Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+            }
+        });
+
+    }
+
+
+//        query.getInBackground(ParseUser.getCurrentUser().getObjectId(), (ParseUser parseUser, ParseException error) -> {
+//            if(error == null){
+//                JSONArray eventsToAttend = ParseUser.getCurrentUser().getJSONArray("willAttend");
+
+
 }
-
-

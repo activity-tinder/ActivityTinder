@@ -15,9 +15,12 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.activtytinder.CardUtils;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
+import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
@@ -107,7 +110,7 @@ public class CheckoutFragment extends DialogFragment {
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
-        query.getInBackground(event.getObjectId(), (event, e) -> {
+        query.getInBackground(event.getObjectId(), (Event event, ParseException e) -> {
             if(e == null){
                 mName = event.getKeyName();
                 mDate = event.getKeyDate();
@@ -128,6 +131,7 @@ public class CheckoutFragment extends DialogFragment {
         });
 
         btnYes.setOnClickListener(view1 -> {
+            CardUtils.addUserToEvent(ParseUser.getCurrentUser(), event);
             showReceiptFragment(event);
             dismiss();
 
