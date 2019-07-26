@@ -45,6 +45,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Calendar;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -74,6 +75,8 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
     private static final int REQUEST_IMAGE_GET = 1;
     private ImageView ivImage;
     private ParseFile eventImageFile;
+    private List <String> myData;
+    View view;
 
     @Nullable
     @Override
@@ -183,7 +186,13 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
                 selectImage();
             }
         });
+
+        if(savedInstanceState != null){
+            myData = (List<String>) savedInstanceState.getSerializable("list");
+        }
     }
+
+
 
     private void makeEvent(String Name, String Description, String Date, String StartTime, String EndTime, String Address,
                            Integer PeopleLimit, ParseGeoPoint EventCoordinates, String Category, ParseFile EventPhoto)

@@ -30,6 +30,8 @@ public class ProfileFragment extends Fragment{
     public TextView tvScore;
     public TextView tvAge;
     public TextView tvHomeCity;
+    public Button btnTakeImage;
+    public Button btnUploadImage;
     public static final String TAG = "ProfileFragment";
     private LocationRequest mLocationRequest;
 
@@ -49,6 +51,8 @@ public class ProfileFragment extends Fragment{
         tvScore = view.findViewById(R.id.tvScore);
         tvAge = view.findViewById(R.id.tvAge);
         tvHomeCity = view.findViewById(R.id.tvHomeCity);
+        btnTakeImage = view.findViewById(R.id.btnTakeImage);
+        btnUploadImage = view.findViewById(R.id.btnUploadImage);
 
         populateProfile();
 

@@ -16,36 +16,41 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
 
+    final Fragment fragment1 = new CardFragment();
+    final Fragment fragment2 = new CreateFragment();
+    final Fragment fragment3 = new ProfileFragment();
+    final FragmentManager fm = getSupportFragmentManager();
+    Fragment active = fragment1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final FragmentManager fragmentManager = getSupportFragmentManager();
+        fm.beginTransaction().add(R.id.flContainer, fragment3, "3").hide(fragment3).commit();
+        fm.beginTransaction().add(R.id.flContainer, fragment2, "2").hide(fragment2).commit();
+        fm.beginTransaction().add(R.id.flContainer, fragment1, "1").commit();
+
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            Fragment fragment;
 
             switch (item.getItemId()) {
                 case R.id.action_card:
-                    fragment = new CardFragment();
-                    //Toast.makeText(MainActivity.this, "Home!", Toast.LENGTH_SHORT).show();
+                    fm.beginTransaction().hide(active).show(fragment1).commit();
+                    active = fragment1;
                     break;
                 case R.id.action_create:
-                    fragment = new CreateFragment();
-                    //Toast.makeText(MainActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
+                    fm.beginTransaction().hide(active).show(fragment2).commit();
+                    active = fragment2;
                     break;
                 case R.id.action_profile:
                 default:
-                    fragment = new ProfileFragment();
-                    //Toast.makeText(MainActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
+                    fm.beginTransaction().hide(active).show(fragment3).commit();
+                    active = fragment3;
                     break;
             }
-            // TODO -- add if statement to check if fragment isn't null
 
-            fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
             return true;
         });
 
