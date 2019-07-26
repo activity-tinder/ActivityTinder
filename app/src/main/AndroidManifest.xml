@@ -16,10 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/Platform.MaterialComponents.Light">
         <activity android:name=".ContactUsActivity"></activity>
-<<<<<<< HEAD
-=======
-        <activity android:name=".DetailActivity" />
->>>>>>> f48daa4fe64ba25e7af1e7cff5394f05a15c4672
         <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="com.google.android.gms.actions.SEARCH_ACTION"/>

@@ -72,7 +72,7 @@ public class ReceiptFragment extends Fragment {
             @Override
             public void done(Event event, ParseException e) {
                 if(e == null){
-                    //                    ParseRelation relation = event.getRelation("usersAttending");
+                    // ParseRelation relation = event.getRelation("usersAttending");
 //                    for(int x =0; x< relation.describeContents(); x++){
 //                    }
 //                    ParseRelation relation = event.getRelation("usersAttending");
