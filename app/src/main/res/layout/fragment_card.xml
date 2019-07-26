@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <ImageButton
         android:id="@+id/btnReject"
@@ -74,9 +74,11 @@
         android:id="@+id/btnUndo"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_gravity="right|bottom"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="24dp"
-        android:background="@android:drawable/ic_menu_revert" />
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#FFE521"
+        android:background="@android:drawable/ic_menu_revert"
+        android:elevation="3dp" />
 
 </FrameLayout>
