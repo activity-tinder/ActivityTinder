@@ -178,7 +178,9 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
             final Integer PeopleLimit = Integer.parseInt(etEventMaxPeople.getText().toString());
             final ParseGeoPoint EventCoordinates = gpEventCoordinates;
             final ParseFile EventPhoto = eventImageFile;
-            makeEvent(EventName, EventDescription, EventDate, StartTime, EndTime, Address, PeopleLimit, EventCoordinates, Category, EventPhoto);
+            Event myEvent = makeEvent(EventName, EventDescription, EventDate, StartTime, EndTime, Address, PeopleLimit, EventCoordinates, Category, EventPhoto);
+            CardUtils.addUserToEvent(ParseUser.getCurrentUser(), myEvent);
+
         });
 
         ivImage.setOnClickListener(new View.OnClickListener() {
@@ -195,15 +197,14 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
 
 
 
-    private void makeEvent(String Name, String Description, String Date, String StartTime, String EndTime, String Address,
+    private Event makeEvent(String Name, String Description, String Date, String StartTime, String EndTime, String Address,
                            Integer PeopleLimit, ParseGeoPoint EventCoordinates, String Category, ParseFile EventPhoto)
     {
-        if (Name.equals("") || Description.equals("") || Date.equals("") || StartTime.equals("") || EndTime.equals("")
+        while (Name.equals("") || Description.equals("") || Date.equals("") || StartTime.equals("") || EndTime.equals("")
                 || Address.equals("") || PeopleLimit == null || EventCoordinates == null || Category.equals("")
                 || EventPhoto == null || Category.equals("Choose Category"))
         {
             Toast.makeText(getContext(), "ERROR IN REQUIRED FIELD! REVIEW EVENT!",Toast.LENGTH_SHORT).show();
-            return;
         }
         Event event = new Event();
         event.setKeyCreator(ParseUser.getCurrentUser());
@@ -217,12 +218,11 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         event.setKeyLocation(EventCoordinates);
         event.setKeyCategory(Category);
         event.put("eventPhoto", EventPhoto);
+        event.saveInBackground();
 
 //        JSONArray attending = new JSONArray();
 //        attending.put(ParseUser.getCurrentUser().getObjectId());
 //        event.put("usersAttending", attending);
-
-        CardUtils.addUserToEvent(ParseUser.getCurrentUser(), event);
 
         event.saveInBackground(new SaveCallback() {
             @Override
@@ -243,6 +243,9 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
                 Toast.makeText(getContext(),"Event Creation Successful!",Toast.LENGTH_SHORT).show();
             }
         });
+
+        return event;
+
     }
 
     public void getEventAddress(){
