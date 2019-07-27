@@ -27,6 +27,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.activtytinder.LoginActivity;
@@ -54,6 +55,8 @@ import static android.app.Activity.RESULT_OK;
 public class ProfileFragment extends Fragment{
 
     ParseUser user = ParseUser.getCurrentUser();
+    private SwipeRefreshLayout swipeContainer;
+
     public Button btnLogout;
     public ProfileAdapter adapter;
     List<Event> mEvents;
@@ -86,7 +89,20 @@ public class ProfileFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         btnLogout = view.findViewById(R.id.logout_btn);
         rvProfile = view.findViewById(R.id.rvEvents);
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+
         mEvents = new ArrayList<>();
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchEventsAsync(0);
+            }
+        });
+
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
         adapter = new ProfileAdapter(getContext(), mEvents);
         rvProfile.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -123,6 +139,12 @@ public class ProfileFragment extends Fragment{
             }
         });
 
+    }
+
+    private void fetchEventsAsync(int i) {
+        adapter.clear();
+        populateEventAdapter();
+        swipeContainer.setRefreshing(false);
     }
 
     private void logout() {

@@ -111,4 +111,12 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         }
 
     }
+    public void clear(){
+        mEvents.clear();
+        notifyDataSetChanged();
+    }
+    public void addAll(List<Event> list){
+        mEvents.addAll(list);
+        notifyDataSetChanged();
+    }
 }
