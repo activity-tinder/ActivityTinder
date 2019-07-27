@@ -123,21 +123,26 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
             }
         });
 
-        etEventStartTime.setOnClickListener(view12 -> {
-            final Calendar calendar = Calendar.getInstance();
-            int hour = calendar.get(Calendar.HOUR_OF_DAY);
-            int minutes = calendar.get(Calendar.MINUTE);
-            tpdClock = new TimePickerDialog(getContext(),
-                    (tp, sHour, sMinute) -> {
-                        if (sHour > 12) {
-                            sHour = sHour - 12;
-                            AM_PM = "PM";
-                        } else {
-                            AM_PM = "AM";
-                        }
-                        etEventStartTime.setText(String.format("%02d:%02d", sHour, sMinute) + " " + AM_PM);
-                    }, hour, minutes, true);
-            tpdClock.show();
+        //TODO -- rename view to be more specific
+        //TODO -- create smaller methods that contain button functionalities
+        etEventStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view12) {
+                final Calendar calendar = Calendar.getInstance();
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minutes = calendar.get(Calendar.MINUTE);
+                tpdClock = new TimePickerDialog(CreateFragment.this.getContext(),
+                        (tp, sHour, sMinute) -> {
+                            if (sHour > 12) {
+                                sHour = sHour - 12;
+                                AM_PM = "PM";
+                            } else {
+                                AM_PM = "AM";
+                            }
+                            etEventStartTime.setText(String.format("%02d:%02d", sHour, sMinute) + " " + AM_PM);
+                        }, hour, minutes, true);
+                tpdClock.show();
+            }
         });
 
         etEventEndTime.setOnClickListener(view13 -> {
@@ -178,9 +183,22 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
             final ParseGeoPoint EventCoordinates = gpEventCoordinates;
             final ParseFile EventPhoto = eventImageFile;
             myEvent = makeEvent(EventName, EventDescription, EventDate, StartTime, EndTime, Address, PeopleLimit, EventCoordinates, Category, EventPhoto);
+
         });
 
-        btnJoin.setOnClickListener(view16 -> CardUtils.addUserToEvent(ParseUser.getCurrentUser(), myEvent));
+        // TODO -- get rid of this button after testing the create event button
+        /**
+         * Adds user to event and vice versa if the user has already created an event.
+         */
+        btnJoin.setOnClickListener(view16 -> {
+            if (myEvent != null) {
+                CardUtils.addUserToEvent(ParseUser.getCurrentUser(), myEvent);
+                myEvent = null;
+            } else {
+                Toast.makeText(getContext(), "Make an event first!", Toast.LENGTH_SHORT).show();
+            }
+
+        });
 
         ivImage.setOnClickListener(view17 -> selectImage());
 
@@ -210,8 +228,8 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         event.setKeyLocation(EventCoordinates);
         event.setKeyCategory(Category);
         event.put("eventPhoto", EventPhoto);
-        event.saveInBackground();
 
+        // TODO -- read documentation for saveinbackground
         event.saveInBackground(e -> {
             if (e != null){
                 Log.d("Create Fragment", "Error while saving");
@@ -226,8 +244,11 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
             etEventEndTime.setText("");
             etEventMaxPeople.setText("");
             ivImage.setImageResource(0);
+
+            CardUtils.addUserToEvent(ParseUser.getCurrentUser(), myEvent);
             Toast.makeText(getContext(),"Event Creation Successful!",Toast.LENGTH_SHORT).show();
         });
+
         return event;
     }
 
