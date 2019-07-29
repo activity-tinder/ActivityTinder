@@ -81,5 +81,15 @@
         android:background="@android:drawable/ic_menu_revert"
         android:elevation="3dp" />
 
+    <ImageButton
+        android:id="@+id/btnRefresh"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@android:drawable/ic_popup_sync"
+        android:backgroundTint="@color/blue"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"/>
+
 
 </FrameLayout>
