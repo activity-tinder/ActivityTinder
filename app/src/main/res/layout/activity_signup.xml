@@ -61,7 +61,7 @@
         android:hint="Home Location"
         android:inputType="textPersonName"
         android:cursorVisible="false"
-        android:focusable="false"
+        android:focusable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
@@ -121,6 +121,7 @@
         android:layout_marginTop="56dp"
         android:background="@color/red"
         android:text="GET LOCATION"
+        tools:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

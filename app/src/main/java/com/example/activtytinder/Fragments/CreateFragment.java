@@ -98,7 +98,7 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
 
         btnGetEventLocation.setOnClickListener(btnEventLocation -> {
             searchQuery = etEventAddress.getText().toString();
-            LocationManager.get().getEventAddress(searchQuery, API_KEY, etEventAddress, getContext());
+            LocationManager.get().getLocationAddress(searchQuery, API_KEY, etEventAddress, getContext());
 
         });
 
@@ -107,7 +107,7 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
                 Toast.makeText(CreateFragment.this.getContext(), "Please enter valid amount of people!", Toast.LENGTH_SHORT).show();
                 return;
             }
-            gpEventCoordinates = LocationManager.get().getEventCoordinates();
+            gpEventCoordinates = LocationManager.get().getLocationCoordinates();
             final String EventName = etEventName.getText().toString();
             final String EventDescription = etEventDescription.getText().toString();
             final String EventDate = etEventDate.getText().toString();
