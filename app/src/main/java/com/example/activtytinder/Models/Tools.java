@@ -16,6 +16,12 @@ import java.util.Calendar;
 
 public class Tools {
 
+    /**
+     * Calls for an Android calendar widget instance specifically for time. The widget is displayed
+     * on the screen and awaits the user to input a time which will be stored in a visible edit text.
+     * @param context - the context where this method is called
+     * @param etTime - the edit text where the user wants to store the time in HH:MM AM/PM format
+     */
     public static void getTime(Context context, EditText etTime) {
         final Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -37,6 +43,14 @@ public class Tools {
         tpdClock.show();
     }
 
+
+    /**
+     * Calls for an Android calendar widget instance specifically for choosing a date. The widget is
+     * displayed on the screen and awaits the user to input a date which will be stored in a visible
+     * edit text.
+     * @param context - the context where this method is called
+     * @param etDate - the edit text where the user wants to store the date in MM/DD/YY format
+     */
     public static void getDate(Context context, EditText etDate) {
         final Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -54,14 +68,18 @@ public class Tools {
         dpdPicker.show();
     }
 
+    /**
+     * Rotates an image by 90 degrees by converting it to a bitmap image and then providing a
+     * rotation using matrices and returning the final bitmap.
+     * @param photoFilePath - the string of the file path of the photo the user wants rotated
+     * @return - returns a Bitmap that now is in the proper orientation
+     */
     public static Bitmap rotateBitmapOrientation(String photoFilePath) {
-        // Create and configure BitmapFactory
         BitmapFactory.Options bounds = new BitmapFactory.Options();
         bounds.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(photoFilePath, bounds);
         BitmapFactory.Options opts = new BitmapFactory.Options();
         Bitmap bm = BitmapFactory.decodeFile(photoFilePath, opts);
-        // Read EXIF Data
         ExifInterface exif = null;
         try {
             exif = new ExifInterface(photoFilePath);
@@ -74,13 +92,9 @@ public class Tools {
         if (orientation == ExifInterface.ORIENTATION_ROTATE_90) rotationAngle = 90;
         if (orientation == ExifInterface.ORIENTATION_ROTATE_180) rotationAngle = 180;
         if (orientation == ExifInterface.ORIENTATION_ROTATE_270) rotationAngle = 270;
-        // Rotate Bitmap
         Matrix matrix = new Matrix();
         matrix.setRotate(rotationAngle, (float) bm.getWidth() / 2, (float) bm.getHeight() / 2);
         Bitmap rotatedBitmap = Bitmap.createBitmap(bm, 0, 0, bounds.outWidth, bounds.outHeight, matrix, true);
-        // Return result
         return rotatedBitmap;
-
-
     }
 }
