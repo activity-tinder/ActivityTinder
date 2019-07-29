@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -58,9 +59,9 @@ public class CardUtils {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    Toast.makeText(getApplicationContext(), "Inputting user Successful!", Toast.LENGTH_SHORT).show();
+                    Log.d("DEBUG", "Inputting user successful!");
                 } else {
-                    Toast.makeText(getApplicationContext(), "inputting user Failed!", Toast.LENGTH_SHORT).show();
+                    Log.d("DEBUG", "Inputting user failed!");
                     e.printStackTrace();
                 }
             }
