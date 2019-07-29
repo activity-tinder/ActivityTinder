@@ -118,26 +118,11 @@ public class ProfileFragment extends Fragment{
         populateProfile();
         populateEventAdapter();
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logout();
-            }
-        });
+        btnLogout.setOnClickListener(btnLogOut -> logout());
 
-        btnUploadImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectImage();
-            }
-        });
+        btnUploadImage.setOnClickListener(btnUploadImage -> selectImage());
 
-        btnTakeImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                launchCamera();
-            }
-        });
+        btnTakeImage.setOnClickListener(btnTakeImage -> launchCamera());
 
     }
 
@@ -155,7 +140,7 @@ public class ProfileFragment extends Fragment{
         getActivity().finish();
     }
 
-    public void populateProfile(){
+    private void populateProfile(){
         tvName.setText(user.getString("name"));
         tvUsername.setText(user.getUsername());
         tvScore.setText(user.getNumber("reliabilityScore").toString());
