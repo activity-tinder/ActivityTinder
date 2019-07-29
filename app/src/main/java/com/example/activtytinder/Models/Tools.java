@@ -16,22 +16,7 @@ import java.util.Calendar;
 
 public class Tools {
 
-    public static String time;
-    private static Tools mTools = null;
-
-
-    public static Tools get() {
-        if (mTools == null) {
-            mTools = new Tools();
-        }
-        return mTools;
-    }
-
-    private Tools() {
-
-    }
-
-    public void getTime(Context context, EditText etTime) {
+    public static void getTime(Context context, EditText etTime) {
         final Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minutes = calendar.get(Calendar.MINUTE);
@@ -52,7 +37,7 @@ public class Tools {
         tpdClock.show();
     }
 
-    public void getDate(Context context, EditText etDate) {
+    public static void getDate(Context context, EditText etDate) {
         final Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH);
@@ -69,7 +54,7 @@ public class Tools {
         dpdPicker.show();
     }
 
-    public Bitmap rotateBitmapOrientation(String photoFilePath) {
+    public static Bitmap rotateBitmapOrientation(String photoFilePath) {
         // Create and configure BitmapFactory
         BitmapFactory.Options bounds = new BitmapFactory.Options();
         bounds.inJustDecodeBounds = true;

@@ -176,7 +176,7 @@ public class ProfileFragment extends Fragment{
             if (resultCode == RESULT_OK) {
                 // by this point we have the camera photo on disk
                 //Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                Bitmap takenImage = Tools.get().rotateBitmapOrientation(photoFile.getAbsolutePath());
+                Bitmap takenImage = Tools.rotateBitmapOrientation(photoFile.getAbsolutePath());
                 // RESIZE BITMAP, see section below
                 // Load the taken image into a preview
                 ivImage.setImageBitmap(takenImage);

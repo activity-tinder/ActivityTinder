@@ -48,24 +48,13 @@ public class LocationManager extends Activity
     private double eventLat = 50.0;
     private double eventLong = 50.0;
 
-    private String API_KEY;
     public RequestQueue requestQueue;
     private String url ="https://www.mapquestapi.com/geocoding/v1/address?key=";
     private String Location = "&location=";
-    private ParseGeoPoint gpEventCoordinates;
 
 
 
     /// the initialization function is a workaround...
-
-
-    public  static LocationManager get() {
-        if (mTools == null) {
-            mTools = new LocationManager();
-        }
-        return mTools;
-    }
-
     private void setCurrentLocation(double longitude, double latitude)
     {
         mLongitude = longitude;
@@ -80,14 +69,21 @@ public class LocationManager extends Activity
         return location;
     }
 
-    public ParseGeoPoint getEventLocation(){
-        ParseGeoPoint gps = new ParseGeoPoint(eventLat,eventLong);
-        return gps;
-    }
-
     private void setEventLocation(double lat, double lng){
         eventLat = lat;
         eventLong = lng;
+    }
+
+    public ParseGeoPoint getEventCoordinates(){
+        ParseGeoPoint eventCoordinates = new ParseGeoPoint(eventLat,eventLong);
+        return eventCoordinates;
+    }
+
+    public  static LocationManager get() {
+        if (mTools == null) {
+            mTools = new LocationManager();
+        }
+        return mTools;
     }
 
     private LocationManager()
@@ -149,8 +145,6 @@ public class LocationManager extends Activity
         requestQueue = Volley.newRequestQueue(context);
         JsonObjectRequest addressRequest = new JsonObjectRequest(Request.Method.GET, url + key + Location + searchQuery, null,
                 new Response.Listener<JSONObject>() {
-
-
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -174,10 +168,4 @@ public class LocationManager extends Activity
                 });
         requestQueue.add(addressRequest);
     }
-
-    public ParseGeoPoint getEventCoordinates(){
-        return gpEventCoordinates;
-    }
-
-
 }

@@ -88,11 +88,11 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         etEventDate.setInputType(InputType.TYPE_NULL);
 
 
-        etEventDate.setOnClickListener(btnEventDate -> Tools.get().getDate(getContext(),etEventDate));
+        etEventDate.setOnClickListener(btnEventDate -> Tools.getDate(getContext(),etEventDate));
 
-        etEventStartTime.setOnClickListener(btnEventStartTime -> Tools.get().getTime(getContext(), etEventStartTime));
+        etEventStartTime.setOnClickListener(btnEventStartTime -> Tools.getTime(getContext(), etEventStartTime));
 
-        etEventEndTime.setOnClickListener(btnEventEndTime -> { Tools.get().getTime(getContext(),etEventEndTime);});
+        etEventEndTime.setOnClickListener(btnEventEndTime -> { Tools.getTime(getContext(),etEventEndTime);});
 
         ivImage.setOnClickListener(btnIvImage -> selectImage());
 
@@ -107,7 +107,7 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
                 Toast.makeText(CreateFragment.this.getContext(), "Please enter valid amount of people!", Toast.LENGTH_SHORT).show();
                 return;
             }
-            gpEventCoordinates = LocationManager.get().getEventLocation();
+            gpEventCoordinates = LocationManager.get().getEventCoordinates();
             final String EventName = etEventName.getText().toString();
             final String EventDescription = etEventDescription.getText().toString();
             final String EventDate = etEventDate.getText().toString();
