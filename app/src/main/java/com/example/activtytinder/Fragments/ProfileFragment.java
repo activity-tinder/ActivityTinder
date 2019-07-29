@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,9 +30,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.example.activtytinder.LoginActivity;
 import com.example.activtytinder.Models.Event;
+import com.example.activtytinder.Models.Tools;
 import com.example.activtytinder.ProfileAdapter;
 import com.example.activtytinder.R;
-import com.google.android.gms.location.LocationRequest;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -45,7 +43,6 @@ import com.parse.ParseUser;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,26 +54,24 @@ public class ProfileFragment extends Fragment{
     ParseUser user = ParseUser.getCurrentUser();
     private SwipeRefreshLayout swipeContainer;
 
-    public Button btnLogout;
-    public ProfileAdapter adapter;
+    private Button btnLogout;
+    private ProfileAdapter adapter;
     List<Event> mEvents;
-    public RecyclerView rvProfile;
-    public TextView tvName;
-    public TextView tvUsername;
-    public TextView tvScore;
-    public TextView tvHomeCity;
-    public Button btnTakeImage;
-    public Button btnUploadImage;
-    public ImageView ivImage;
+    private RecyclerView rvProfile;
+    private TextView tvName;
+    private TextView tvUsername;
+    private TextView tvScore;
+    private TextView tvHomeCity;
+    private Button btnTakeImage;
+    private Button btnUploadImage;
+    private ImageView ivImage;
 
     private File photoFile;
-    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
-    public String photoFileName = "photo.jpg";
+    private final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
+    private String photoFileName = "photo.jpg";
 
 
-    private static final int REQUEST_IMAGE_GET = 1;
-    public static final String TAG = "ProfileFragment";
-    private LocationRequest mLocationRequest;
+    static final String TAG = "ProfileFragment";
 
 
     @Nullable
@@ -92,12 +87,7 @@ public class ProfileFragment extends Fragment{
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
 
         mEvents = new ArrayList<>();
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                fetchEventsAsync(0);
-            }
-        });
+        swipeContainer.setOnRefreshListener(() -> fetchEventsAsync(0));
 
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -145,11 +135,8 @@ public class ProfileFragment extends Fragment{
         tvUsername.setText(user.getUsername());
         tvScore.setText(user.getNumber("reliabilityScore").toString());
         tvHomeCity.setText(user.getString("homeCity"));
-
-
         ParseFile image = user.getParseFile("profileImage");
         String url;
-
         String security = "https";
         try {
             url = image.getUrl().substring(4);
@@ -157,7 +144,6 @@ public class ProfileFragment extends Fragment{
         catch (Exception e){
             return;
         }
-
         Log.d("DEBUG", "in setting image " + security + url);
         Glide.with(getContext())
                 .load(security + url)
@@ -167,17 +153,9 @@ public class ProfileFragment extends Fragment{
                 .into(ivImage);
     }
 
-    private void selectImage() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivityForResult(intent, REQUEST_IMAGE_GET);
-        }
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
             Uri photoUri = data.getData();
             Glide.with(getContext()).load(photoUri).into(ivImage);
             InputStream inputStream = null;
@@ -198,7 +176,7 @@ public class ProfileFragment extends Fragment{
             if (resultCode == RESULT_OK) {
                 // by this point we have the camera photo on disk
                 //Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                Bitmap takenImage = rotateBitmapOrientation(photoFile.getAbsolutePath());
+                Bitmap takenImage = Tools.get().rotateBitmapOrientation(photoFile.getAbsolutePath());
                 // RESIZE BITMAP, see section below
                 // Load the taken image into a preview
                 ivImage.setImageBitmap(takenImage);
@@ -210,78 +188,40 @@ public class ProfileFragment extends Fragment{
         }
     }
 
+    private void selectImage() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(intent, 1);
+        }
+    }
+
     private void launchCamera(){
         if (ActivityCompat.checkSelfPermission(getContext(),Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, 20);
         }else {
             Log.e(TAG, "PERMISSION GRANTED");
         }
-
-        // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Create a File reference to access to future access
         photoFile = getPhotoFileUri(photoFileName);
-        // wrap File object into a content provider
-        // required for API >= 24
-        // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
         Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
-        // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
-        // So as long as the result is not null, it's safe to use the intent.
         if (intent.resolveActivity(getContext().getPackageManager()) != null) {
-            // Start the image capture intent to take photo
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
     }
 
     public File getPhotoFileUri(String fileName) {
-        // Get safe storage directory for photos
-        // Use `getExternalFilesDir` on Context to access package-specific directories.
-        // This way, we don't need to request external read/write runtime permissions.
         File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
-        // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
             Log.d(TAG, "failed to create directory");
         }
-        // Return the file target for the photo based on filename
         File file = new File(mediaStorageDir.getPath() + File.separator + fileName);
         return file;
     }
 
-
-
-    public Bitmap rotateBitmapOrientation(String photoFilePath) {
-        // Create and configure BitmapFactory
-        BitmapFactory.Options bounds = new BitmapFactory.Options();
-        bounds.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(photoFilePath, bounds);
-        BitmapFactory.Options opts = new BitmapFactory.Options();
-        Bitmap bm = BitmapFactory.decodeFile(photoFilePath, opts);
-        // Read EXIF Data
-        ExifInterface exif = null;
-        try {
-            exif = new ExifInterface(photoFilePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
-        int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
-        int rotationAngle = 0;
-        if (orientation == ExifInterface.ORIENTATION_ROTATE_90) rotationAngle = 90;
-        if (orientation == ExifInterface.ORIENTATION_ROTATE_180) rotationAngle = 180;
-        if (orientation == ExifInterface.ORIENTATION_ROTATE_270) rotationAngle = 270;
-        // Rotate Bitmap
-        Matrix matrix = new Matrix();
-        matrix.setRotate(rotationAngle, (float) bm.getWidth() / 2, (float) bm.getHeight() / 2);
-        Bitmap rotatedBitmap = Bitmap.createBitmap(bm, 0, 0, bounds.outWidth, bounds.outHeight, matrix, true);
-        // Return result
-        return rotatedBitmap;
-
-    }
-
     public void populateEventAdapter(){
         ParseRelation<Event> eventsToAttend = user.getRelation("willAttend");
-
         ParseQuery<Event> girlWhat = eventsToAttend.getQuery();
         girlWhat.findInBackground(new FindCallback<Event>() {
             @Override
