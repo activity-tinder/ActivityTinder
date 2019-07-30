@@ -19,10 +19,22 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/ivImage"
+                android:layout_width="match_parent"
+                android:layout_height="239dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:color/background_dark" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/username_text_input_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
 
                 <EditText
                     android:id="@+id/etEventName"
@@ -30,12 +42,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginLeft="32dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="0dp"
-                    android:gravity="top|left"
                     android:ems="10"
+                    android:gravity="top|left"
                     android:hint="Event Name"
                     android:inputType="textPersonName"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:visibility="visible" />
@@ -47,20 +58,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/etEventDescription"
-                android:layout_width="328dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
-                android:ems="10"
-                android:hint="Event Description"
-                android:inputType="textPersonName"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/etEventName"
-                tools:visibility="visible" />
+                <EditText
+                    android:id="@+id/etEventDescription"
+                    android:layout_width="328dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:ems="10"
+                    android:hint="Event Description"
+                    android:inputType="textPersonName"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/etEventName"
+                    tools:visibility="visible" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,22 +80,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/etEventDate"
-                android:layout_width="328dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
-                android:cursorVisible="false"
-                android:ems="10"
-                android:focusable="false"
-                android:hint="Event Date"
-                android:inputType="date"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
+                <EditText
+                    android:id="@+id/etEventDate"
+                    android:layout_width="328dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:cursorVisible="false"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:hint="Event Date"
+                    android:inputType="date"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,22 +104,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/etStartTime"
-                android:layout_width="328dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
-                android:cursorVisible="false"
-                android:ems="10"
-                android:focusable="false"
-                android:hint="Event Start Time"
-                android:inputType="textPersonName"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
+                <EditText
+                    android:id="@+id/etStartTime"
+                    android:layout_width="328dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:cursorVisible="false"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:hint="Event Start Time"
+                    android:inputType="textPersonName"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -117,22 +128,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/etEndTime"
-                android:layout_width="328dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
-                android:cursorVisible="false"
-                android:ems="10"
-                android:focusable="false"
-                android:hint="Event End Time"
-                android:inputType="textPersonName"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
+                <EditText
+                    android:id="@+id/etEndTime"
+                    android:layout_width="328dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:cursorVisible="false"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:hint="Event End Time"
+                    android:inputType="textPersonName"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -141,20 +152,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/etEventLocation"
-                android:layout_width="328dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
-                android:ems="10"
-                android:hint="Event Address"
-                android:inputType="textPersonName"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
+                <EditText
+                    android:id="@+id/etEventLocation"
+                    android:layout_width="328dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:ems="10"
+                    android:hint="Event Address"
+                    android:inputType="textPersonName"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -174,22 +185,23 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/username_text_input_layout7"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/etPeopleLimit"
-                android:layout_width="328dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
-                android:ems="10"
-                android:hint="Max Amount of People"
-                android:inputType="number"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
+                android:layout_marginTop="8dp">
+
+                <EditText
+                    android:id="@+id/etPeopleLimit"
+                    android:layout_width="328dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:ems="10"
+                    android:hint="Max Amount of People"
+                    android:inputType="number"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -199,7 +211,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="28dp"
                 android:layout_marginLeft="28dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginBottom="0dp"
                 android:prompt="@string/categories"
                 android:spinnerMode="dropdown"
@@ -209,17 +221,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/etPeopleLimit"
                 app:layout_constraintVertical_bias="0.1" />
 
-            <ImageView
-                android:id="@+id/ivImage"
-                android:layout_width="320dp"
-                android:layout_height="328dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="44dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:color/background_dark" />
-
             <Button
                 android:id="@+id/btnCreateEvent"
                 android:layout_width="wrap_content"
@@ -227,19 +228,13 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@color/bright_green"
                 android:text="Create Event"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.916"
                 app:layout_constraintStart_toEndOf="@+id/spinner"
                 app:layout_constraintTop_toBottomOf="@+id/etPeopleLimit" />
-
-            <Button
-                android:id="@+id/btnJoin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
-                android:background="@color/light_purple"
-                android:text="Join Event" />
 
         </LinearLayout>
     </ScrollView>
