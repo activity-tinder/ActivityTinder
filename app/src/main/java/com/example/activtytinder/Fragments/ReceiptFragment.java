@@ -20,12 +20,17 @@ import androidx.fragment.app.Fragment;
 
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
+import com.parse.ParseUser;
 
-import org.json.JSONArray;
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReceiptFragment extends Fragment  {
 
@@ -39,7 +44,7 @@ public class ReceiptFragment extends Fragment  {
     private String mCreator;
     private String mDate;
     private String mLocation;
-    private JSONArray mAttendees;
+    private ArrayList<String> mAttendees;
     private String mDescription;
     private Event mEvent;
 //    private Button btnHome;
@@ -107,8 +112,38 @@ public class ReceiptFragment extends Fragment  {
                     mDate = event.getKeyDate();
                     mCreator = event.getCreator().getUsername();
                     mLocation = event.getKeyAddress();
-                    mAttendees = event.getKeyAttendees();
                     mDescription = event.getKeyDescription();
+                    ParseRelation<ParseUser> relation = event.getRelation("usersAttending");
+                    ParseQuery<ParseUser> relationQuery = relation.getQuery();
+                    relationQuery.findInBackground(new FindCallback<ParseUser>() {
+                        @Override
+                        public void done(List<ParseUser> attendees, ParseException e) {
+                            if(e == null){
+                                for(int x = 0; x < attendees.size(); x++){
+                                    mAttendees.add(attendees.get(x).getUsername());
+                                }
+                                tvEventDetails.setText("Name: "
+                                        + mName
+                                        + "\n\nDate: "
+                                        + mDate
+                                        + "\n\nCreated by: "
+                                        + mCreator
+                                        +"\n\nLocation: "
+                                        + mLocation
+                                        + "\n\nAttendees: "
+                                        + mAttendees
+                                        + "\n\nDescription: "
+                                        + mDescription
+                                        + "\n\n"
+                                );
+                            }
+                            else{
+                                Log.e("ReceiptFragment", "There are no attendees");
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
 //                    for (int x = 0; x <event.getKeyAttendees().length(); x++){
 //                        try {
 //                            String userId = event.getKeyAttendees().getString(x);
@@ -119,20 +154,7 @@ public class ReceiptFragment extends Fragment  {
 //                        }
 //
 //                    }
-                    tvEventDetails.setText("Name: "
-                            + mName
-                            + "\n\nDate: "
-                            + mDate
-                            + "\n\nCreated by: "
-                            + mCreator
-                            +"\n\nLocation: "
-                            + mLocation
-                            + "\n\nAttendees: "
-                            + mAttendees
-                            + "\n\nDescription: "
-                            + mDescription
-                            + "\n\n"
-                    );
+
                 }
                 else{
                     Log.e("ReceiptFragment", "Girl, you don goofed");
