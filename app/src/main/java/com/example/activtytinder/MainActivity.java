@@ -15,7 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigationView;
+    public BottomNavigationView bottomNavigationView;
 
     final Fragment cardFragment = new CardFragment();
     final Fragment createFragment = new CreateFragment();
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
 
-        fragmentManager.beginTransaction().add(R.id.flContainer, receiptFragment, "4").hide(receiptFragment);
+        fragmentManager.beginTransaction().add(R.id.flContainer, receiptFragment, "4").hide(receiptFragment).commit();
         fragmentManager.beginTransaction().add(R.id.flContainer, profileFragment, "3").hide(profileFragment).commit();
         fragmentManager.beginTransaction().add(R.id.flContainer, createFragment, "2").hide(createFragment).commit();
         fragmentManager.beginTransaction().add(R.id.flContainer, cardFragment, "1").commit();
@@ -49,10 +49,14 @@ public class MainActivity extends AppCompatActivity {
                     active = createFragment;
                     break;
                 case R.id.action_profile:
-                default:
                     fragmentManager.beginTransaction().hide(active).show(profileFragment).commit();
                     active = profileFragment;
                     break;
+                 default:
+                     //Added this to the fragment manager so that I cna create it at the beginning
+                     fragmentManager.beginTransaction().hide(active).show(receiptFragment).commit();
+                     active = receiptFragment;
+                     break;
             }
 
             return true;
