@@ -1,5 +1,6 @@
 package com.example.activtytinder.Fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -98,7 +99,7 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
 
         btnGetEventLocation.setOnClickListener(btnEventLocation -> {
             searchQuery = etEventAddress.getText().toString();
-            LocationManager.get().getEventAddress(searchQuery, API_KEY, etEventAddress, getContext());
+            LocationManager.get().getLocationAddress(searchQuery, API_KEY, etEventAddress, getContext());
 
         });
 
@@ -107,7 +108,7 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
                 Toast.makeText(CreateFragment.this.getContext(), "Please enter valid amount of people!", Toast.LENGTH_SHORT).show();
                 return;
             }
-            gpEventCoordinates = LocationManager.get().getEventCoordinates();
+            gpEventCoordinates = LocationManager.get().getLocationCoordinates();
             final String EventName = etEventName.getText().toString();
             final String EventDescription = etEventDescription.getText().toString();
             final String EventDate = etEventDate.getText().toString();
@@ -124,14 +125,16 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
     }
 
 
+    @SuppressLint("NewApi")
     private Event makeEvent(String Name, String Description, String Date, String StartTime, String EndTime, String Address,
-                           Integer PeopleLimit, ParseGeoPoint EventCoordinates, String Category, ParseFile EventPhoto)
+                            Integer PeopleLimit, ParseGeoPoint EventCoordinates, String Category, ParseFile EventPhoto)
     {
-        while (Name.equals("") || Description.equals("") || Date.equals("") || StartTime.equals("") || EndTime.equals("")
+        if (Name.equals("") || Description.equals("") || Date.equals("") || StartTime.equals("") || EndTime.equals("")
                 || Address.equals("") || PeopleLimit == null || EventCoordinates == null || Category.equals("")
                 || EventPhoto == null || Category.equals("Choose Category"))
         {
             Toast.makeText(getContext(), "ERROR IN REQUIRED FIELD! REVIEW EVENT!",Toast.LENGTH_SHORT).show();
+            return  null;
         }
         Event event = new Event();
         event.setKeyCreator(ParseUser.getCurrentUser());
@@ -145,6 +148,7 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         event.setKeyLocation(EventCoordinates);
         event.setKeyCategory(Category);
         event.put("eventPhoto", EventPhoto);
+
         // TODO -- read documentation for saveinbackground
         event.saveInBackground(e -> {
             if (e != null){

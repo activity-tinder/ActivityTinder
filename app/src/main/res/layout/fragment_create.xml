@@ -28,7 +28,8 @@
                 android:layout_marginTop="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:color/background_dark" />
+                app:srcCompat="@android:drawable/ic_menu_gallery"
+                tools:srcCompat="@android:drawable/ic_menu_gallery" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/username_text_input_layout"
@@ -152,20 +153,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/etEventLocation"
-                    android:layout_width="328dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="0dp"
-                    android:ems="10"
-                    android:hint="Event Address"
-                    android:inputType="textPersonName"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:visibility="visible" />
+            <EditText
+                android:id="@+id/etEventLocation"
+                android:layout_width="328dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:ems="10"
+                android:hint="Event Street Address, City, State"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
