@@ -26,8 +26,11 @@ import com.parse.ParseQuery;
 
 import org.parceler.Parcels;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import static com.example.activtytinder.Fragments.ProfileFragment.TAG;
 
@@ -93,29 +96,44 @@ public class CardFragment extends Fragment {
                 return;
             }
 
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm a");
             LocalDateTime now = LocalDateTime.now();
-            System.out.println(dtf.format(now));
 
+            Date currentTime = null;
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
+            try {
+                currentTime = sdf.parse(dtf.format(now));
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
 
             for (int i = 0; i < event.size(); i++) {
 
-                // if statements that checks if event has already occurred/is in progress
+                String eventTimeRaw = event.get(i).getKeyDate() + " " + event.get(i).getKeyStartTime();
+                Date eventTime = null;
+                try {
+                    eventTime = sdf.parse(eventTimeRaw);
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
 
+                if (currentTime.compareTo(eventTime) < 0) {
+                    System.out.println("current time is before event time, can show");
 
-                // TODO -- call adding and removing views in a multithreading way, synchronized
-                // figure out if this call is safe or not
-                SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), event.get(i), cardViewHolderSize);
-                Event eventToSend = event.get(i);
+                    // TODO -- call adding and removing views in a multithreading way, synchronized
+                    // figure out if this call is safe or not
+                    SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), event.get(i), cardViewHolderSize);
+                    Event eventToSend = event.get(i);
 
-                // TODO -- figure out how to dynamically set colors
+                    // TODO -- figure out how to dynamically set colors
 //                if (event.get(i).getCategory().equals("Active") && event.get(i).getCategory() != null) {
 //                    clCardStack.setBackgroundColor(23163377);
 //                }
 
-                cardListeners(card, eventToSend);
+                    cardListeners(card, eventToSend);
 
-                mSwipePlaceHolderView.addView(card);
+                    mSwipePlaceHolderView.addView(card);
+                }
             }
         });
 

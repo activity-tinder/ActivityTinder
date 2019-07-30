@@ -55,15 +55,12 @@ public class CardUtils {
 
         ParseRelation<Event> eventInUser = user.getRelation("willAttend");
         eventInUser.add(event);
-        user.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Log.d("DEBUG", "Inputting user successful!");
-                } else {
-                    Log.d("DEBUG", "Inputting user failed!");
-                    e.printStackTrace();
-                }
+        user.saveInBackground(e -> {
+            if (e == null) {
+                Log.d("DEBUG", "Inputting user successful!");
+            } else {
+                Log.d("DEBUG", "Inputting user failed!");
+                e.printStackTrace();
             }
         });
     }
