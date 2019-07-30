@@ -20,14 +20,19 @@ import androidx.fragment.app.Fragment;
 
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
+import com.parse.ParseUser;
 
-import org.json.JSONArray;
 import org.parceler.Parcels;
 
-public class ReceiptFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ReceiptFragment extends Fragment  {
 
     private Button btnDirections;
     private Button btnChat;
@@ -39,7 +44,7 @@ public class ReceiptFragment extends Fragment {
     private String mCreator;
     private String mDate;
     private String mLocation;
-    private JSONArray mAttendees;
+    private ArrayList<String> mAttendees;
     private String mDescription;
     private Event mEvent;
 //    private Button btnHome;
@@ -49,7 +54,6 @@ public class ReceiptFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_receipt, container, false);
     }
 
@@ -62,10 +66,17 @@ public class ReceiptFragment extends Fragment {
         btnDitch = view.findViewById(R.id.btnDitchEvent);
         scDetails = view.findViewById(R.id.scDetails);
         tvEventDetails = view.findViewById(R.id.eventDetails);
+        mAttendees = new ArrayList<>();
 //        btnHome = view.findViewById(R.id.btnHome);
         Bundle eventBundle = this.getArguments();
         if(eventBundle != null){
             mEvent = Parcels.unwrap(eventBundle.getParcelable("Event"));
+        }
+        //Right now, this is stopping the code from crashing because i don't get an event
+        //Main Activity creates this fragment at the beginning, but I'm still not able to click on the navigation bar
+        else{
+            tvEventDetails.setText("You have not selected an event to attend yet!");
+            return;
         }
 
 //        bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);
@@ -80,54 +91,43 @@ public class ReceiptFragment extends Fragment {
             @Override
             public void done(Event event, ParseException e) {
                 if(e == null){
-                    // ParseRelation relation = event.getRelation("usersAttending");
-//                    for(int x =0; x< relation.describeContents(); x++){
-//                    }
-//                    ParseRelation relation = event.getRelation("usersAttending");
-//                    ParseQuery attendeesQuery = relation.getQuery();
-//                    attendeesQuery.findInBackground(new FindCallback() {
-//                        @Override
-//                        public void done(List<Event> usersList, ParseException e) {
-//                            if(e == null){
-//                                for(int x =0; x < usersList.size(); x++){
-//                                    mAttendees.add(usersList.get(x).getUsername());
-//                                }
-//                            }
-//                        }
-//
-//                    });
-//                    ParseQuery queryAttendees = relation.getQuery();
-//                    queryAttendees.getInBackground();
                     mName = event.getKeyName();
                     mDate = event.getKeyDate();
                     mCreator = event.getCreator().getUsername();
                     mLocation = event.getKeyAddress();
-                    mAttendees = event.getKeyAttendees();
                     mDescription = event.getKeyDescription();
-//                    for (int x = 0; x <event.getKeyAttendees().length(); x++){
-//                        try {
-//                            String userId = event.getKeyAttendees().getString(x);
-                    //Make mAttendees an arraylist
-//                            mAttendees.add(userId);
-//                        } catch (JSONException e1) {
-//                            e1.printStackTrace();
-//                        }
-//
-//                    }
-                    tvEventDetails.setText("Name: "
-                            + mName
-                            + "\n\nDate: "
-                            + mDate
-                            + "\n\nCreated by: "
-                            + mCreator
-                            +"\n\nLocation: "
-                            + mLocation
-                            + "\n\nAttendees: "
-                            + mAttendees
-                            + "\n\nDescription: "
-                            + mDescription
-                            + "\n\n"
-                    );
+                    ParseRelation<ParseUser> relation = event.getRelation("usersAttending");
+                    ParseQuery<ParseUser> query = relation.getQuery();
+                    query.include(Event.KEY_CREATOR);
+                    query.findInBackground(new FindCallback<ParseUser>() {
+                        @Override
+                        public void done(List<ParseUser> users, ParseException e) {
+                            if(e == null){
+                                for(int x = 0; x < users.size(); x++){
+                                    mAttendees.add(users.get(x).getUsername());
+                                }
+                                tvEventDetails.setText("Name: "
+                                        + mName
+                                        + "\n\nDate: "
+                                        + mDate
+                                        + "\n\nCreated by: "
+                                        + mCreator
+                                        +"\n\nLocation: "
+                                        + mLocation
+                                        + "\n\nAttendees: "
+                                        + mAttendees.toString().substring(1, mAttendees.toString().length() -1 )
+                                        + "\n\nDescription: "
+                                        + mDescription
+                                        + "\n\n"
+                                );
+                            }
+                            else{
+                                Log.e("ReceiptFragment", "There are no attendees");
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
                 }
                 else{
                     Log.e("ReceiptFragment", "Girl, you don goofed");
@@ -189,18 +189,6 @@ public class ReceiptFragment extends Fragment {
             }
         });
 
-//        btnHome.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                bottomNavigationView.setVisibility(View.VISIBLE);
-//                FragmentManager fragmentManager = getFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.remove(ReceiptFragment.this);
-//                fragmentTransaction.commit();
-//                fragmentManager.popBackStack();
-//
-//            }
-//        });
     }
 
     private void searchWeb(String query) {

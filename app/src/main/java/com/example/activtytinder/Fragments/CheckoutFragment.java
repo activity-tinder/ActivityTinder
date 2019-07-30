@@ -84,8 +84,6 @@ public class CheckoutFragment extends DialogFragment {
         fragmentTransaction.replace(R.id.flContainer, receiptFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-        bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setVisibility(View.INVISIBLE);
     }
 
     @Nullable
@@ -116,6 +114,7 @@ public class CheckoutFragment extends DialogFragment {
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
+        query.include(Event.KEY_CREATOR);
         query.getInBackground(event.getObjectId(), (Event event, ParseException e) -> {
             if(e == null){
                 mName = event.getKeyName();
