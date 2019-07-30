@@ -27,7 +27,7 @@ import com.parse.ParseQuery;
 import org.json.JSONArray;
 import org.parceler.Parcels;
 
-public class ReceiptFragment extends Fragment {
+public class ReceiptFragment extends Fragment  {
 
     private Button btnDirections;
     private Button btnChat;
@@ -49,7 +49,6 @@ public class ReceiptFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_receipt, container, false);
     }
 
@@ -66,6 +65,12 @@ public class ReceiptFragment extends Fragment {
         Bundle eventBundle = this.getArguments();
         if(eventBundle != null){
             mEvent = Parcels.unwrap(eventBundle.getParcelable("Event"));
+        }
+        //Right now, this is stopping the code from crashing because i don't get an event
+        //Main Activity creates this fragment at the beginning, but I'm still not able to click on the navigation bar
+        else{
+            tvEventDetails.setText("You have not selected an event to attend yet!");
+            return;
         }
 
 //        bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);

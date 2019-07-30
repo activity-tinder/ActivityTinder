@@ -84,8 +84,6 @@ public class CheckoutFragment extends DialogFragment {
         fragmentTransaction.replace(R.id.flContainer, receiptFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-        bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setVisibility(View.INVISIBLE);
     }
 
     @Nullable
