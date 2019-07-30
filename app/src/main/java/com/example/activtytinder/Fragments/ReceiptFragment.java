@@ -28,6 +28,9 @@ import com.parse.ParseQuery;
 import org.json.JSONArray;
 import org.parceler.Parcels;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ReceiptFragment extends Fragment {
 
     private Button btnDirections;
@@ -43,6 +46,8 @@ public class ReceiptFragment extends Fragment {
     private JSONArray mAttendees;
     private String mDescription;
     private Event mEvent;
+    private String mStartTime;
+    private String mEndTime;
 //    private Button btnHome;
 
 //    BottomNavigationView bottomNavigationView;
@@ -51,7 +56,7 @@ public class ReceiptFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_receipt, container , true);
+        return inflater.inflate(R.layout.fragment_receipt, container , false);
     }
 
     @Override
@@ -105,6 +110,8 @@ public class ReceiptFragment extends Fragment {
                     mLocation = event.getKeyAddress();
                     mAttendees = event.getKeyAttendees();
                     mDescription = event.getKeyDescription();
+                    mStartTime = event.getKeyStartTime();
+                    mEndTime = event.getKeyEndTime();
 //                    for (int x = 0; x <event.getKeyAttendees().length(); x++){
 //                        try {
 //                            String userId = event.getKeyAttendees().getString(x);
@@ -180,7 +187,17 @@ public class ReceiptFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //TODO-- open overlay that gives a bunch of calendar options that one can export the event name, details, location, and time to the calendar app of their choice
-                addEvent(mName, mLocation, 2000 ,  8000);
+                String rightTime = checkTime(mStartTime);
+                String myDate = mDate + " " + rightTime + ":00";
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:MM:SS");
+                Date startDate = null;
+                try {
+                    startDate = sdf.parse(myDate);
+                } catch (java.text.ParseException e) {
+                    e.printStackTrace();
+                }
+                long start = startDate.getTime();
+                addEvent(mName, mLocation, start,  8000);
             }
         });
 
@@ -223,6 +240,14 @@ public class ReceiptFragment extends Fragment {
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(intent);
         }
+    }
+
+    public String checkTime (String time) {
+        if (time.charAt(6) == 'A') {
+            String finalTime = time.substring(0,5);
+            return finalTime;
+        }else
+        return null;
     }
 
 
