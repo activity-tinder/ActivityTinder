@@ -1,6 +1,7 @@
 package com.example.activtytinder.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,16 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
+import com.parse.ParseUser;
 
-import org.json.JSONArray;
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DetailsFragment extends DialogFragment {
 
@@ -27,7 +35,7 @@ public class DetailsFragment extends DialogFragment {
     private String mDate;
     private String mLocation;
     private String mCreator;
-    private JSONArray mAttendees;
+    private ArrayList mAttendees;
     private Integer mLimit;
     private String mDescription;
     private String mStartTime;
@@ -71,37 +79,56 @@ public class DetailsFragment extends DialogFragment {
         tvEventDetailsFragment.requestFocus();
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
+        mAttendees = new ArrayList();
         mName = mEvent.getKeyName();
         mDate = mEvent.getKeyDate();
         mLocation = mEvent.getKeyAddress();
         mCreator = mEvent.getCreator().getUsername();
-        mAttendees = mEvent.getKeyAttendees();
         mLimit = mEvent.getKeyLimit();
         mDescription = mEvent.getKeyDescription();
         mStartTime = mEvent.getKeyStartTime();
         mEndTime = mEvent.getKeyEndTime();
 
-        tvEventDetailsFragment.setText(
-                "Name: "
-                        + mName
-                        + "\n\nDate: "
-                        + mDate
-                        + "\n\nTime: "
-                        + mStartTime
-                        + " - "
-                        + mEndTime
-                        + "\n\nCreated by: "
-                        + mCreator
-                        +"\n\nLocation: "
-                        + mLocation
-                        + "\n\nAttendees: "
-                        + mAttendees
-                        + "\n\nPeople Limit: "
-                        + mLimit
-                        + "\n\nDescription: "
-                        + mDescription
-                        + "\n\n"
-        );
+        ParseRelation<ParseUser> relation = mEvent.getRelation("usersAttending");
+        ParseQuery<ParseUser> query = relation.getQuery();
+        query.include(Event.KEY_CREATOR);
+        query.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> users, ParseException e) {
+                if(e == null){
+                    for(int x = 0; x < users.size(); x++){
+                        mAttendees.add(users.get(x).getUsername());
+                    }
+                    tvEventDetailsFragment.setText(
+                            "Name: "
+                                    + mName
+                                    + "\n\nDate: "
+                                    + mDate
+                                    + "\n\nTime: "
+                                    + mStartTime
+                                    + " - "
+                                    + mEndTime
+                                    + "\n\nCreated by: "
+                                    + mCreator
+                                    +"\n\nLocation: "
+                                    + mLocation
+                                    + "\n\nAttendees: "
+                                    + mAttendees.toString().substring(1, mAttendees.toString().length() -1 )
+                                    + "\n\nPeople Limit: "
+                                    + mLimit
+                                    + "\n\nDescription: "
+                                    + mDescription
+                                    + "\n\n"
+                    );
+                }
+                else{
+                    Log.e("ReceiptFragment", "There are no attendees");
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,4 +136,5 @@ public class DetailsFragment extends DialogFragment {
             }
         });
     }
+
 }

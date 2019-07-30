@@ -114,6 +114,7 @@ public class CheckoutFragment extends DialogFragment {
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
+        query.include(Event.KEY_CREATOR);
         query.getInBackground(event.getObjectId(), (Event event, ParseException e) -> {
             if(e == null){
                 mName = event.getKeyName();
