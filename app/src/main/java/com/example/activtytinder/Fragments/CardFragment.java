@@ -117,7 +117,7 @@ public class CardFragment extends Fragment {
                     e1.printStackTrace();
                 }
 
-                if (currentTime.compareTo(eventTime) < 0) {
+                if (currentTime.before(eventTime)) {
                     System.out.println("current time is before event time, can show");
 
                     // TODO -- call adding and removing views in a multithreading way, synchronized
