@@ -127,11 +127,12 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
     private Event makeEvent(String Name, String Description, String Date, String StartTime, String EndTime, String Address,
                            Integer PeopleLimit, ParseGeoPoint EventCoordinates, String Category, ParseFile EventPhoto)
     {
-        while (Name.equals("") || Description.equals("") || Date.equals("") || StartTime.equals("") || EndTime.equals("")
+        if (Name.equals("") || Description.equals("") || Date.equals("") || StartTime.equals("") || EndTime.equals("")
                 || Address.equals("") || PeopleLimit == null || EventCoordinates == null || Category.equals("")
                 || EventPhoto == null || Category.equals("Choose Category"))
         {
             Toast.makeText(getContext(), "ERROR IN REQUIRED FIELD! REVIEW EVENT!",Toast.LENGTH_SHORT).show();
+            return  null;
         }
         Event event = new Event();
         event.setKeyCreator(ParseUser.getCurrentUser());

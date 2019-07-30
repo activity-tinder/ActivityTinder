@@ -58,6 +58,10 @@ public class SignUpActivity  extends AppCompatActivity {
         });
 
         btnCreateAccount.setOnClickListener(btnCreateAccount -> {
+            if (LocationManager.get().getCity() == null) {
+                Toast.makeText(SignUpActivity.this, "Please enter valid Address", Toast.LENGTH_SHORT).show();
+                return;
+            }
             String Birthday = etBirthday.getText().toString();
             String deliveryDate = Birthday;
             SimpleDateFormat dateFormatprev = new SimpleDateFormat("MM/dd/yyyy");
@@ -79,6 +83,12 @@ public class SignUpActivity  extends AppCompatActivity {
     }
 
     private void makeAccount(String Name, String Email, Date Birthday, ParseGeoPoint BaseLocation, String Username, String Password, String HomeCity){
+        if (Name.equals("") || Email.equals("") || Birthday == null || BaseLocation == null || Username.equals("")
+                || Password.equals("") || HomeCity.equals(""))
+        {
+            Toast.makeText(SignUpActivity.this, "ERROR IN REQUIRED FIELD! REVIEW YOUR PROFILE!",Toast.LENGTH_SHORT).show();
+            return;
+        }
         ParseUser user = new ParseUser();
         user.setUsername(Username);
         user.setPassword(Password);
