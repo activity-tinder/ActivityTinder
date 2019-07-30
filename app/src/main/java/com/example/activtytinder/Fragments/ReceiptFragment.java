@@ -17,12 +17,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -45,17 +42,14 @@ public class ReceiptFragment extends Fragment {
     private JSONArray mAttendees;
     private String mDescription;
     private Event mEvent;
-    private Button btnHome;
+//    private Button btnHome;
 
-    BottomNavigationView bottomNavigationView;
+//    BottomNavigationView bottomNavigationView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Bundle eventBundle = this.getArguments();
-        if(eventBundle != null){
-            mEvent = Parcels.unwrap(eventBundle.getParcelable("Event"));
-        }
+
         return inflater.inflate(R.layout.fragment_receipt, container, false);
     }
 
@@ -68,9 +62,13 @@ public class ReceiptFragment extends Fragment {
         btnDitch = view.findViewById(R.id.btnDitchEvent);
         scDetails = view.findViewById(R.id.scDetails);
         tvEventDetails = view.findViewById(R.id.eventDetails);
-        btnHome = view.findViewById(R.id.btnHome);
+//        btnHome = view.findViewById(R.id.btnHome);
+        Bundle eventBundle = this.getArguments();
+        if(eventBundle != null){
+            mEvent = Parcels.unwrap(eventBundle.getParcelable("Event"));
+        }
 
-        bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);
+//        bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);
 
         ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
         query.include(Event.KEY_CREATOR);
@@ -191,18 +189,18 @@ public class ReceiptFragment extends Fragment {
             }
         });
 
-        btnHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomNavigationView.setVisibility(View.VISIBLE);
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.remove(ReceiptFragment.this);
-                fragmentTransaction.commit();
-                fragmentManager.popBackStack();
-
-            }
-        });
+//        btnHome.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                bottomNavigationView.setVisibility(View.VISIBLE);
+//                FragmentManager fragmentManager = getFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.remove(ReceiptFragment.this);
+//                fragmentTransaction.commit();
+//                fragmentManager.popBackStack();
+//
+//            }
+//        });
     }
 
     private void searchWeb(String query) {
