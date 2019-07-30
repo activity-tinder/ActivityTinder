@@ -2,6 +2,7 @@ package com.example.activtytinder;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.activtytinder.Fragments.ReceiptFragment;
 import com.example.activtytinder.Models.Event;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -21,8 +24,12 @@ import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
+import org.parceler.Parcels;
+
 import java.io.File;
 import java.util.List;
+
+import static com.example.activtytinder.MainActivity.fm;
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder>{
 
@@ -85,6 +92,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
 
         }
+        holder.bind(event);
     }
 
     @Override
@@ -108,6 +116,18 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             tvDate = itemview.findViewById(R.id.tvDate);
             tvLocation = itemview.findViewById(R.id.tvLocation);
             tvPeopleAttending= itemview.findViewById(R.id.tvPeopleAttending);
+        }
+        public void bind(final Event event){
+           itemView.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   Fragment fragment = new ReceiptFragment();
+                   Bundle bundle = new Bundle();
+                   bundle.putParcelable("Event", Parcels.wrap(event));
+                   fragment.setArguments(bundle);
+                   fm.beginTransaction().replace(R.id.flContainer, fragment).commit();
+               }
+           });
         }
 
     }
