@@ -19,13 +19,14 @@ public class MainActivity extends AppCompatActivity {
     final Fragment cardFragment = new CardFragment();
     final Fragment createFragment = new CreateFragment();
     final Fragment profileFragment = new ProfileFragment();
-    final FragmentManager fm = getSupportFragmentManager();
+    public static FragmentManager fm;
     Fragment active = cardFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fm = getSupportFragmentManager();
 
         fm.beginTransaction().add(R.id.flContainer, profileFragment, "3").hide(profileFragment).commit();
         fm.beginTransaction().add(R.id.flContainer, createFragment, "2").hide(createFragment).commit();
