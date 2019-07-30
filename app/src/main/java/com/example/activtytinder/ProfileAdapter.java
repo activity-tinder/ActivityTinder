@@ -64,7 +64,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> users, ParseException e) {
-                holder.tvPeopleAttending.setText("There are "  + users.size() +" people attending.");
+                if(users.size() == 1){
+                    holder.tvPeopleAttending.setText("There is "  + users.size() +" person attending.");
+                }
+                else{
+                    holder.tvPeopleAttending.setText("There are "  + users.size() +" people attending.");
+                }
+
             }
         });
 
