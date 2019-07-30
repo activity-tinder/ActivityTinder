@@ -26,6 +26,7 @@ import com.parse.ParseQuery;
 
 import org.parceler.Parcels;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -99,41 +100,71 @@ public class CardFragment extends Fragment {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm a");
             LocalDateTime now = LocalDateTime.now();
 
-            Date currentTime = null;
-            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
+            Date currentDate = null;
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
             try {
-                currentTime = sdf.parse(dtf.format(now));
+                currentDate = sdf.parse(dtf.format(now));
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+
+            Date currentTime = null;
+            SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm a");
+            try {
+                currentTime = sdfTime.parse(dtf.format(now));
             } catch (ParseException e1) {
                 e1.printStackTrace();
             }
 
             for (int i = 0; i < event.size(); i++) {
 
-                String eventTimeRaw = event.get(i).getKeyDate() + " " + event.get(i).getKeyStartTime();
-                Date eventTime = null;
-                try {
-                    eventTime = sdf.parse(eventTimeRaw);
-                } catch (ParseException e1) {
-                    e1.printStackTrace();
-                }
+//                String eventDateRaw = event.get(i).getKeyDate();
+//                String eventTimeRaw = event.get(i).getKeyStartTime();
+//
+//                Date eventDate = null;
+//                Date eventTime = null;
+//                try {
+//                    eventDate = sdf.parse(eventDateRaw);
+//                } catch (ParseException e1) {
+//                    e1.printStackTrace();
+//                }
+//                try {
+//                    eventTime = sdfTime.parse(eventTimeRaw);
+//                } catch (ParseException e1) {
+//                    e1.printStackTrace();
+//                }
+//
+//                if (currentDate.before(eventDate) || (currentDate.equals(eventDate) && currentTime.before(eventTime))) {
+//                    System.out.println("current time is before event time, can show");
+//
+//                    // TODO -- call adding and removing views in a multithreading way, synchronized
+//                    // figure out if this call is safe or not
+//                    SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), event.get(i), cardViewHolderSize);
+//                    Event eventToSend = event.get(i);
+//
+//                    // TODO -- figure out how to dynamically set colors
+////                if (event.get(i).getCategory().equals("Active") && event.get(i).getCategory() != null) {
+////                    clCardStack.setBackgroundColor(23163377);
+////                }
+//
+//                    cardListeners(card, eventToSend);
+//
+//                    mSwipePlaceHolderView.addView(card);
+//                }
 
-                if (currentTime.before(eventTime)) {
-                    System.out.println("current time is before event time, can show");
+                // TODO -- call adding and removing views in a multithreading way, synchronized
+                // figure out if this call is safe or not
+                SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), event.get(i), cardViewHolderSize);
+                Event eventToSend = event.get(i);
 
-                    // TODO -- call adding and removing views in a multithreading way, synchronized
-                    // figure out if this call is safe or not
-                    SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), event.get(i), cardViewHolderSize);
-                    Event eventToSend = event.get(i);
-
-                    // TODO -- figure out how to dynamically set colors
+                // TODO -- figure out how to dynamically set colors
 //                if (event.get(i).getCategory().equals("Active") && event.get(i).getCategory() != null) {
 //                    clCardStack.setBackgroundColor(23163377);
 //                }
 
-                    cardListeners(card, eventToSend);
+                cardListeners(card, eventToSend);
 
-                    mSwipePlaceHolderView.addView(card);
-                }
+                mSwipePlaceHolderView.addView(card);
             }
         });
 
