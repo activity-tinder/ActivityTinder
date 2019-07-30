@@ -29,7 +29,7 @@ import org.parceler.Parcels;
 import java.io.File;
 import java.util.List;
 
-import static com.example.activtytinder.MainActivity.fm;
+import static com.example.activtytinder.MainActivity.fragmentManager;
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder>{
 
@@ -131,7 +131,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                    Bundle bundle = new Bundle();
                    bundle.putParcelable("Event", Parcels.wrap(event));
                    fragment.setArguments(bundle);
-                   fm.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                   fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                }
            });
         }

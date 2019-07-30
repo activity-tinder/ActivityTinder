@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.activtytinder.Fragments.CardFragment;
 import com.example.activtytinder.Fragments.CreateFragment;
 import com.example.activtytinder.Fragments.ProfileFragment;
+import com.example.activtytinder.Fragments.ReceiptFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -19,18 +20,20 @@ public class MainActivity extends AppCompatActivity {
     final Fragment cardFragment = new CardFragment();
     final Fragment createFragment = new CreateFragment();
     final Fragment profileFragment = new ProfileFragment();
-    public static FragmentManager fm;
+    final Fragment receiptFragment = new ReceiptFragment();
+    public static FragmentManager fragmentManager;
     Fragment active = cardFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fm = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
 
-        fm.beginTransaction().add(R.id.flContainer, profileFragment, "3").hide(profileFragment).commit();
-        fm.beginTransaction().add(R.id.flContainer, createFragment, "2").hide(createFragment).commit();
-        fm.beginTransaction().add(R.id.flContainer, cardFragment, "1").commit();
+        fragmentManager.beginTransaction().add(R.id.flContainer, receiptFragment, "4").hide(receiptFragment);
+        fragmentManager.beginTransaction().add(R.id.flContainer, profileFragment, "3").hide(profileFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.flContainer, createFragment, "2").hide(createFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.flContainer, cardFragment, "1").commit();
 
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -38,16 +41,16 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.action_card:
-                    fm.beginTransaction().hide(active).show(cardFragment).commit();
+                    fragmentManager.beginTransaction().hide(active).show(cardFragment).commit();
                     active = cardFragment;
                     break;
                 case R.id.action_create:
-                    fm.beginTransaction().hide(active).show(createFragment).commit();
+                    fragmentManager.beginTransaction().hide(active).show(createFragment).commit();
                     active = createFragment;
                     break;
                 case R.id.action_profile:
                 default:
-                    fm.beginTransaction().hide(active).show(profileFragment).commit();
+                    fragmentManager.beginTransaction().hide(active).show(profileFragment).commit();
                     active = profileFragment;
                     break;
             }
