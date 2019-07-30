@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.activtytinder.LoginActivity;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.Models.Tools;
@@ -147,8 +148,8 @@ public class ProfileFragment extends Fragment{
         Log.d("DEBUG", "in setting image " + security + url);
         Glide.with(getContext())
                 .load(security + url)
-                .centerCrop()
                 .placeholder(R.drawable.ic_launcher_foreground)
+                .apply(RequestOptions.circleCropTransform())
                 .dontAnimate()
                 .into(ivImage);
     }
