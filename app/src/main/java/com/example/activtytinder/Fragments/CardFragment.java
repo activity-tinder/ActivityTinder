@@ -71,7 +71,7 @@ public class CardFragment extends Fragment {
 
         queryEvents();
 
-        btnManager();
+        btnListeners();
     }
 
     /**
@@ -87,7 +87,6 @@ public class CardFragment extends Fragment {
         eventQuery.include(Event.KEY_CREATOR);
         eventQuery.orderByAscending("eventDate");
         eventQuery.findInBackground((event, e) -> {
-
             if (e != null) {
                 Log.d(TAG, "Error with Parse Query");
                 e.printStackTrace();
@@ -108,35 +107,25 @@ public class CardFragment extends Fragment {
                 // figure out if this call is safe or not
                 SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), event.get(i), cardViewHolderSize);
                 Event eventToSend = event.get(i);
+
                 // TODO -- figure out how to dynamically set colors
 //                if (event.get(i).getCategory().equals("Active") && event.get(i).getCategory() != null) {
 //                    clCardStack.setBackgroundColor(23163377);
 //                }
 
-                /**
-                 * Listens for card being swiped affirmative and opens a checkout dialog overlay.
-                 */
-                card.setOnSwipeListener(() -> {
-                    Bundle eventBundle = new Bundle();
-                    eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
-                    CardFragment.this.showCheckoutDialog(eventToSend);
-                });
+                cardListeners(card, eventToSend);
 
-                /**
-                 * Listens for card being clicked and opens the card detail overlay.
-                 */
-                card.setOnClickListener(() -> {
-                    Bundle eventBundle = new Bundle();
-                    eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
-                    showDetailFragment(eventToSend);
-                });
                 mSwipePlaceHolderView.addView(card);
             }
         });
 
-        /**
-         * Creates and formats card stack.
-         */
+        buildCardStack();
+    }
+
+    /**
+     * Creates and formats card stack properties.
+     */
+    public void buildCardStack() {
         mSwipePlaceHolderView.getBuilder()
                 .setDisplayViewCount(4)
                 .setHeightSwipeDistFactor(8)
@@ -175,10 +164,35 @@ public class CardFragment extends Fragment {
     }
 
     /**
+     * Initializes card action listeners.
+     * @param card - the specific card the listener is being created for
+     * @param eventToSend - the event that the card is associated with
+     */
+    private void cardListeners(SwipeEventCard card, Event eventToSend) {
+        /**
+         * Listens for card being swiped affirmative and opens a checkout dialog overlay.
+         */
+        card.setOnSwipeListener(() -> {
+            Bundle eventBundle = new Bundle();
+            eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
+            CardFragment.this.showCheckoutDialog(eventToSend);
+        });
+
+        /**
+         * Listens for card being clicked and opens the card detail overlay.
+         */
+        card.setOnClickListener(() -> {
+            Bundle eventBundle = new Bundle();
+            eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
+            showDetailFragment(eventToSend);
+        });
+    }
+
+    /**
      * Initializes buttons in this fragment.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void btnManager() {
+    private void btnListeners() {
         btnAccept.setOnClickListener(btn -> {
             //Log.d(TAG, "accept clicked!");
             mSwipePlaceHolderView.doSwipe(true);

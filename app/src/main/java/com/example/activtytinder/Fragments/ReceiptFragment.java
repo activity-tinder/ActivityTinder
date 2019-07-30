@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,10 +30,17 @@ import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReceiptFragment extends Fragment  {
+
 
     private Button btnDirections;
     private Button btnChat;
@@ -47,6 +55,8 @@ public class ReceiptFragment extends Fragment  {
     private ArrayList<String> mAttendees;
     private String mDescription;
     private Event mEvent;
+    private String mStartTime;
+    private String mEndTime;
 //    private Button btnHome;
 
 //    BottomNavigationView bottomNavigationView;
@@ -54,7 +64,11 @@ public class ReceiptFragment extends Fragment  {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_receipt, container, false);
+
+
+        return inflater.inflate(R.layout.fragment_receipt, container , false);
+
+
     }
 
     @Override
@@ -96,6 +110,8 @@ public class ReceiptFragment extends Fragment  {
                     mCreator = event.getCreator().getUsername();
                     mLocation = event.getKeyAddress();
                     mDescription = event.getKeyDescription();
+                    mStartTime = event.getKeyStartTime();
+                    mEndTime = event.getKeyEndTime();
                     ParseRelation<ParseUser> relation = event.getRelation("usersAttending");
                     ParseQuery<ParseUser> query = relation.getQuery();
                     query.include(Event.KEY_CREATOR);
@@ -114,6 +130,8 @@ public class ReceiptFragment extends Fragment  {
                                         + mCreator
                                         +"\n\nLocation: "
                                         + mLocation
+                                        +"Time: "
+                                        + mStartTime + " - " + mEndTime
                                         + "\n\nAttendees: "
                                         + mAttendees.toString().substring(1, mAttendees.toString().length() -1 )
                                         + "\n\nDescription: "
@@ -127,7 +145,6 @@ public class ReceiptFragment extends Fragment  {
                             }
                         }
                     });
-
                 }
                 else{
                     Log.e("ReceiptFragment", "Girl, you don goofed");
@@ -179,6 +196,17 @@ public class ReceiptFragment extends Fragment  {
             @Override
             public void onClick(View view) {
                 //TODO-- open overlay that gives a bunch of calendar options that one can export the event name, details, location, and time to the calendar app of their choice
+                String rightTime = checkTime(mStartTime);
+                String myDate = mDate + " " + rightTime + ":00";
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:MM:SS");
+                Date startDate = null;
+                try {
+                    startDate = sdf.parse(myDate);
+                } catch (java.text.ParseException e) {
+                    e.printStackTrace();
+                }
+                long start = startDate.getTime();
+                addEvent(mName, mLocation, start,  8000);
             }
         });
 
@@ -197,6 +225,26 @@ public class ReceiptFragment extends Fragment  {
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(intent);
         }
+    }
+
+    public void addEvent(String title, String location, long begin, long end) {
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.Events.TITLE, title)
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, location)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, begin)
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, end);
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
+    public String checkTime (String time) {
+        if (time.charAt(6) == 'A') {
+            String finalTime = time.substring(0,5);
+            return finalTime;
+        }else
+        return null;
     }
 
 

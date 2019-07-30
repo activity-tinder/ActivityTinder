@@ -39,6 +39,12 @@ public class SwipeEventCard {
     @View(R.id.tvCardEventName)
     protected TextView tvCardEventName;
 
+    @View(R.id.tvCardEventDate)
+    protected TextView tvCardEventDate;
+
+    @View(R.id.tvCardEventTime)
+    protected TextView tvCardEventTime;
+
     @View(R.id.tvCardEventLocation)
     protected TextView tvCardLocation;
 
@@ -51,10 +57,10 @@ public class SwipeEventCard {
     public Point mCardViewHolderSize;
 
     /**
-     *
-     * @param context
-     * @param event
-     * @param cardViewHolderSize
+     * Creates a single SwipeEventCard to put on the card deck.
+     * @param context - Context passed in from CardFragment
+     * @param event - Event associated with the card created
+     * @param cardViewHolderSize - Controls the size of the card created
      */
     public SwipeEventCard(Context context, Event event, Point cardViewHolderSize) {
         mContext = context;
@@ -69,7 +75,9 @@ public class SwipeEventCard {
         void onSwiped();
     }
 
-
+    /**
+     * Listener interface created to detect when the user clicks on a card.
+     */
     public interface onClickListener{
         void onClick();
     }
@@ -89,8 +97,6 @@ public class SwipeEventCard {
     public void onResolved() {
         ParseFile image = mEvent.getEventImage();
         if (image != null) {
-            Uri imageUri = Uri.fromFile(new File(image.getUrl()));
-
             // TODO -- make nonsecure links secure without cutting strings
 
             /**
@@ -110,6 +116,11 @@ public class SwipeEventCard {
         }
 
         tvCardEventName.setText(mEvent.getKeyName());
+
+        tvCardEventDate.setText(mEvent.getKeyDate());
+
+        String eventTime = mEvent.getKeyStartTime() + " - " + mEvent.getKeyEndTime();
+        tvCardEventTime.setText(eventTime);
 
         if (mEvent.getLocation() == null) {
             tvCardLocation.setText("no address given");
@@ -149,7 +160,9 @@ public class SwipeEventCard {
         Log.d("EVENT", "onSwipedOut");
     }
 
-    // when card is not swiped fully in a direction and swings back onto the deck
+    /**
+     * When card is not swiped fully in a direction and swings back onto the deck
+     */
     @SwipeCancelState
     public void onSwipeCancelState(){
         Log.d("EVENT", "onSwipeCancelState");
