@@ -1,5 +1,6 @@
 package com.example.activtytinder.Fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -124,8 +125,9 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
     }
 
 
+    @SuppressLint("NewApi")
     private Event makeEvent(String Name, String Description, String Date, String StartTime, String EndTime, String Address,
-                           Integer PeopleLimit, ParseGeoPoint EventCoordinates, String Category, ParseFile EventPhoto)
+                            Integer PeopleLimit, ParseGeoPoint EventCoordinates, String Category, ParseFile EventPhoto)
     {
         if (Name.equals("") || Description.equals("") || Date.equals("") || StartTime.equals("") || EndTime.equals("")
                 || Address.equals("") || PeopleLimit == null || EventCoordinates == null || Category.equals("")
@@ -146,6 +148,7 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         event.setKeyLocation(EventCoordinates);
         event.setKeyCategory(Category);
         event.put("eventPhoto", EventPhoto);
+
         // TODO -- read documentation for saveinbackground
         event.saveInBackground(e -> {
             if (e != null){
