@@ -7,10 +7,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.content.FileProvider;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.example.activtytinder.Models.Event;
 import com.mindorks.placeholderview.SwipeDirection;
 import com.mindorks.placeholderview.annotations.Click;
@@ -24,11 +21,9 @@ import com.mindorks.placeholderview.annotations.swipe.SwipeOut;
 import com.mindorks.placeholderview.annotations.swipe.SwipeOutState;
 import com.mindorks.placeholderview.annotations.swipe.SwipeTouch;
 import com.mindorks.placeholderview.annotations.swipe.SwipingDirection;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 
 import java.io.File;
-import java.net.URI;
 
 // this class binds the event information to the card swiping view
 @Layout(R.layout.event_card_view)

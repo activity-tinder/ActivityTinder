@@ -22,18 +22,12 @@ import com.example.activtytinder.R;
 import com.example.activtytinder.SwipeEventCard;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
-import com.mindorks.placeholderview.annotations.swipe.SwipeOut;
 import com.parse.ParseQuery;
 
 import org.parceler.Parcels;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Locale;
 
 import static com.example.activtytinder.Fragments.ProfileFragment.TAG;
 
