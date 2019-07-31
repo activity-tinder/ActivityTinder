@@ -65,4 +65,14 @@ public class CardUtils {
         });
     }
 
+    public static void removeUserFromEvent(ParseUser user, Event event) {
+        ParseRelation<ParseUser> userInEvent = event.getRelation("usersAttending");
+        userInEvent.remove(user);
+        event.saveInBackground();
+
+        ParseRelation<Event> eventInUser = user.getRelation("willAttend");
+        eventInUser.remove(event);
+        user.saveInBackground();
+    }
+
 }
