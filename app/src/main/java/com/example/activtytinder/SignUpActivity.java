@@ -95,7 +95,7 @@ public class SignUpActivity  extends AppCompatActivity {
         user.setEmail(Email);
         user.put("name", Name);
         user.put("location", BaseLocation);
-        user.put("etBirthday", Birthday);
+        user.put("birthday", Birthday);
         user.put("reliabilityScore", 100);
         user.put("homeCity", HomeCity);
         user.signUpInBackground(new SignUpCallback() {
