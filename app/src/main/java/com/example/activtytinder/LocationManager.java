@@ -52,6 +52,7 @@ public class LocationManager extends Activity
     private String url ="https://www.mapquestapi.com/geocoding/v1/address?key=";
     private String Location = "&location=";
     private String City;
+    private String correctAddress;
 
 
     /**
@@ -123,6 +124,14 @@ public class LocationManager extends Activity
      */
     public String getCity(){
         return City;
+    }
+
+    private void setCorrectAddress (String place){
+        correctAddress = place;
+    }
+
+    public String getCorrectAddress(){
+        return correctAddress;
     }
 
     /**
@@ -197,6 +206,7 @@ public class LocationManager extends Activity
                             JSONObject eventLatLng = locations.getJSONObject(0).getJSONObject("latLng");
                             setLocationCoordinates(eventLatLng.getDouble("lat"), eventLatLng.getDouble("lng"));
                             etEventAddress.setText(street + ", " + city + ", " + state);
+                            setCorrectAddress(street + ", " + city + ", " + state);
                             setCity(city + ", " + state);
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -58,6 +58,8 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
     private ImageView ivImage;
     private ParseFile eventImageFile;
     private Event myEvent;
+    String correctAddress;
+    private boolean tampered = false;
 
     @Nullable
     @Override
@@ -100,7 +102,6 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         btnGetEventLocation.setOnClickListener(btnEventLocation -> {
             searchQuery = etEventAddress.getText().toString();
             LocationManager.get().getLocationAddress(searchQuery, API_KEY, etEventAddress, getContext());
-
         });
 
         btnCreateEvent.setOnClickListener(btnCreateEvent -> {
@@ -131,7 +132,7 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
     {
         if (Name.equals("") || Description.equals("") || Date.equals("") || StartTime.equals("") || EndTime.equals("")
                 || Address.equals("") || PeopleLimit == null || EventCoordinates == null || Category.equals("")
-                || EventPhoto == null || Category.equals("Choose Category"))
+                || EventPhoto == null || Category.equals("Choose Category") || !Address.equals(LocationManager.get().getCorrectAddress()))
         {
             Toast.makeText(getContext(), "ERROR IN REQUIRED FIELD! REVIEW EVENT!",Toast.LENGTH_SHORT).show();
             return  null;
