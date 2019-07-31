@@ -152,10 +152,6 @@ public class ReceiptFragment extends Fragment  {
             }
         });
 
-
-
-
-
         btnDirections.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

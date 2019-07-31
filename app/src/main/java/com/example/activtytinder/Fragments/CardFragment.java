@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +23,11 @@ import com.example.activtytinder.R;
 import com.example.activtytinder.SwipeEventCard;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
@@ -31,12 +36,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import static com.example.activtytinder.Fragments.ProfileFragment.TAG;
 
-//TODO -- documentation for class
+/**
+ * this class contains the card stack that shows the events users have created. Users are able to
+ * swipe yes and no on cards in the stack, click the yes or no buttons
+ */
 public class CardFragment extends Fragment {
 
     private ImageButton btnAccept;
@@ -44,7 +54,7 @@ public class CardFragment extends Fragment {
     private ImageButton btnUndo;
     private ImageButton btnRefresh;
 
-    private ConstraintLayout clCardStack;
+    public ArrayList<String> attending;
 
     public SwipePlaceHolderView mSwipePlaceHolderView;
     Point cardViewHolderSize;
@@ -60,13 +70,11 @@ public class CardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         btnAccept = view.findViewById(R.id.btnAccept);
         btnReject = view.findViewById(R.id.btnReject);
         btnUndo = view.findViewById(R.id.btnUndo);
         btnRefresh = view.findViewById(R.id.btnRefresh);
-
-        clCardStack = view.findViewById(R.id.clCardStack);
+        attending = new ArrayList<>();
 
         int bottomMargin = CardUtils.dpToPx(160);
         Point windowSize = CardUtils.getDisplaySize(getActivity().getWindowManager());
@@ -88,46 +96,79 @@ public class CardFragment extends Fragment {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void queryEvents() {
+
+
         ParseQuery<Event> eventQuery = new ParseQuery<Event>(Event.class);
         //Toast.makeText(getContext(), "got into queryEvents", Toast.LENGTH_SHORT).show();
         eventQuery.include(Event.KEY_CREATOR);
         eventQuery.orderByAscending("eventDate");
-        eventQuery.findInBackground((event, e) -> {
-            if (e != null) {
-                Log.d(TAG, "Error with Parse Query");
-                e.printStackTrace();
-                return;
-            }
+        /**
+         * Queries into database of all events.
+         */
+        eventQuery.findInBackground(new FindCallback<Event>() {
+            @Override
+            public void done(List<Event> events, com.parse.ParseException e) {
+                if (e != null) {
+                    Log.d(TAG, "Error with Parse Query");
+                    e.printStackTrace();
+                    return;
+                }
 
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
-            LocalDateTime now = LocalDateTime.now();
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
+                LocalDateTime now = LocalDateTime.now();
 
-            long currentMillis = getDateInMillis(dtf.format(now));
+                long currentMillis = CardFragment.this.getDateInMillis(dtf.format(now));
 
-            for (int i = 0; i < event.size(); i++) {
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                ParseRelation<Event> eventsAttending = currentUser.getRelation("willAttend");
+                ParseQuery<Event> queryWillAttend = eventsAttending.getQuery();
 
-                String eventDateRaw = event.get(i).getKeyDate() + " " + event.get(i).getKeyStartTime();
+                /**
+                 * Queries into the list of events that the current user is already attending.
+                 */
+                queryWillAttend.findInBackground(new FindCallback<Event>() {
+                    @Override
+                    public void done(List<Event> results, com.parse.ParseException attendingError) {
+                        if(attendingError == null){
+                            for (int i = 0; i < results.size(); i++) {
+                                attending.add(results.get(i).getObjectId());
+                            }
 
-                long eventMillis = getDateInMillis(eventDateRaw);
+                            for (int i = 0; i < events.size(); i++) {
 
-                if (currentMillis < eventMillis) {
-                    // figure out if this call is safe or not
-                    SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), event.get(i), cardViewHolderSize);
-                    Event eventToSend = event.get(i);
+                                Event thisEvent = events.get(i);
 
-                    // TODO -- figure out how to dynamically set colors
+                                String eventDateRaw = thisEvent.getKeyDate() + " " + thisEvent.getKeyStartTime();
+
+                                long eventMillis = CardFragment.this.getDateInMillis(eventDateRaw);
+
+                                if (!(attending.contains(thisEvent.getObjectId())) && currentMillis < eventMillis) {
+                                    // figure out if this call is safe or not
+                                    SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), thisEvent, cardViewHolderSize);
+                                    Event eventToSend = thisEvent;
+
+                                    // TODO -- figure out how to dynamically set colors
 //                if (event.get(i).getCategory().equals("Active") && event.get(i).getCategory() != null) {
 //                    clCardStack.setBackgroundColor(23163377);
 //                }
+                                    CardFragment.this.cardListeners(card, eventToSend);
 
-                    cardListeners(card, eventToSend);
+                                    mSwipePlaceHolderView.addView(card);
+                                }
+                            }
+                            buildCardStack();
 
-                    mSwipePlaceHolderView.addView(card);
-                }
+                        } else {
+                            Log.d(TAG, "Error with getting user's currently attending events.");
+                            attendingError.printStackTrace();
+                            return;
+                        }
+                    }
+                });
+
             }
         });
 
-        buildCardStack();
     }
 
     /**

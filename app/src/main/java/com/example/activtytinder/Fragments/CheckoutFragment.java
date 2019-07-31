@@ -65,6 +65,10 @@ public class CheckoutFragment extends DialogFragment {
         void onNoClicked();
     }
 
+    /**
+     * Sets the checkout fragment object's button listener.
+     * @param listener
+     */
     public void setOnBtnNoListener(BtnNoListener listener){
         this.btnNoListener = listener;
     }
