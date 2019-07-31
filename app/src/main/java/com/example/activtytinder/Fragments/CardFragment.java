@@ -26,8 +26,13 @@ import com.parse.ParseQuery;
 
 import org.parceler.Parcels;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
 
 import static com.example.activtytinder.Fragments.ProfileFragment.TAG;
 
@@ -93,29 +98,31 @@ public class CardFragment extends Fragment {
                 return;
             }
 
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
             LocalDateTime now = LocalDateTime.now();
-            System.out.println(dtf.format(now));
 
+            long currentMillis = getDateInMillis(dtf.format(now));
 
             for (int i = 0; i < event.size(); i++) {
 
-                // if statements that checks if event has already occurred/is in progress
+                String eventDateRaw = event.get(i).getKeyDate() + " " + event.get(i).getKeyStartTime();
 
+                long eventMillis = getDateInMillis(eventDateRaw);
 
-                // TODO -- call adding and removing views in a multithreading way, synchronized
-                // figure out if this call is safe or not
-                SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), event.get(i), cardViewHolderSize);
-                Event eventToSend = event.get(i);
+                if (currentMillis < eventMillis) {
+                    // figure out if this call is safe or not
+                    SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), event.get(i), cardViewHolderSize);
+                    Event eventToSend = event.get(i);
 
-                // TODO -- figure out how to dynamically set colors
+                    // TODO -- figure out how to dynamically set colors
 //                if (event.get(i).getCategory().equals("Active") && event.get(i).getCategory() != null) {
 //                    clCardStack.setBackgroundColor(23163377);
 //                }
 
-                cardListeners(card, eventToSend);
+                    cardListeners(card, eventToSend);
 
-                mSwipePlaceHolderView.addView(card);
+                    mSwipePlaceHolderView.addView(card);
+                }
             }
         });
 
@@ -161,6 +168,19 @@ public class CardFragment extends Fragment {
         FragmentManager fragmentManager = getFragmentManager();
         DetailsFragment detailsDialogFragment = DetailsFragment.newInstance("Event", event);
         detailsDialogFragment.show(fragmentManager, "CheckoutFragment");
+    }
+
+    private long getDateInMillis(String parsedString) {
+
+        Date currentDate = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.US);
+        try {
+            currentDate = sdf.parse(parsedString);
+        } catch (ParseException e1) {
+            e1.printStackTrace();
+        }
+        long millis = currentDate.getTime();
+        return millis;
     }
 
     /**
