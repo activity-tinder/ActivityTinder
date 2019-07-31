@@ -84,6 +84,7 @@ public class CardFragment extends Fragment {
      * Requires a call to Parse database for the Event object type and will get all of the events
      * and display them in the card stack. This function also contains a swipe listener for when the
      * card is swiped in, and the checkout menu for the card appears as an overlay.
+     * Filters the queried events by events that have not occurred yet.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void queryEvents() {
@@ -170,6 +171,11 @@ public class CardFragment extends Fragment {
         detailsDialogFragment.show(fragmentManager, "CheckoutFragment");
     }
 
+    /**
+     * Turns a date and time in the form of a string into milliseconds for accurate comparisons.
+     * @param parsedString - A string that contains the date to be parsed and converted into a long.
+     * @return A long that represents the time given in milliseconds relative to the UTC.
+     */
     private long getDateInMillis(String parsedString) {
 
         Date currentDate = null;
