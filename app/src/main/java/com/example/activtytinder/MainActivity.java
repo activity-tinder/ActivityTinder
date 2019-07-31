@@ -1,6 +1,8 @@
 package com.example.activtytinder;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -60,5 +62,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_card);
+    }
+    public void contactUs(View item) {
+        // first parameter is the context, second is the class of the activity to launch
+        Intent i = new Intent(this, ContactUsActivity.class);
+        startActivity(i);
     }
 }
