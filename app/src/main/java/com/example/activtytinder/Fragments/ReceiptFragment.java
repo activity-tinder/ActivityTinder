@@ -1,6 +1,5 @@
 package com.example.activtytinder.Fragments;
 
-import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -30,13 +29,9 @@ import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
-
 import java.text.SimpleDateFormat;
-import java.util.Date;
-
-
-
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ReceiptFragment extends Fragment  {
@@ -174,7 +169,7 @@ public class ReceiptFragment extends Fragment  {
                 //TODO -- open internal chat option or if we're feeling bold open Facebook Messenger
                 Intent intent= new Intent();
                 intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_TEXT, "Hello");
+                intent.putExtra(Intent.EXTRA_TEXT, "Hi!");
                 intent.setType("text/plain");
                 intent.setPackage("com.facebook.orca");
 
@@ -194,24 +189,7 @@ public class ReceiptFragment extends Fragment  {
         btnCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO-- open overlay that gives a bunch of calendar options that one can export the event name, details, location, and time to the calendar app of their choice
-                String rightStartTime = checkTime(mStartTime);
-                String rightEndTime = checkTime(mEndTime);
-                String myStartDate = mDate + " " + rightStartTime + ":00";
-                String myEndDate = mDate + " " + rightEndTime + ":00";
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
-                SimpleDateFormat sdf2 = new SimpleDateFormat("MM/dd/yyy hh:mm:ss");
-                Date startDate = null;
-                Date endDate = null;
-                try {
-                    startDate = sdf.parse(myStartDate);
-                    endDate = sdf2.parse(myEndDate);
-                } catch (java.text.ParseException e) {
-                    e.printStackTrace();
-                }
-                long start = startDate.getTime();
-                long end = endDate.getTime();
-                addEvent(mName, mLocation, start,  end, mDescription);
+                addEvent(mName, mLocation, checkTime(mStartTime), checkTime(mEndTime), mDescription);
             }
         });
 
@@ -222,14 +200,6 @@ public class ReceiptFragment extends Fragment  {
             }
         });
 
-    }
-
-    private void searchWeb(String query) {
-        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-        intent.putExtra(SearchManager.QUERY, query);
-        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivity(intent);
-        }
     }
 
     public void addEvent(String title, String location, long begin, long end, String description) {
@@ -245,22 +215,28 @@ public class ReceiptFragment extends Fragment  {
         }
     }
 
-    public String checkTime (String time) {
+    public Long checkTime (String time) {
+        String finalTime;
+        String myDate;
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+        Date date = null;
         if (time.charAt(6) == 'A') {
-            String finalTime = time.substring(0,5);
-            return finalTime;
+            finalTime = time.substring(0,5);
+            myDate = mDate + " " + finalTime + ":00";
         }else{
             String errorTime = time.substring(0,2);
             int fixedTime = Integer.parseInt(errorTime);
             fixedTime = fixedTime + 12;
-            String fixedTime2 = String.format("%02d",fixedTime);
-            String fixedString = (fixedTime)+ time.substring(2,5);
-            return fixedString;
+            finalTime = (fixedTime)+ time.substring(2,5);
+            myDate = mDate + " " +finalTime + ":00";
         }
+        try{
+            date = sdf.parse(myDate);
+        }catch (java.text.ParseException e){
+            e.printStackTrace();
+        }
+        long accurateTime = date.getTime();
+        return accurateTime;
     }
-
-
-
-
 
 }

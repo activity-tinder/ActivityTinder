@@ -54,7 +54,12 @@ public class LocationManager extends Activity
     private String City;
 
 
-
+    /**
+     * Called to establish context and activity of what needs the information and is needed before
+     * calling setup.
+     * @param context - the context of where the method is being called
+     * @param activity - the activity of where the method is being called
+     */
     public void initialize(Context context, Activity activity)
     {
         if (mContext == null || mActivity == null)

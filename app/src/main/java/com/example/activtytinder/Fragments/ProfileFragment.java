@@ -52,12 +52,12 @@ import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment{
 
-    ParseUser user = ParseUser.getCurrentUser();
+    private ParseUser user = ParseUser.getCurrentUser();
     private SwipeRefreshLayout swipeContainer;
 
     private Button btnLogout;
     private ProfileAdapter adapter;
-    List<Event> mEvents;
+    private List<Event> mEvents;
     private RecyclerView rvProfile;
     private TextView tvName;
     private TextView tvUsername;
@@ -154,41 +154,6 @@ public class ProfileFragment extends Fragment{
                 .into(ivImage);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            Uri photoUri = data.getData();
-            Glide.with(getContext()).load(photoUri).into(ivImage);
-            InputStream inputStream = null;
-            try {
-                inputStream = getActivity().getContentResolver().openInputStream(photoUri);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            Bitmap thumbnail = BitmapFactory.decodeStream(inputStream);
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            thumbnail.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-            byte[] image = outputStream.toByteArray();
-            ParseFile file = new ParseFile("EVENT_IMAGE", image);
-            user.put("profileImage", file);
-            user.saveInBackground();
-        }
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                // by this point we have the camera photo on disk
-                //Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                Bitmap takenImage = Tools.rotateBitmapOrientation(photoFile.getAbsolutePath());
-                // RESIZE BITMAP, see section below
-                // Load the taken image into a preview
-                ivImage.setImageBitmap(takenImage);
-                user.put("profileImage", new ParseFile(photoFile));
-                user.saveInBackground();
-            } else { // Result was a failure
-                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
     private void selectImage() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
@@ -197,12 +162,16 @@ public class ProfileFragment extends Fragment{
         }
     }
 
-    private void launchCamera(){
-        if (ActivityCompat.checkSelfPermission(getContext(),Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, 20);
-        }else {
+    private void launchCamera() {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        } else {
             Log.e(TAG, "PERMISSION GRANTED");
+            actuallyLaunchCamera();
         }
+    }
+
+    private void actuallyLaunchCamera(){
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         photoFile = getPhotoFileUri(photoFileName);
         Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
@@ -232,8 +201,44 @@ public class ProfileFragment extends Fragment{
                 adapter.notifyDataSetChanged();
             }
         });
-
-
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Uri photoUri = data.getData();
+            Glide.with(getContext()).load(photoUri).into(ivImage);
+            InputStream inputStream = null;
+            try {
+                inputStream = getActivity().getContentResolver().openInputStream(photoUri);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Bitmap thumbnail = BitmapFactory.decodeStream(inputStream);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            thumbnail.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            byte[] image = outputStream.toByteArray();
+            ParseFile file = new ParseFile("EVENT_IMAGE", image);
+            user.put("profileImage", file);
+            user.saveInBackground();
+        }
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Bitmap takenImage = Tools.rotateBitmapOrientation(photoFile.getAbsolutePath());
+                ivImage.setImageBitmap(takenImage);
+                user.put("profileImage", new ParseFile(photoFile));
+                user.saveInBackground();
+            } else { // Result was a failure
+                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            actuallyLaunchCamera();
+        }
+    }
 }
