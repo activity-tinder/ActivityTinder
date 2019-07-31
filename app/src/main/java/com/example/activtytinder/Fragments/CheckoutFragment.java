@@ -18,7 +18,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.activtytinder.CardUtils;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -29,7 +28,6 @@ import org.parceler.Parcels;
 public class CheckoutFragment extends DialogFragment {
 
     public BtnNoListener btnNoListener;
-//    private TextView tvQuestion;
     private TextView tvEventDetails;
     private Event event;
     private Button btnYes;
@@ -38,8 +36,6 @@ public class CheckoutFragment extends DialogFragment {
     private String mDate;
     private String mLocation;
 
-
-    BottomNavigationView bottomNavigationView;
 
 
     public CheckoutFragment() {

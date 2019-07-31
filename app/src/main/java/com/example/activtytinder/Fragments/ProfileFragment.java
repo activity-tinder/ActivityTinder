@@ -34,8 +34,6 @@ import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.Models.Tools;
 import com.example.activtytinder.ProfileAdapter;
 import com.example.activtytinder.R;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
@@ -113,7 +111,7 @@ public class ProfileFragment extends Fragment{
 
         btnUploadImage.setOnClickListener(btnUploadImage -> selectImage());
 
-        btnTakeImage.setOnClickListener(btnTakeImage -> launchCamera());
+        btnTakeImage.setOnClickListener(btnTakeImage -> verifyCameraPermission());
 
     }
 
@@ -162,16 +160,16 @@ public class ProfileFragment extends Fragment{
         }
     }
 
-    private void launchCamera() {
+    private void verifyCameraPermission() {
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         } else {
             Log.e(TAG, "PERMISSION GRANTED");
-            actuallyLaunchCamera();
+            launchCamera();
         }
     }
 
-    private void actuallyLaunchCamera(){
+    private void launchCamera(){
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         photoFile = getPhotoFileUri(photoFileName);
         Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
@@ -194,12 +192,9 @@ public class ProfileFragment extends Fragment{
         ParseRelation<Event> eventsToAttend = user.getRelation("willAttend");
         ParseQuery<Event> eventQuery = eventsToAttend.getQuery();
         eventQuery.orderByAscending("eventDate");
-        eventQuery.findInBackground(new FindCallback<Event>() {
-            @Override
-            public void done(List<Event> events, ParseException e) {
-                mEvents.addAll(events);
-                adapter.notifyDataSetChanged();
-            }
+        eventQuery.findInBackground((events, e) -> {
+            mEvents.addAll(events);
+            adapter.notifyDataSetChanged();
         });
     }
 
@@ -238,7 +233,7 @@ public class ProfileFragment extends Fragment{
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            actuallyLaunchCamera();
+            launchCamera();
         }
     }
 }

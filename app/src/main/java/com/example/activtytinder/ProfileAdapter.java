@@ -134,7 +134,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
                    fragmentManager.popBackStack();
                    fragmentManager.beginTransaction().addToBackStack("Receipt").replace(R.id.flContainer, fragment).commit();
-//                   fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                }
            });
         }
