@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.example.activtytinder.Models.Event;
 
+import com.example.activtytinder.Models.Feedback;
 import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -15,6 +16,7 @@ public class ParseApp extends Application {
         super.onCreate();
         ParseObject.registerSubclass(ParseUser.class);//must have this for Parse to be configured fully
         ParseObject.registerSubclass(Event.class);//must have this for Parse to be configured fully
+        ParseObject.registerSubclass(Feedback.class);//must have this for Parse to be configured fully
 
         //set up Parse stuff, values straight from setup for the project on heroku website
         final Parse.Configuration configuration = new Parse.Configuration.Builder(this)

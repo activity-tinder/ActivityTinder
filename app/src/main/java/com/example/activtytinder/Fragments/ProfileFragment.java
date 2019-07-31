@@ -224,6 +224,7 @@ public class ProfileFragment extends Fragment{
     public void populateEventAdapter(){
         ParseRelation<Event> eventsToAttend = user.getRelation("willAttend");
         ParseQuery<Event> eventQuery = eventsToAttend.getQuery();
+        eventQuery.orderByAscending("eventDate");
         eventQuery.findInBackground(new FindCallback<Event>() {
             @Override
             public void done(List<Event> events, ParseException e) {

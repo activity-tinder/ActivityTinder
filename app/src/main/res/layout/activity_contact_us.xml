@@ -6,13 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ContactUsActivity">
 
-    <TextView
+    <EditText
         android:id="@+id/name_et"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="28dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:hint="Name"
@@ -28,7 +27,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:hint="Email"
@@ -36,41 +35,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_et"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/name_et" />
 
-    <ScrollView
-        android:id="@+id/scComment"
-        android:layout_width="0dp"
-        android:layout_height="180dp"
+
+    <EditText
+        android:id="@+id/comment_et"
+        android:layout_width="346dp"
+        android:layout_height="115dp"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:hint="Tell us what's wrong..."
+        android:gravity="left"
+        android:inputType="textMultiLine"
+        android:isScrollContainer="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_et">
+        app:layout_constraintTop_toBottomOf="@+id/email_et"
+        app:passwordToggleEnabled="true" />
 
-
-        <EditText
-            android:id="@+id/comment_et"
-            android:layout_width="350dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:hint="Tell us what's wrong..."
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.517"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email_et"
-            app:passwordToggleEnabled="true" />
-
-    </ScrollView>
 
 
     <Button
@@ -84,7 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scComment" />
+        app:layout_constraintTop_toBottomOf="@+id/comment_et" />
 
 
     <ImageView
@@ -93,7 +78,6 @@
         android:layout_height="150dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"

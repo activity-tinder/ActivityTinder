@@ -24,7 +24,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.49"
-        app:srcCompat="@drawable/got_bugs" />
+        app:srcCompat="@drawable/bug" />
 
     <FrameLayout
         android:id="@+id/flContainer"

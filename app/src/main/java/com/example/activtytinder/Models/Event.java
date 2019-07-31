@@ -11,7 +11,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.json.JSONArray;
 import org.parceler.Parcel;
 //import com.parse.ParseQuery;
 
@@ -22,7 +21,7 @@ public class Event extends ParseObject implements Parcelable {
     public static final String KEY_EVENT_DATE = "eventDate";
     public static final String KEY_NAME= "name";
     public static final String KEY_CREATOR = "creator";
-    public static final String KEY_ATTENDEES =  "usersAttending";
+//    public static final String KEY_ATTENDEES =  "usersAttending";
     public static final String KEY_LIMIT = "peopleLimit";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_LOCATION  = "location";
@@ -39,9 +38,7 @@ public class Event extends ParseObject implements Parcelable {
     public String getKeyDate(){
         return getString(KEY_EVENT_DATE);
     }
-    public void setKeyDate(String eventDate){
-        put(KEY_EVENT_DATE, eventDate);
-    }
+    public void setKeyDate(String eventDate){ put(KEY_EVENT_DATE, eventDate); }
 
     public String getKeyName(){
         return getString(KEY_NAME);
@@ -64,13 +61,13 @@ public class Event extends ParseObject implements Parcelable {
         put(KEY_CREATOR, creator);
     }
 
-    public JSONArray getKeyAttendees(){
-        return getJSONArray(KEY_ATTENDEES);
-    }
-
-    public void setKeyAttendees(JSONArray attendees){
-        put(KEY_ATTENDEES, attendees);
-    }
+//    public JSONArray getKeyAttendees(){
+//        return getJSONArray(KEY_ATTENDEES);
+//    }
+//
+//    public void setKeyAttendees(JSONArray attendees){
+//        put(KEY_ATTENDEES, attendees);
+//    }
 
     public Integer getKeyLimit(){
         return getInt(KEY_LIMIT);
