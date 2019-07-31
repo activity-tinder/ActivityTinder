@@ -14,20 +14,20 @@ import com.parse.ParseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText usernameInput;
-    private EditText passwordInput;
-    private Button loginBtn;
-    private Button signUpBtn;
+    private EditText etUsernameInput;
+    private EditText etPasswordInput;
+    private Button btnLogin;
+    private Button btnSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ParseUser currentUser = ParseUser.getCurrentUser();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        usernameInput = findViewById(R.id.username_et);
-        passwordInput = findViewById(R.id.password_et);
-        loginBtn = findViewById(R.id.login_btn);
-        signUpBtn = findViewById(R.id.signup_btn);
+        etUsernameInput = findViewById(R.id.etUsername);
+        etPasswordInput = findViewById(R.id.etPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+        btnSignUp = findViewById(R.id.btnSignup);
 
         if (currentUser != null) {
             final Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -35,17 +35,23 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
-        loginBtn.setOnClickListener(view -> {
-            final String username = usernameInput.getText().toString();
-            final String password = passwordInput.getText().toString();
+        btnLogin.setOnClickListener(view -> {
+            final String username = etUsernameInput.getText().toString();
+            final String password = etPasswordInput.getText().toString();
             login(username, password);
         });
 
-        signUpBtn.setOnClickListener(view -> {
-            signUpScreen();
+        btnSignUp.setOnClickListener(view -> {
+            goToSignUpScreen();
         });
     }
 
+    /**
+     * Signs the user into their account by verifying the username and password supplied with the
+     * Parse database information.
+     * @param username - String for the user's username input
+     * @param password - String for the user's password input
+     */
     private void login(String username, String password){
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
@@ -63,7 +69,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void signUpScreen() {
+    /**
+     * Fires and intent to take the user from the login screen to the SignUp screen for them to set
+     * up their new account.
+     */
+    public void goToSignUpScreen() {
         final Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
         startActivity(intent);
         finish();

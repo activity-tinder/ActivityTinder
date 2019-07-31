@@ -82,9 +82,21 @@ public class SignUpActivity  extends AppCompatActivity {
         });
     }
 
+    /**
+     * When called, takes all the values from the edit texts that user filled out and puts them on the Parse database after
+     * verifying that all fields have an appropriate value in them. The method then fires an intent to take the newly registered
+     * user to the MainActivity where they will then see the cards in the CardFragment.
+     * @param Name - String of the user's name
+     * @param Email - String of the user's email
+     * @param Birthday - Date of the user's birthday
+     * @param BaseLocation - ParseGeoPoint that gives the latitude and longitude coordinates of the user's base location
+     * @param Username - String for the user's selected username
+     * @param Password - String for the user to input their password
+     * @param HomeCity - String for the user's home city that will be displayed in their profile not with their address
+     */
     private void makeAccount(String Name, String Email, Date Birthday, ParseGeoPoint BaseLocation, String Username, String Password, String HomeCity){
         if (Name.equals("") || Email.equals("") || Birthday == null || BaseLocation == null || Username.equals("")
-                || Password.equals("") || HomeCity.equals(""))
+                || Password.equals("") || !HomeCity.equals(LocationManager.get().getCorrectAddress()))
         {
             Toast.makeText(SignUpActivity.this, "ERROR IN REQUIRED FIELD! REVIEW YOUR PROFILE!",Toast.LENGTH_SHORT).show();
             return;
