@@ -195,17 +195,23 @@ public class ReceiptFragment extends Fragment  {
             @Override
             public void onClick(View view) {
                 //TODO-- open overlay that gives a bunch of calendar options that one can export the event name, details, location, and time to the calendar app of their choice
-                String rightTime = checkTime(mStartTime);
-                String myDate = mDate + " " + rightTime + ":00";
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:MM:SS");
+                String rightStartTime = checkTime(mStartTime);
+                String rightEndTime = checkTime(mEndTime);
+                String myStartDate = mDate + " " + rightStartTime + ":00";
+                String myEndDate = mDate + " " + rightEndTime + ":00";
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+                SimpleDateFormat sdf2 = new SimpleDateFormat("MM/dd/yyy hh:mm:ss");
                 Date startDate = null;
+                Date endDate = null;
                 try {
-                    startDate = sdf.parse(myDate);
+                    startDate = sdf.parse(myStartDate);
+                    endDate = sdf2.parse(myEndDate);
                 } catch (java.text.ParseException e) {
                     e.printStackTrace();
                 }
                 long start = startDate.getTime();
-                addEvent(mName, mLocation, start,  8000);
+                long end = endDate.getTime();
+                addEvent(mName, mLocation, start,  end, mDescription);
             }
         });
 
@@ -226,13 +232,14 @@ public class ReceiptFragment extends Fragment  {
         }
     }
 
-    public void addEvent(String title, String location, long begin, long end) {
+    public void addEvent(String title, String location, long begin, long end, String description) {
         Intent intent = new Intent(Intent.ACTION_INSERT)
                 .setData(CalendarContract.Events.CONTENT_URI)
                 .putExtra(CalendarContract.Events.TITLE, title)
                 .putExtra(CalendarContract.Events.EVENT_LOCATION, location)
                 .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, begin)
-                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, end);
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, end)
+                .putExtra(CalendarContract.Events.DESCRIPTION, description);
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(intent);
         }
@@ -242,8 +249,14 @@ public class ReceiptFragment extends Fragment  {
         if (time.charAt(6) == 'A') {
             String finalTime = time.substring(0,5);
             return finalTime;
-        }else
-        return null;
+        }else{
+            String errorTime = time.substring(0,2);
+            int fixedTime = Integer.parseInt(errorTime);
+            fixedTime = fixedTime + 12;
+            String fixedTime2 = String.format("%02d",fixedTime);
+            String fixedString = (fixedTime)+ time.substring(2,5);
+            return fixedString;
+        }
     }
 
 
