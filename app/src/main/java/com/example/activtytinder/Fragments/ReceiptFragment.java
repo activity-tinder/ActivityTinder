@@ -81,7 +81,6 @@ public class ReceiptFragment extends Fragment  {
         scDetails = view.findViewById(R.id.scDetails);
         tvEventDetails = view.findViewById(R.id.eventDetails);
         mAttendees = new ArrayList<>();
-//        btnHome = view.findViewById(R.id.btnHome);
         Bundle eventBundle = this.getArguments();
         if(eventBundle != null){
             mEvent = Parcels.unwrap(eventBundle.getParcelable("Event"));
@@ -130,7 +129,7 @@ public class ReceiptFragment extends Fragment  {
                                         + mCreator
                                         +"\n\nLocation: "
                                         + mLocation
-                                        +"Time: "
+                                        +"\n\nTime: "
                                         + mStartTime + " - " + mEndTime
                                         + "\n\nAttendees: "
                                         + mAttendees.toString().substring(1, mAttendees.toString().length() -1 )

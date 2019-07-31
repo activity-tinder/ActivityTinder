@@ -131,7 +131,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                    Bundle bundle = new Bundle();
                    bundle.putParcelable("Event", Parcels.wrap(event));
                    fragment.setArguments(bundle);
-                   fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+
+                   fragmentManager.popBackStack();
+                   fragmentManager.beginTransaction().addToBackStack("Receipt").replace(R.id.flContainer, fragment).commit();
+//                   fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                }
            });
         }

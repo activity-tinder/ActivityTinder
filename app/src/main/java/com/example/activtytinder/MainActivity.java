@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     final Fragment profileFragment = new ProfileFragment();
     final Fragment receiptFragment = new ReceiptFragment();
     public static FragmentManager fragmentManager;
-    Fragment active = cardFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,32 +29,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
 
-        fragmentManager.beginTransaction().add(R.id.flContainer, receiptFragment, "4").hide(receiptFragment).commit();
-        fragmentManager.beginTransaction().add(R.id.flContainer, profileFragment, "3").hide(profileFragment).commit();
-        fragmentManager.beginTransaction().add(R.id.flContainer, createFragment, "2").hide(createFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.flContainer, receiptFragment, "4").commit();
+        fragmentManager.beginTransaction().add(R.id.flContainer, profileFragment, "3").commit();
+        fragmentManager.beginTransaction().add(R.id.flContainer, createFragment, "2").commit();
         fragmentManager.beginTransaction().add(R.id.flContainer, cardFragment, "1").commit();
 
+        fragmentManager.popBackStack();
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
                 case R.id.action_card:
-                    fragmentManager.beginTransaction().hide(active).show(cardFragment).commit();
-                    active = cardFragment;
+                    fragmentManager.beginTransaction().addToBackStack("1").replace(R.id.flContainer, cardFragment).commit();
                     break;
                 case R.id.action_create:
-                    fragmentManager.beginTransaction().hide(active).show(createFragment).commit();
-                    active = createFragment;
+                    fragmentManager.beginTransaction().addToBackStack("2").replace(R.id.flContainer, createFragment).commit();
                     break;
                 case R.id.action_profile:
-                    fragmentManager.beginTransaction().hide(active).show(profileFragment).commit();
-                    active = profileFragment;
+                    fragmentManager.beginTransaction().addToBackStack("3").replace(R.id.flContainer, profileFragment).commit();
                     break;
                  default:
-                     //Added this to the fragment manager so that I cna create it at the beginning
-                     fragmentManager.beginTransaction().hide(active).show(receiptFragment).commit();
-                     active = receiptFragment;
+                     //Added this to the fragment manager so that I can create it at the beginning
+                     fragmentManager.beginTransaction().addToBackStack("4").replace(R.id.flContainer, receiptFragment).commit();
                      break;
             }
 
