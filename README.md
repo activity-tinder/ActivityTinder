@@ -52,7 +52,7 @@ This app will help individuals meet people that they want to hang out or do spec
 * [x] Location permissions
 * [x] Event creation page
 * [x] Main card stack page with activities on the cards
-* [ ] Activity detail page
+* [x] Activity detail page
 * [x] Activity checkout page
 * [x] Activity receipt page
 * [x] Contact us page
@@ -61,20 +61,20 @@ This app will help individuals meet people that they want to hang out or do spec
 
 **\*Updated\* Stretch Stories** 
 * [ ] color categorized cards for the activities depending on the type of activity
-* [ ] location page that asks for city location & Directions to event
+* [x] location page that asks for city location & Directions to event
 * [ ] type in password to confirm leaving activity
    * [ ] warning for user before leaving activity under 24 hours before activity
-* [ ] detailed card view features:
-    * [ ] listing of people who are planning on attending already
+* [x] detailed card view features:
+    * [x] listing of people who are planning on attending already
     * [ ] default images for types of activities
 * [ ] Filter option where you can choose location, price, number of people, etc.
-* [ ] Messenger (intent) chat option
-* [ ] export event details to calendar
+* [x] Messenger (intent) chat option
+* [x] export event details to calendar
 * [ ] checking into event (attendance)
 
 **Optional Nice-to-have Stories**
 * organizer can compose a message to be displayed to whoever tries to join the event
-*  delete an event
+* delete an event
 * After-event survey where you are able to rate the people who went
     * You can add pictures of the event to the survey
 * cute sound and animation of adding to an event
