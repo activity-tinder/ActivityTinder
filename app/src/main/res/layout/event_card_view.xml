@@ -2,95 +2,109 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="40dp"
+    android:layout_marginBottom="0dp"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvCards"
         android:layout_width="320dp"
-        android:layout_height="match_parent"
-        android:layout_margin="20dp"
+        android:layout_height="420dp"
+        android:layout_margin="15dp"
         android:orientation="vertical"
-        app:cardCornerRadius="5dp"
+        app:cardCornerRadius="10dp"
         app:cardElevation="4dp">
 
-        <ImageView
-            android:id="@+id/ivCardImage"
-
-            android:layout_width="match_parent"
-            android:layout_height="328dp"
-            android:layout_marginBottom="75dp"
-            app:srcCompat="@drawable/googleg_standard_color_18" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clCardStack"
             android:layout_width="match_parent"
-            android:layout_height="109dp"
-            android:layout_gravity="bottom"
-            android:background="@color/light_purple"
-            android:gravity="center|left"
-            android:orientation="vertical"
-            android:paddingLeft="20dp">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tvCardEventName"
+            <ImageView
+                android:id="@+id/ivCardImage"
+
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/clCardStack"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/googleg_standard_color_18" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clCardStack"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Sample Event"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="24sp"
-                android:textStyle="bold"
+                android:layout_gravity="bottom"
+                android:background="@color/light_purple"
+                android:gravity="center|left"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent">
 
-            <TextView
-                android:id="@+id/tvCardEventLocation"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Location"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="14sp"
-                android:textStyle="normal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvCardEventDate" />
+                <TextView
+                    android:id="@+id/tvCardEventName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Sample Event"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tvCardEventCreator"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="event creator"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvCardEventLocation" />
+                <TextView
+                    android:id="@+id/tvCardEventLocation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Location"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp"
+                    android:textStyle="normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvCardEventDate" />
 
-            <TextView
-                android:id="@+id/tvCardEventDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date"
-                android:textColor="#000000"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvCardEventName" />
+                <TextView
+                    android:id="@+id/tvCardEventCreator"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="event creator"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvCardEventLocation" />
 
-            <TextView
-                android:id="@+id/tvCardEventTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:text="Time"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/tvCardEventDate"
-                app:layout_constraintTop_toBottomOf="@+id/tvCardEventName" />
+                <TextView
+                    android:id="@+id/tvCardEventDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date"
+                    android:textColor="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvCardEventName" />
+
+                <TextView
+                    android:id="@+id/tvCardEventTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:text="Time"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/tvCardEventDate"
+                    app:layout_constraintTop_toBottomOf="@+id/tvCardEventName" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>
