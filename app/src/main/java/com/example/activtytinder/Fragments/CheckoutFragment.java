@@ -99,7 +99,7 @@ public class CheckoutFragment extends DialogFragment {
         tvEventDetails = view.findViewById(R.id.tvEventDetails);
         btnYes = view.findViewById(R.id.btnYes);
         btnNo = view.findViewById(R.id.btnNo);
-
+        getDialog().setCanceledOnTouchOutside(false);
         Bundle eventBundle = this.getArguments();
         if(eventBundle != null){
             event = Parcels.unwrap(eventBundle.getParcelable("Event"));
