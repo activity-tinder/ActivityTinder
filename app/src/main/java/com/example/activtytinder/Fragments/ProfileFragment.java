@@ -52,12 +52,12 @@ import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment{
 
-    ParseUser user = ParseUser.getCurrentUser();
+    private ParseUser user = ParseUser.getCurrentUser();
     private SwipeRefreshLayout swipeContainer;
 
     private Button btnLogout;
     private ProfileAdapter adapter;
-    List<Event> mEvents;
+    private List<Event> mEvents;
     private RecyclerView rvProfile;
     private TextView tvName;
     private TextView tvUsername;
@@ -154,37 +154,6 @@ public class ProfileFragment extends Fragment{
                 .into(ivImage);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            Uri photoUri = data.getData();
-            Glide.with(getContext()).load(photoUri).into(ivImage);
-            InputStream inputStream = null;
-            try {
-                inputStream = getActivity().getContentResolver().openInputStream(photoUri);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            Bitmap thumbnail = BitmapFactory.decodeStream(inputStream);
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            thumbnail.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-            byte[] image = outputStream.toByteArray();
-            ParseFile file = new ParseFile("EVENT_IMAGE", image);
-            user.put("profileImage", file);
-            user.saveInBackground();
-        }
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                Bitmap takenImage = Tools.rotateBitmapOrientation(photoFile.getAbsolutePath());
-                ivImage.setImageBitmap(takenImage);
-                user.put("profileImage", new ParseFile(photoFile));
-                user.saveInBackground();
-            } else { // Result was a failure
-                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
     private void selectImage() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
@@ -231,6 +200,37 @@ public class ProfileFragment extends Fragment{
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Uri photoUri = data.getData();
+            Glide.with(getContext()).load(photoUri).into(ivImage);
+            InputStream inputStream = null;
+            try {
+                inputStream = getActivity().getContentResolver().openInputStream(photoUri);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Bitmap thumbnail = BitmapFactory.decodeStream(inputStream);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            thumbnail.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            byte[] image = outputStream.toByteArray();
+            ParseFile file = new ParseFile("EVENT_IMAGE", image);
+            user.put("profileImage", file);
+            user.saveInBackground();
+        }
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Bitmap takenImage = Tools.rotateBitmapOrientation(photoFile.getAbsolutePath());
+                ivImage.setImageBitmap(takenImage);
+                user.put("profileImage", new ParseFile(photoFile));
+                user.saveInBackground();
+            } else { // Result was a failure
+                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
