@@ -6,5 +6,5 @@
         path="Pictures" />
 
     <!--Uncomment below to share the entire application specific directory -->
-    <!--<external-path name="all_dirs" path="."/>-->
+    <external-path name="all_dirs" path="."/>
 </paths>

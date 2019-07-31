@@ -175,11 +175,7 @@ public class ProfileFragment extends Fragment{
         }
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                // by this point we have the camera photo on disk
-                //Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 Bitmap takenImage = Tools.rotateBitmapOrientation(photoFile.getAbsolutePath());
-                // RESIZE BITMAP, see section below
-                // Load the taken image into a preview
                 ivImage.setImageBitmap(takenImage);
                 user.put("profileImage", new ParseFile(photoFile));
                 user.saveInBackground();
@@ -197,12 +193,16 @@ public class ProfileFragment extends Fragment{
         }
     }
 
-    private void launchCamera(){
-        if (ActivityCompat.checkSelfPermission(getContext(),Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, 20);
-        }else {
+    private void launchCamera() {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        } else {
             Log.e(TAG, "PERMISSION GRANTED");
+            actuallyLaunchCamera();
         }
+    }
+
+    private void actuallyLaunchCamera(){
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         photoFile = getPhotoFileUri(photoFileName);
         Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
@@ -231,8 +231,13 @@ public class ProfileFragment extends Fragment{
                 adapter.notifyDataSetChanged();
             }
         });
-
-
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            actuallyLaunchCamera();
+        }
+    }
 }

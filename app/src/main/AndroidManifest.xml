@@ -27,7 +27,8 @@
                 android:resource="@xml/fileprovider" />
         </provider>
         <activity android:name=".ContactUsActivity"></activity>
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.actions.SEARCH_ACTION"/>
                 <category android:name="android.intent.category.DEFAULT"/>
