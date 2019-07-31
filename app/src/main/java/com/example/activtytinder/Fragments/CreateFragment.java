@@ -100,7 +100,6 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         btnGetEventLocation.setOnClickListener(btnEventLocation -> {
             searchQuery = etEventAddress.getText().toString();
             LocationManager.get().getLocationAddress(searchQuery, API_KEY, etEventAddress, getContext());
-
         });
 
         btnCreateEvent.setOnClickListener(btnCreateEvent -> {
@@ -124,14 +123,29 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         });
     }
 
-
+    /**
+     * When called, takes all the values from the edit texts that user filled out and puts them on the Parse database after
+     * verifying that all fields have an appropriate value in them. The method then clears all fields when done uploading
+     * the data so that the user can create a new event if they wish to.
+     * @param Name - String of the Event Name
+     * @param Description - String of the Event Description
+     * @param Date - String of the date of the event in MM/DD/YYYY format
+     * @param StartTime - String of the start time of the event
+     * @param EndTime - String of the end time of the event
+     * @param Address - String of the event address in the format of Street Address, City, State
+     * @param PeopleLimit - Integer of the maximum amount of people who can attend the event
+     * @param EventCoordinates - ParseGeoPoint of the latitude and longitude of the event location
+     * @param Category - String of the category of the event by which it is classified
+     * @param EventPhoto -  ParseFile of the image used to be seen with the event
+     * @return - Returns the event that has been created
+     */
     @SuppressLint("NewApi")
     private Event makeEvent(String Name, String Description, String Date, String StartTime, String EndTime, String Address,
                             Integer PeopleLimit, ParseGeoPoint EventCoordinates, String Category, ParseFile EventPhoto)
     {
         if (Name.equals("") || Description.equals("") || Date.equals("") || StartTime.equals("") || EndTime.equals("")
                 || Address.equals("") || PeopleLimit == null || EventCoordinates == null || Category.equals("")
-                || EventPhoto == null || Category.equals("Choose Category"))
+                || EventPhoto == null || Category.equals("Choose Category") || !Address.equals(LocationManager.get().getCorrectAddress()))
         {
             Toast.makeText(getContext(), "ERROR IN REQUIRED FIELD! REVIEW EVENT!",Toast.LENGTH_SHORT).show();
             return  null;
@@ -149,7 +163,6 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         event.setKeyCategory(Category);
         event.put("eventPhoto", EventPhoto);
 
-        // TODO -- read documentation for saveinbackground
         event.saveInBackground(e -> {
             if (e != null){
                 Log.d("Create Fragment", "Error while saving");
@@ -171,6 +184,11 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         return event;
     }
 
+    /**
+     * Allows user to access their media to select a photo. The method fires an intent that lets the
+     * user choose their photo from anywhere in their devices's storage used in selecting profile
+     * and event photos.
+     */
     private void selectImage() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
