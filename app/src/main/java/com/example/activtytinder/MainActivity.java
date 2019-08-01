@@ -65,6 +65,15 @@ public class MainActivity extends AppCompatActivity {
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_card);
     }
+    
+    /**
+     * Back button only goes to card fragment to prevent tracking entire stack back.
+     */
+    @Override
+    public void onBackPressed() {
+        fragmentManager.beginTransaction().addToBackStack("1").replace(R.id.flContainer, cardFragment).commit();
+    }
+
     //TODO -- explain this method
     public void contactUs(View item) {
         // first parameter is the context, second is the class of the activity to launch
