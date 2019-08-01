@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_card);
     }
-    
+
     /**
      * Back button only goes to card fragment to prevent tracking entire stack back.
      */
