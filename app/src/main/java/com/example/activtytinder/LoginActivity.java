@@ -12,6 +12,7 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+//TODO -- explain activity
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etUsernameInput;
@@ -35,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
+        //TODO -- move buttons to separate method
         btnLogin.setOnClickListener(view -> {
             final String username = etUsernameInput.getText().toString();
             final String password = etPasswordInput.getText().toString();

@@ -16,12 +16,13 @@ import org.parceler.Parcel;
 
 @Parcel(analyze = Event.class)
 @ParseClassName("Event")
+
+//TODO-- explain model
 public class Event extends ParseObject implements Parcelable {
 
     public static final String KEY_EVENT_DATE = "eventDate";
     public static final String KEY_NAME= "name";
     public static final String KEY_CREATOR = "creator";
-//    public static final String KEY_ATTENDEES =  "usersAttending";
     public static final String KEY_LIMIT = "peopleLimit";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_LOCATION  = "location";
@@ -60,14 +61,6 @@ public class Event extends ParseObject implements Parcelable {
     public void setKeyCreator(ParseUser creator){
         put(KEY_CREATOR, creator);
     }
-
-//    public JSONArray getKeyAttendees(){
-//        return getJSONArray(KEY_ATTENDEES);
-//    }
-//
-//    public void setKeyAttendees(JSONArray attendees){
-//        put(KEY_ATTENDEES, attendees);
-//    }
 
     public Integer getKeyLimit(){
         return getInt(KEY_LIMIT);

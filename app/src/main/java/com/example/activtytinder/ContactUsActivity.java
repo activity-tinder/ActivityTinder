@@ -15,6 +15,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+//TODO -- explain this activity
 public class ContactUsActivity extends AppCompatActivity {
 
     private Button btnSubmit;
@@ -32,7 +33,7 @@ public class ContactUsActivity extends AppCompatActivity {
         tvComment = findViewById(R.id.comment_et);
 
 
-
+        //TODO -- move button to separate method
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -9,11 +9,13 @@ import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+//TODO -- explain this class
 public class ParseApp extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
+        //TODO -- explain the register for subclasses
         ParseObject.registerSubclass(ParseUser.class);//must have this for Parse to be configured fully
         ParseObject.registerSubclass(Event.class);//must have this for Parse to be configured fully
         ParseObject.registerSubclass(Feedback.class);//must have this for Parse to be configured fully

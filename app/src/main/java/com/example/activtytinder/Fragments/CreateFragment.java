@@ -27,7 +27,7 @@ import com.bumptech.glide.Glide;
 import com.example.activtytinder.CardUtils;
 import com.example.activtytinder.LocationManager;
 import com.example.activtytinder.Models.Event;
-import com.example.activtytinder.Models.Tools;
+import com.example.activtytinder.Tools;
 import com.example.activtytinder.R;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -88,7 +88,7 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         API_KEY = getActivity().getResources().getString(R.string.mapquest_api_key);
         etEventDate.setInputType(InputType.TYPE_NULL);
 
-
+        //TODO -- put button in separate method
         etEventDate.setOnClickListener(btnEventDate -> Tools.getDate(getContext(),etEventDate));
 
         etEventStartTime.setOnClickListener(btnEventStartTime -> Tools.getTime(getContext(), etEventStartTime));
@@ -203,11 +203,13 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
             eventCategory = adapterView.getItemAtPosition(i).toString();
     }
 
+    //TODO -- explain this pls
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
 
+    //TODO -- explain this
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1 && resultCode == RESULT_OK) {

@@ -33,7 +33,7 @@ import permissions.dispatcher.NeedsPermission;
 
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
-
+//TODO -- explain class
 public class LocationManager extends Activity
 {
 

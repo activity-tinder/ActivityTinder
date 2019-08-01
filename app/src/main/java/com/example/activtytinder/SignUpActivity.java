@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.example.activtytinder.Models.Tools;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
@@ -20,6 +19,7 @@ import com.parse.SignUpCallback;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+//TODO -- expalin this activity
 public class SignUpActivity  extends AppCompatActivity {
 
     private EditText etFullName;
@@ -52,6 +52,7 @@ public class SignUpActivity  extends AppCompatActivity {
         etBirthday.setInputType(InputType.TYPE_NULL);
         etBirthday.setOnClickListener(btnBirthday -> Tools.getDate(SignUpActivity.this, etBirthday));
 
+        //TODO -- create separate
         btnGetLocation.setOnClickListener(btnGetLocation -> {
             String search = etBaseLocation.getText().toString();
             LocationManager.get().getLocationAddress(search, API_KEY, etBaseLocation, SignUpActivity.this);

@@ -37,12 +37,14 @@ public class CheckoutFragment extends DialogFragment {
     private String mLocation;
 
 
+    //TODO -- Explain constructor
 
     public CheckoutFragment() {
         // Empty constructor is required for DialogFragment
         // Make sure not to add arguments to the constructor
     }
 
+    //TODO-- Explain new instance
     public static CheckoutFragment newInstance(String eventDetails, Event event){
         CheckoutFragment fragment = new CheckoutFragment();
         //Event event = (Event) eventBundle.getSerializable("event");
@@ -68,6 +70,8 @@ public class CheckoutFragment extends DialogFragment {
         this.btnNoListener = listener;
     }
 
+
+    //TODO-- Explain method
     /**
      *
      * @param event
@@ -98,6 +102,7 @@ public class CheckoutFragment extends DialogFragment {
         tvEventDetails = view.findViewById(R.id.etPasswordInput);
         btnYes = view.findViewById(R.id.btnYes);
         btnNo = view.findViewById(R.id.btnNo);
+
         getDialog().setCanceledOnTouchOutside(false);
         Bundle eventBundle = this.getArguments();
         if(eventBundle != null){
@@ -112,6 +117,8 @@ public class CheckoutFragment extends DialogFragment {
         tvEventDetails.requestFocus();
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
+
+        //TODO -- Explain query
         ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
         query.include(Event.KEY_CREATOR);
         query.getInBackground(event.getObjectId(), (Event event, ParseException e) -> {
@@ -134,6 +141,7 @@ public class CheckoutFragment extends DialogFragment {
             }
         });
 
+        //TODO -- Create seperate method to instantiate buttons
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view1) {

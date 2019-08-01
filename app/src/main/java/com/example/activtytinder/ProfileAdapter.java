@@ -31,6 +31,7 @@ import java.util.List;
 
 import static com.example.activtytinder.MainActivity.fragmentManager;
 
+//TODO -- explain this adapter
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder>{
 
     private Context context;
@@ -59,6 +60,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         holder.tvName.setText(event.getKeyName());
         holder.tvDate.setText(event.getKeyDate());
         holder.tvLocation.setText(event.getKeyAddress());
+        //TODO - explain this query
         ParseRelation<ParseUser> relation = event.getRelation("usersAttending");
         ParseQuery<ParseUser> query = relation.getQuery();
         query.findInBackground(new FindCallback<ParseUser>() {
@@ -127,6 +129,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
            itemView.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
+                   //TODO -- explain all the fragment stuff
                    Fragment fragment = new ReceiptFragment();
                    Bundle bundle = new Bundle();
                    bundle.putParcelable("Event", Parcels.wrap(event));
@@ -139,12 +142,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         }
 
     }
+    //TODO -- explain this
     public void clear(){
         mEvents.clear();
         notifyDataSetChanged();
     }
-    public void addAll(List<Event> list){
-        mEvents.addAll(list);
-        notifyDataSetChanged();
-    }
+
 }

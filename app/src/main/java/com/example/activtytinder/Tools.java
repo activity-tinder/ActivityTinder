@@ -1,4 +1,4 @@
-package com.example.activtytinder.Models;
+package com.example.activtytinder;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -18,6 +18,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+//TODO -- explain tools class
 public class Tools {
 
     /**

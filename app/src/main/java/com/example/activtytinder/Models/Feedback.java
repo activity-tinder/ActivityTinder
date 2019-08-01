@@ -4,7 +4,7 @@ package com.example.activtytinder.Models;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
-
+//TODO -- explain model
 @ParseClassName("Feedback")
 public class Feedback extends ParseObject {
 

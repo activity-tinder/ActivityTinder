@@ -60,8 +60,6 @@ public class ReceiptFragment extends Fragment  {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-
         return inflater.inflate(R.layout.fragment_receipt, container , false);
 
 
@@ -87,12 +85,9 @@ public class ReceiptFragment extends Fragment  {
         }
 
 
+        //TODO -- explain query
         ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
         query.include(Event.KEY_CREATOR);
-
-
-
-        //TODO --  call the event.getObjectID
         query.getInBackground(mEvent.getObjectId(), new GetCallback<Event>() {
             @Override
             public void done(Event event, ParseException e) {
@@ -104,6 +99,7 @@ public class ReceiptFragment extends Fragment  {
                     mDescription = event.getKeyDescription();
                     mStartTime = event.getKeyStartTime();
                     mEndTime = event.getKeyEndTime();
+                    //TODO-- explain query
                     ParseRelation<ParseUser> relation = event.getRelation("usersAttending");
                     ParseQuery<ParseUser> query = relation.getQuery();
                     query.include(Event.KEY_CREATOR);
@@ -145,6 +141,7 @@ public class ReceiptFragment extends Fragment  {
             }
         });
 
+        //TODO -- create separate method for buttons
         btnDirections.setOnClickListener(btnDirections -> {
             Uri gmmIntentUri = Uri.parse("geo:" + 0 +"," + 0 +"?q="+ mLocation);
             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
@@ -195,6 +192,7 @@ public class ReceiptFragment extends Fragment  {
         leaveDialogFragment.show(fragmentManager, "LeaveFragment");
     }
 
+    //TODO -- explain this
     public void addEvent(String title, String location, long begin, long end, String description) {
         Intent intent = new Intent(Intent.ACTION_INSERT)
                 .setData(CalendarContract.Events.CONTENT_URI)
@@ -208,6 +206,7 @@ public class ReceiptFragment extends Fragment  {
         }
     }
 
+    //TODO -- explain this
     private long checkTime (String time) {
         String finalTime;
         String myDate;

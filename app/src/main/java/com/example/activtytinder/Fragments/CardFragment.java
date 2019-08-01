@@ -40,7 +40,7 @@ import java.util.Locale;
 import static com.example.activtytinder.Fragments.ProfileFragment.TAG;
 
 /**
- * this class contains the card stack that shows the events users have created. Users are able to
+ * This class contains the card stack that shows the events users have created. Users are able to
  * swipe yes and no on cards in the stack, click the yes or no buttons
  */
 public class CardFragment extends Fragment {
@@ -50,8 +50,11 @@ public class CardFragment extends Fragment {
     private ImageButton btnUndo;
     private ImageButton btnRefresh;
 
+    //TODO -- Explain this ArrayList
     public ArrayList<String> attending;
 
+
+    //TODO-- Explain this viewholder
     public SwipePlaceHolderView mSwipePlaceHolderView;
     Point cardViewHolderSize;
 

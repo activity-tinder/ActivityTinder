@@ -18,7 +18,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.activtytinder.CardUtils;
 import com.example.activtytinder.Models.Event;
-import com.example.activtytinder.Models.Tools;
+import com.example.activtytinder.Tools;
 import com.example.activtytinder.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;

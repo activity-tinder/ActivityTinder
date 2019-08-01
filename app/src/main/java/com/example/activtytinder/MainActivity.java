@@ -14,7 +14,7 @@ import com.example.activtytinder.Fragments.ProfileFragment;
 import com.example.activtytinder.Fragments.ReceiptFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-
+//TODO -- explain this activity
 public class MainActivity extends AppCompatActivity {
 
     public BottomNavigationView bottomNavigationView;
@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     final Fragment receiptFragment = new ReceiptFragment();
     public static FragmentManager fragmentManager;
 
+
+    //TODO -- explain all the fragment stuff
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_card);
     }
+    //TODO -- explain this method
     public void contactUs(View item) {
         // first parameter is the context, second is the class of the activity to launch
         Intent i = new Intent(this, ContactUsActivity.class);

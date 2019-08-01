@@ -31,7 +31,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.activtytinder.LoginActivity;
 import com.example.activtytinder.Models.Event;
-import com.example.activtytinder.Models.Tools;
+import com.example.activtytinder.Tools;
 import com.example.activtytinder.ProfileAdapter;
 import com.example.activtytinder.R;
 import com.parse.ParseFile;
@@ -88,6 +88,7 @@ public class ProfileFragment extends Fragment{
         mEvents = new ArrayList<>();
         swipeContainer.setOnRefreshListener(() -> fetchEventsAsync(0));
 
+        //TODO -- change referesh colors to color scheme for app
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
@@ -109,6 +110,7 @@ public class ProfileFragment extends Fragment{
 
         tvScore.setText(user.getNumber("reliabilityScore").toString());
 
+        //TODO -- create seperate method for buttons
         btnLogout.setOnClickListener(btnLogOut -> logout());
 
         btnUploadImage.setOnClickListener(btnUploadImage -> selectImage());
@@ -117,6 +119,7 @@ public class ProfileFragment extends Fragment{
 
     }
 
+    //TODO -- explain this
     private void fetchEventsAsync(int i) {
         adapter.clear();
         populateEventAdapter();
@@ -131,6 +134,7 @@ public class ProfileFragment extends Fragment{
         getActivity().finish();
     }
 
+    //TODO -- explain this
     private void populateProfile(){
         tvName.setText(user.getString("name"));
         tvUsername.setText(user.getUsername());
@@ -190,6 +194,7 @@ public class ProfileFragment extends Fragment{
         return file;
     }
 
+    //TODO -- explain this
     public void populateEventAdapter(){
         ParseRelation<Event> eventsToAttend = user.getRelation("willAttend");
         ParseQuery<Event> eventQuery = eventsToAttend.getQuery();
@@ -199,6 +204,8 @@ public class ProfileFragment extends Fragment{
             adapter.notifyDataSetChanged();
         });
     }
+
+    //TODO -- explain this
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -231,10 +238,12 @@ public class ProfileFragment extends Fragment{
         }
     }
 
+    //TODO -- explain this
     public static void updateScore(){
         tvScore.setText(ParseUser.getCurrentUser().getNumber("reliabilityScore").toString());
     }
 
+    //TODO - explain this
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

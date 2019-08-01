@@ -2,7 +2,6 @@ package com.example.activtytinder;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.net.Uri;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,8 +22,8 @@ import com.mindorks.placeholderview.annotations.swipe.SwipeTouch;
 import com.mindorks.placeholderview.annotations.swipe.SwipingDirection;
 import com.parse.ParseFile;
 
-import java.io.File;
 
+//TODO -- explain this class
 // this class binds the event information to the card swiping view
 @Layout(R.layout.event_card_view)
 public class SwipeEventCard {
@@ -92,6 +91,7 @@ public class SwipeEventCard {
 
     public void setOnClickListener(onClickListener clickListener) {this.clickListener = clickListener;}
 
+    //TODO -- explain this
     // loads information on cards
     @Resolve
     public void onResolved() {
@@ -140,6 +140,7 @@ public class SwipeEventCard {
         listener.onSwiped();
     }
 
+    //TODO -- finish this
     /**
      *
      */
@@ -148,16 +149,19 @@ public class SwipeEventCard {
         clickListener.onClick();
     }
 
+    //TODO -- explain this
     @SwipeInState
     public void onSwipeInState(){
         //Log.d("EVENT", "onSwipeInState");
     }
 
+    //TODO -- explain this
     @SwipeOutState
     public void onSwipeOutState(){
         Log.d("EVENT", "onSwipeOutState");
     }
 
+    //TODO -- explain this
     @SwipeOut
     public void onSwipedOut(){
         Log.d("EVENT", "onSwipedOut");
@@ -171,11 +175,13 @@ public class SwipeEventCard {
         Log.d("EVENT", "onSwipeCancelState");
     }
 
+    //TODO -- epxlain this
     @SwipingDirection
     public void onSwipingDirection(SwipeDirection direction) {
         Log.d("DEBUG", "SwipingDirection " + direction.name());
     }
 
+    //TODO -- explain this
     @SwipeTouch
     public void onSwipeTouch(float xStart, float yStart, float xCurrent, float yCurrent) {
 

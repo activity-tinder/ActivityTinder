@@ -41,9 +41,12 @@ public class DetailsFragment extends DialogFragment {
     private String mStartTime;
     private String mEndTime;
 
+    //TODO -- explain this constructor
     public DetailsFragment() {
 
     }
+
+    //TODO -- Explain new instance
 
     public static DetailsFragment newInstance(String eventDetails, Event event){
         DetailsFragment fragment = new DetailsFragment();
@@ -89,6 +92,7 @@ public class DetailsFragment extends DialogFragment {
         mStartTime = mEvent.getKeyStartTime();
         mEndTime = mEvent.getKeyEndTime();
 
+        //TODO -- explain this query
         ParseRelation<ParseUser> relation = mEvent.getRelation("usersAttending");
         ParseQuery<ParseUser> query = relation.getQuery();
         query.include(Event.KEY_CREATOR);
@@ -129,6 +133,7 @@ public class DetailsFragment extends DialogFragment {
         });
 
 
+        //TODO -- create seperat emethiod for button
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

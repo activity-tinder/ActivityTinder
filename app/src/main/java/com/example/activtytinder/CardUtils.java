@@ -7,18 +7,16 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.example.activtytinder.Models.Event;
-import com.parse.ParseException;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
-import static com.parse.Parse.getApplicationContext;
-
+//TODO -- explain class
 public class CardUtils {
 
+
+    //TODO -- explain this
     public static Point getDisplaySize(WindowManager windowManager) {
         try {
             if (Build.VERSION.SDK_INT > 16) {
