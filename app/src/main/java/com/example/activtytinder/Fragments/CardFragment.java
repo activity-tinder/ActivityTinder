@@ -78,6 +78,8 @@ public class CardFragment extends Fragment {
 
         mSwipePlaceHolderView = view.findViewById(R.id.swipeView);
 
+
+
         queryEvents();
 
         btnListeners();

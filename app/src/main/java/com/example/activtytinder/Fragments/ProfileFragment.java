@@ -59,7 +59,7 @@ public class ProfileFragment extends Fragment{
     private RecyclerView rvProfile;
     private TextView tvName;
     private TextView tvUsername;
-    private TextView tvScore;
+    public static TextView tvScore;
     private TextView tvHomeCity;
     private Button btnTakeImage;
     private Button btnUploadImage;
@@ -106,6 +106,8 @@ public class ProfileFragment extends Fragment{
 
         populateProfile();
         populateEventAdapter();
+
+        tvScore.setText(user.getNumber("reliabilityScore").toString());
 
         btnLogout.setOnClickListener(btnLogOut -> logout());
 
@@ -227,6 +229,10 @@ public class ProfileFragment extends Fragment{
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public static void updateScore(){
+        tvScore.setText(ParseUser.getCurrentUser().getNumber("reliabilityScore").toString());
     }
 
     @Override
