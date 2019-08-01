@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     final static Fragment cardFragment = new CardFragment();
     final Fragment createFragment = new CreateFragment();
-    final Fragment profileFragment = new ProfileFragment();
+    public static Fragment profileFragment = new ProfileFragment();
     final Fragment receiptFragment = new ReceiptFragment();
     public static FragmentManager fragmentManager;
 

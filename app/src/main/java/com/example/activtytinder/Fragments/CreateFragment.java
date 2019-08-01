@@ -29,9 +29,11 @@ import com.example.activtytinder.LocationManager;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.Tools;
 import com.example.activtytinder.R;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -163,23 +165,26 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         event.setKeyCategory(Category);
         event.put("eventPhoto", EventPhoto);
 
-        event.saveInBackground(e -> {
-            if (e != null){
-                Log.d("Create Fragment", "Error while saving");
-                e.printStackTrace();
-                return;
-            }
-            etEventAddress.setText("");
-            etEventName.setText("");
-            etEventDescription.setText("");
-            etEventDate.setText("");
-            etEventStartTime.setText("");
-            etEventEndTime.setText("");
-            etEventMaxPeople.setText("");
-            ivImage.setImageResource(0);
+        event.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.d("Create Fragment", "Error while saving");
+                    e.printStackTrace();
+                    return;
+                }
+                etEventAddress.setText("");
+                etEventName.setText("");
+                etEventDescription.setText("");
+                etEventDate.setText("");
+                etEventStartTime.setText("");
+                etEventEndTime.setText("");
+                etEventMaxPeople.setText("");
+                ivImage.setImageResource(0);
 
-            CardUtils.addUserToEvent(ParseUser.getCurrentUser(), myEvent);
-            Toast.makeText(getContext(),"Event Creation Successful!",Toast.LENGTH_SHORT).show();
+                CardUtils.addUserToEvent(ParseUser.getCurrentUser(), myEvent);
+                Toast.makeText(CreateFragment.this.getContext(), "Event Creation Successful!", Toast.LENGTH_SHORT).show();
+            }
         });
         return event;
     }

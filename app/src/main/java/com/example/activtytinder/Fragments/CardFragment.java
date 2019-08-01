@@ -54,7 +54,7 @@ public class CardFragment extends Fragment {
     //TODO -- Explain this ArrayList
 
     //TODO -- add a spinner for filtering
-    
+
     public ArrayList<String> attending;
 
 

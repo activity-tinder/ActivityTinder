@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -111,6 +112,7 @@ public class ProfileFragment extends Fragment{
         tvScore.setText(user.getNumber("reliabilityScore").toString());
 
         //TODO -- create seperate method for buttons
+
         btnLogout.setOnClickListener(btnLogOut -> logout());
 
         btnUploadImage.setOnClickListener(btnUploadImage -> selectImage());
@@ -237,13 +239,13 @@ public class ProfileFragment extends Fragment{
             }
         }
     }
-
+    
     //TODO -- explain this
     public static void updateScore(){
         tvScore.setText(ParseUser.getCurrentUser().getNumber("reliabilityScore").toString());
     }
 
-    //TODO - explain this
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
