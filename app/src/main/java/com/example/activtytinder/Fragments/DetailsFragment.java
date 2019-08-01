@@ -106,6 +106,8 @@ public class DetailsFragment extends DialogFragment {
                     tvEventDetailsFragment.setText(
                             "Name: "
                                     + mName
+                                    + "\n\nDescription: "
+                                    + mDescription
                                     + "\n\nDate: "
                                     + mDate
                                     + "\n\nTime: "
@@ -120,8 +122,6 @@ public class DetailsFragment extends DialogFragment {
                                     + mAttendees.toString().substring(1, mAttendees.toString().length() -1 )
                                     + "\n\nPeople Limit: "
                                     + mLimit
-                                    + "\n\nDescription: "
-                                    + mDescription
                                     + "\n\n"
                     );
                 }

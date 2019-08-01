@@ -50,7 +50,11 @@ public class CardFragment extends Fragment {
     private ImageButton btnUndo;
     private ImageButton btnRefresh;
 
+
     //TODO -- Explain this ArrayList
+
+    //TODO -- add a spinner for filtering
+    
     public ArrayList<String> attending;
 
 

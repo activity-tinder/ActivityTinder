@@ -142,7 +142,7 @@ public class SwipeEventCard {
 
     //TODO -- finish this
     /**
-     *
+     * When card is regularly clicked
      */
     @Click(R.id.cvCards)
     public void onCardClick() {

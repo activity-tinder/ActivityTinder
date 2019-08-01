@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,11 +20,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
@@ -42,6 +45,7 @@ public class ReceiptFragment extends Fragment  {
     private Button btnChat;
     private Button btnCalendar;
     private Button btnDitch;
+    private ImageView ivPicture;
     private ScrollView scDetails;
     private TextView tvEventDetails;
     private String mName;
@@ -61,8 +65,6 @@ public class ReceiptFragment extends Fragment  {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_receipt, container , false);
-
-
     }
 
     @Override
@@ -74,6 +76,7 @@ public class ReceiptFragment extends Fragment  {
         btnDitch = view.findViewById(R.id.btnDitchEvent);
         scDetails = view.findViewById(R.id.scDetails);
         tvEventDetails = view.findViewById(R.id.eventDetails);
+        ivPicture = view.findViewById(R.id.ivReceiptImage);
         mAttendees = new ArrayList<>();
         Bundle eventBundle = this.getArguments();
         if(eventBundle != null){
@@ -110,6 +113,26 @@ public class ReceiptFragment extends Fragment  {
                                 for(int x = 0; x < users.size(); x++){
                                     mAttendees.add(users.get(x).getUsername());
                                 }
+
+                                ParseFile image = mEvent.getEventImage();
+                                if (image != null) {
+                                    // TODO -- make nonsecure links secure without cutting strings
+
+                                    /**
+                                     * Alters image url from Parse to begin with https instead of http to pass
+                                     * Android security requirements.
+                                     */
+                                    String security = "https";
+                                    String url = image.getUrl().substring(4);
+
+                                    Log.d("DEBUG", "in setting image " + security + url);
+                                    Glide.with(getContext())
+                                            .load(security + url)
+                                            .centerCrop()
+                                            .dontAnimate()
+                                            .into(ivPicture);
+                                }
+
                                 tvEventDetails.setText("Name: "
                                         + mName
                                         + "\n\nDate: "
@@ -141,45 +164,7 @@ public class ReceiptFragment extends Fragment  {
             }
         });
 
-        //TODO -- create separate method for buttons
-        btnDirections.setOnClickListener(btnDirections -> {
-            Uri gmmIntentUri = Uri.parse("geo:" + 0 +"," + 0 +"?q="+ mLocation);
-            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-            mapIntent.setPackage("com.google.android.apps.maps");
-            startActivity(mapIntent);
-
-        });
-
-        btnChat.setOnClickListener(btnChat -> {
-            Intent intent= new Intent();
-            intent.setAction(Intent.ACTION_SEND);
-            intent.putExtra(Intent.EXTRA_TEXT, "Hi!");
-            intent.setType("text/plain");
-            intent.setPackage("com.facebook.orca");
-            try
-            {
-                startActivity(intent);
-            }
-            catch (ActivityNotFoundException ex)
-            {
-                Toast.makeText(getContext(),
-                        "Oops!Can't open Facebook messenger right now. Please try again later.",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
-
-        btnCalendar.setOnClickListener(btnCalendar -> addEvent(mName, mLocation, checkTime(mStartTime), checkTime(mEndTime), mDescription));
-
-        btnDitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO -- give User a warning message/confirmation overlay. If they choose to leave, take User's name off of the users attending. Lower their score if it's 24 hours before event will occur.
-                Bundle eventBundle = new Bundle();
-                eventBundle.putParcelable("Event", Parcels.wrap(mEvent));
-                ReceiptFragment.this.showLeaveDialog(mEvent);
-            }
-        });
-
+        btnManager();
     }
 
     /**
@@ -229,6 +214,46 @@ public class ReceiptFragment extends Fragment  {
         }
         long accurateTime = date.getTime();
         return accurateTime;
+    }
+
+    private void btnManager() {
+        btnDirections.setOnClickListener(btnDirections -> {
+            Uri gmmIntentUri = Uri.parse("geo:" + 0 +"," + 0 +"?q="+ mLocation);
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);
+
+        });
+
+        btnChat.setOnClickListener(btnChat -> {
+            Intent intent= new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT, "Hi!");
+            intent.setType("text/plain");
+            intent.setPackage("com.facebook.orca");
+            try
+            {
+                startActivity(intent);
+            }
+            catch (ActivityNotFoundException ex)
+            {
+                Toast.makeText(getContext(),
+                        "Oops!Can't open Facebook messenger right now. Please try again later.",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        btnCalendar.setOnClickListener(btnCalendar -> addEvent(mName, mLocation, checkTime(mStartTime), checkTime(mEndTime), mDescription));
+
+        btnDitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO -- give User a warning message/confirmation overlay. If they choose to leave, take User's name off of the users attending. Lower their score if it's 24 hours before event will occur.
+                Bundle eventBundle = new Bundle();
+                eventBundle.putParcelable("Event", Parcels.wrap(mEvent));
+                ReceiptFragment.this.showLeaveDialog(mEvent);
+            }
+        });
     }
 
 }
