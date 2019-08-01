@@ -14,6 +14,7 @@
     <string name="name">Name</string>
     <string name="question">Are you sure you want to attend?</string>
     <string name="close">Close</string>
+    <string name="leave_event">Are you sure you want to leave the event? Your reliability score will go down by 10 points if the event starts within 24 hours! Enter your password to confirm you\'re leaving the event!</string>
     <string-array name="categories_array">
         <item>Choose Category</item>
         <item>Food</item>

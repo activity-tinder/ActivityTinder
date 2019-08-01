@@ -18,7 +18,7 @@
         android:layout_marginRight="12dp"
         android:layout_marginBottom="8dp"
         android:textAlignment="center"
-        android:text="Are you sure you want to leave the event? Your reliability score will go down by 10 points if the event starts within a day! You must also enter your password to confirm it's you!"
+        android:text="@string/leave_event"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
