@@ -6,6 +6,9 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+
 import com.bumptech.glide.Glide;
 import com.example.activtytinder.Models.Event;
 import com.mindorks.placeholderview.SwipeDirection;
@@ -28,8 +31,11 @@ import com.parse.ParseFile;
 @Layout(R.layout.event_card_view)
 public class SwipeEventCard {
 
+
+
     SwipeListener listener;
     onClickListener clickListener;
+
 
     // setting up layout variables
     @View(R.id.ivCardImage)
@@ -49,6 +55,9 @@ public class SwipeEventCard {
 
     @View(R.id.tvCardEventCreator)
     protected TextView tvCardEventCreator;
+
+    @View(R.id.clCardStack)
+    protected ConstraintLayout mConstraintLayout;
 
     protected Event mEvent;
     protected Context mContext;
@@ -129,6 +138,14 @@ public class SwipeEventCard {
         }
 
         tvCardEventCreator.setText(mEvent.getCreator().getUsername());
+
+        if (mEvent.getCategory().equals("Active")) {
+            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.magenta));
+        }else if (mEvent.getCategory().equals("Nature")){
+            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bright_green));
+        }else if (mEvent.getCategory().equals("Food")){
+            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.orange));
+        }
     }
 
     /**

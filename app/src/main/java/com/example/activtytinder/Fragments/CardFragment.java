@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -49,6 +50,7 @@ public class CardFragment extends Fragment {
     private ImageButton btnReject;
     private ImageButton btnUndo;
     private ImageButton btnRefresh;
+    private ConstraintLayout mConstraintLayout;
 
 
     //TODO -- Explain this ArrayList
@@ -84,6 +86,9 @@ public class CardFragment extends Fragment {
         cardViewHolderSize = new Point(windowSize.x, windowSize.y - bottomMargin);
 
         mSwipePlaceHolderView = view.findViewById(R.id.swipeView);
+
+
+
 
 
 
