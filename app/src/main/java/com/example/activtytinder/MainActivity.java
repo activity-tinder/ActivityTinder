@@ -63,6 +63,12 @@ public class MainActivity extends AppCompatActivity {
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_card);
     }
+
+    @Override
+    public void onBackPressed() {
+        fragmentManager.beginTransaction().addToBackStack("1").replace(R.id.flContainer, cardFragment).commit();
+    }
+
     public void contactUs(View item) {
         // first parameter is the context, second is the class of the activity to launch
         Intent i = new Intent(this, ContactUsActivity.class);
