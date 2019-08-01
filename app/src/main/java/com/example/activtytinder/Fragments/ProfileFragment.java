@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -106,8 +107,6 @@ public class ProfileFragment extends Fragment{
 
         populateProfile();
         populateEventAdapter();
-
-        tvScore.setText(user.getNumber("reliabilityScore").toString());
 
         btnLogout.setOnClickListener(btnLogOut -> logout());
 
@@ -231,9 +230,12 @@ public class ProfileFragment extends Fragment{
         }
     }
 
-    public static void updateScore(){
-        tvScore.setText(ParseUser.getCurrentUser().getNumber("reliabilityScore").toString());
+    public void closeCurrentFragment(){
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.popBackStackImmediate();
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
