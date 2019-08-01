@@ -39,7 +39,6 @@ public class CheckoutFragment extends DialogFragment {
 
 
     public CheckoutFragment() {
-
         // Empty constructor is required for DialogFragment
         // Make sure not to add arguments to the constructor
     }
@@ -96,7 +95,7 @@ public class CheckoutFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tvEventDetails = view.findViewById(R.id.tvEventDetails);
+        tvEventDetails = view.findViewById(R.id.etPasswordInput);
         btnYes = view.findViewById(R.id.btnYes);
         btnNo = view.findViewById(R.id.btnNo);
         getDialog().setCanceledOnTouchOutside(false);
@@ -135,16 +134,22 @@ public class CheckoutFragment extends DialogFragment {
             }
         });
 
-        btnYes.setOnClickListener(view1 -> {
-            CardUtils.addUserToEvent(ParseUser.getCurrentUser(), event);
-            showReceiptFragment(event);
-            dismiss();
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view1) {
+                CardUtils.addUserToEvent(ParseUser.getCurrentUser(), event);
+                CheckoutFragment.this.showReceiptFragment(event);
+                CheckoutFragment.this.dismiss();
 
+            }
         });
 
-        btnNo.setOnClickListener(view12 -> {
-            btnNoListener.onNoClicked();
-            dismiss();
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view12) {
+                btnNoListener.onNoClicked();
+                CheckoutFragment.this.dismiss();
+            }
         });
 
 

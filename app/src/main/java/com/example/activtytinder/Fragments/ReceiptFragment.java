@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
@@ -176,9 +177,22 @@ public class ReceiptFragment extends Fragment  {
             @Override
             public void onClick(View view) {
                 //TODO -- give User a warning message/confirmation overlay. If they choose to leave, take User's name off of the users attending. Lower their score if it's 24 hours before event will occur.
+                Bundle eventBundle = new Bundle();
+                eventBundle.putParcelable("Event", Parcels.wrap(mEvent));
+                ReceiptFragment.this.showLeaveDialog(mEvent);
             }
         });
 
+    }
+
+    /**
+     * Creates an overlaid checkout fragment instance
+     * @param event - the event that the user is trying to leave
+     */
+    public void showLeaveDialog(Event event) {
+        FragmentManager fragmentManager = getFragmentManager();
+        LeaveFragment leaveDialogFragment = LeaveFragment.newInstance(event);
+        leaveDialogFragment.show(fragmentManager, "LeaveFragment");
     }
 
     public void addEvent(String title, String location, long begin, long end, String description) {
