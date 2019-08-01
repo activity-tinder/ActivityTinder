@@ -11,10 +11,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.activtytinder.CardUtils;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
@@ -70,14 +74,23 @@ public class LeaveFragment extends DialogFragment {
             @Override
             public void onClick(View view1) {
                 ParseUser user = ParseUser.getCurrentUser();
-                if(etPasswordInput.getText().toString().equals(user.get("password"))) {
-                    CardUtils.removeUserFromEvent(user, event);
-                    LeaveFragment.this.dismiss();
-                }else{
-                    Toast.makeText(getContext(),"Incorrect Password! Try again or don't leave!", Toast.LENGTH_SHORT).show();
-                }
-
+                user.logInInBackground(user.getUsername(), etPasswordInput.getText().toString(), new LogInCallback() {
+                    @Override
+                    public void done(ParseUser user, ParseException e) {
+                        if (e == null) {
+                            CardUtils.removeUserFromEvent(user, event);
+                            FragmentManager fragmentManager = getFragmentManager();
+                            LeaveFragment.this.dismiss();;
+                            Fragment fragment = new CardFragment();
+                            fragmentManager.beginTransaction().addToBackStack("Cards").replace(R.id.flContainer, fragment ).commit();
+                        } else {
+                            Toast.makeText(getContext(),"Incorrect Password! Try again or don't leave!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
+
+
         });
 
         btnNo.setOnClickListener(new View.OnClickListener() {

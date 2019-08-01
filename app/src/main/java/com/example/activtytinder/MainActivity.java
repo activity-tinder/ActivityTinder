@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     public BottomNavigationView bottomNavigationView;
 
-    final Fragment cardFragment = new CardFragment();
+    final static Fragment cardFragment = new CardFragment();
     final Fragment createFragment = new CreateFragment();
     final Fragment profileFragment = new ProfileFragment();
     final Fragment receiptFragment = new ReceiptFragment();
