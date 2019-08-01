@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.action_card);
     }
 
+    /**
+     * Back button only goes to card fragment to prevent tracking entire stack back.
+     */
     @Override
     public void onBackPressed() {
         fragmentManager.beginTransaction().addToBackStack("1").replace(R.id.flContainer, cardFragment).commit();
