@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,11 +20,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
@@ -42,6 +45,7 @@ public class ReceiptFragment extends Fragment  {
     private Button btnChat;
     private Button btnCalendar;
     private Button btnDitch;
+    private ImageView ivPicture;
     private ScrollView scDetails;
     private TextView tvEventDetails;
     private String mName;
@@ -76,6 +80,7 @@ public class ReceiptFragment extends Fragment  {
         btnDitch = view.findViewById(R.id.btnDitchEvent);
         scDetails = view.findViewById(R.id.scDetails);
         tvEventDetails = view.findViewById(R.id.eventDetails);
+        ivPicture = view.findViewById(R.id.ivReceiptImage);
         mAttendees = new ArrayList<>();
         Bundle eventBundle = this.getArguments();
         if(eventBundle != null){
@@ -114,6 +119,26 @@ public class ReceiptFragment extends Fragment  {
                                 for(int x = 0; x < users.size(); x++){
                                     mAttendees.add(users.get(x).getUsername());
                                 }
+
+                                ParseFile image = mEvent.getEventImage();
+                                if (image != null) {
+                                    // TODO -- make nonsecure links secure without cutting strings
+
+                                    /**
+                                     * Alters image url from Parse to begin with https instead of http to pass
+                                     * Android security requirements.
+                                     */
+                                    String security = "https";
+                                    String url = image.getUrl().substring(4);
+
+                                    Log.d("DEBUG", "in setting image " + security + url);
+                                    Glide.with(getContext())
+                                            .load(security + url)
+                                            .centerCrop()
+                                            .dontAnimate()
+                                            .into(ivPicture);
+                                }
+
                                 tvEventDetails.setText("Name: "
                                         + mName
                                         + "\n\nDate: "
