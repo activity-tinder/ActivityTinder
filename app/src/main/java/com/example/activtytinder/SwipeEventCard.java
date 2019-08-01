@@ -140,6 +140,9 @@ public class SwipeEventCard {
         listener.onSwiped();
     }
 
+    /**
+     *
+     */
     @Click(R.id.cvCards)
     public void onCardClick() {
         clickListener.onClick();

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
@@ -80,14 +81,11 @@ public class ReceiptFragment extends Fragment  {
         if(eventBundle != null){
             mEvent = Parcels.unwrap(eventBundle.getParcelable("Event"));
         }
-        //Right now, this is stopping the code from crashing because i don't get an event
-        //Main Activity creates this fragment at the beginning, but I'm still not able to click on the navigation bar
         else{
             tvEventDetails.setText("You have not selected an event to attend yet!");
             return;
         }
 
-//        bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);
 
         ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
         query.include(Event.KEY_CREATOR);
@@ -141,61 +139,60 @@ public class ReceiptFragment extends Fragment  {
                     });
                 }
                 else{
-                    Log.e("ReceiptFragment", "Girl, you don goofed");
+                    Log.e("ReceiptFragment", "Event Query Failed!");
                     e.printStackTrace();
                 }
             }
         });
 
-        btnDirections.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //searchWeb(mLocation);
-                Uri gmmIntentUri = Uri.parse("geo:" + 0 +"," + 0 +"?q="+ mLocation);
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                startActivity(mapIntent);
+        btnDirections.setOnClickListener(btnDirections -> {
+            Uri gmmIntentUri = Uri.parse("geo:" + 0 +"," + 0 +"?q="+ mLocation);
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);
 
+        });
+
+        btnChat.setOnClickListener(btnChat -> {
+            Intent intent= new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT, "Hi!");
+            intent.setType("text/plain");
+            intent.setPackage("com.facebook.orca");
+            try
+            {
+                startActivity(intent);
+            }
+            catch (ActivityNotFoundException ex)
+            {
+                Toast.makeText(getContext(),
+                        "Oops!Can't open Facebook messenger right now. Please try again later.",
+                        Toast.LENGTH_LONG).show();
             }
         });
 
-        btnChat.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                //TODO -- open internal chat option or if we're feeling bold open Facebook Messenger
-                Intent intent= new Intent();
-                intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_TEXT, "Hi!");
-                intent.setType("text/plain");
-                intent.setPackage("com.facebook.orca");
-
-                try
-                {
-                    startActivity(intent);
-                }
-                catch (ActivityNotFoundException ex)
-                {
-                    Toast.makeText(getContext(),
-                            "Oups!Can't open Facebook messenger right now. Please try again later.",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        btnCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addEvent(mName, mLocation, checkTime(mStartTime), checkTime(mEndTime), mDescription);
-            }
-        });
+        btnCalendar.setOnClickListener(btnCalendar -> addEvent(mName, mLocation, checkTime(mStartTime), checkTime(mEndTime), mDescription));
 
         btnDitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO -- give User a warning message/confirmation overlay. If they choose to leave, take User's name off of the users attending. Lower their score if it's 24 hours before event will occur.
+                Bundle eventBundle = new Bundle();
+                eventBundle.putParcelable("Event", Parcels.wrap(mEvent));
+                ReceiptFragment.this.showLeaveDialog(mEvent);
             }
         });
 
+    }
+
+    /**
+     * Creates an overlaid checkout fragment instance
+     * @param event - the event that the user is trying to leave
+     */
+    public void showLeaveDialog(Event event) {
+        FragmentManager fragmentManager = getFragmentManager();
+        LeaveFragment leaveDialogFragment = LeaveFragment.newInstance(event);
+        leaveDialogFragment.show(fragmentManager, "LeaveFragment");
     }
 
     public void addEvent(String title, String location, long begin, long end, String description) {
@@ -211,7 +208,7 @@ public class ReceiptFragment extends Fragment  {
         }
     }
 
-    public Long checkTime (String time) {
+    private long checkTime (String time) {
         String finalTime;
         String myDate;
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");

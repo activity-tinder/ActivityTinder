@@ -12,7 +12,11 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class Tools {
 
@@ -96,5 +100,23 @@ public class Tools {
         matrix.setRotate(rotationAngle, (float) bm.getWidth() / 2, (float) bm.getHeight() / 2);
         Bitmap rotatedBitmap = Bitmap.createBitmap(bm, 0, 0, bounds.outWidth, bounds.outHeight, matrix, true);
         return rotatedBitmap;
+    }
+
+    /**
+     * Turns a date and time in the form of a string into milliseconds for accurate comparisons.
+     * @param parsedString - A string that contains the date to be parsed and converted into a long.
+     * @return A long that represents the time given in milliseconds relative to the UTC.
+     */
+    public static long getDateInMillis(String parsedString) {
+
+        Date currentDate = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.US);
+        try {
+            currentDate = sdf.parse(parsedString);
+        } catch (ParseException e1) {
+            e1.printStackTrace();
+        }
+        long millis = currentDate.getTime();
+        return millis;
     }
 }

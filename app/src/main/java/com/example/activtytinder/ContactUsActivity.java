@@ -17,7 +17,7 @@ import com.parse.SaveCallback;
 
 public class ContactUsActivity extends AppCompatActivity {
 
-    private Button btnsubmit;
+    private Button btnSubmit;
     private EditText etName;
     private EditText etEmail;
     private TextView tvComment;
@@ -26,14 +26,14 @@ public class ContactUsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_us);
-        btnsubmit = findViewById(R.id.btn_submit);
+        btnSubmit = findViewById(R.id.btn_submit);
         etName = findViewById(R.id.name_et);
         etEmail = findViewById(R.id.email_et);
         tvComment = findViewById(R.id.comment_et);
 
 
 
-        btnsubmit.setOnClickListener(new View.OnClickListener() {
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Feedback feedback = new Feedback();

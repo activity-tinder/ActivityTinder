@@ -46,9 +46,6 @@ public class CardUtils {
      * @param event - event user wants to attend, must be an Event
      */
     public static void addUserToEvent(ParseUser user, Event event) {
-        // add the current user to the list of people attending the event in the event
-        // class
-
         ParseRelation<ParseUser> userInEvent = event.getRelation("usersAttending");
         userInEvent.add(user);
         event.saveInBackground();
@@ -63,6 +60,22 @@ public class CardUtils {
                 e.printStackTrace();
             }
         });
+    }
+
+    /**
+     * Removes the user from the event's list of people attending and removes the event
+     * from the user's list of events that they're attending.
+     * @param user - user to remove, must be a ParseUser
+     * @param event - event user wants to leave, must be an Event
+     */
+    public static void removeUserFromEvent(ParseUser user, Event event) {
+        ParseRelation<ParseUser> userInEvent = event.getRelation("usersAttending");
+        userInEvent.remove(user);
+        event.saveInBackground();
+
+        ParseRelation<Event> eventInUser = user.getRelation("willAttend");
+        eventInUser.remove(event);
+        user.saveInBackground();
     }
 
 }
