@@ -65,10 +65,7 @@ public class ReceiptFragment extends Fragment  {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
         return inflater.inflate(R.layout.fragment_receipt, container , false);
-
-
     }
 
     @Override
@@ -94,8 +91,6 @@ public class ReceiptFragment extends Fragment  {
 
         ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
         query.include(Event.KEY_CREATOR);
-
-
 
         //TODO --  call the event.getObjectID
         query.getInBackground(mEvent.getObjectId(), new GetCallback<Event>() {
@@ -170,44 +165,7 @@ public class ReceiptFragment extends Fragment  {
             }
         });
 
-        btnDirections.setOnClickListener(btnDirections -> {
-            Uri gmmIntentUri = Uri.parse("geo:" + 0 +"," + 0 +"?q="+ mLocation);
-            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-            mapIntent.setPackage("com.google.android.apps.maps");
-            startActivity(mapIntent);
-
-        });
-
-        btnChat.setOnClickListener(btnChat -> {
-            Intent intent= new Intent();
-            intent.setAction(Intent.ACTION_SEND);
-            intent.putExtra(Intent.EXTRA_TEXT, "Hi!");
-            intent.setType("text/plain");
-            intent.setPackage("com.facebook.orca");
-            try
-            {
-                startActivity(intent);
-            }
-            catch (ActivityNotFoundException ex)
-            {
-                Toast.makeText(getContext(),
-                        "Oops!Can't open Facebook messenger right now. Please try again later.",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
-
-        btnCalendar.setOnClickListener(btnCalendar -> addEvent(mName, mLocation, checkTime(mStartTime), checkTime(mEndTime), mDescription));
-
-        btnDitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO -- give User a warning message/confirmation overlay. If they choose to leave, take User's name off of the users attending. Lower their score if it's 24 hours before event will occur.
-                Bundle eventBundle = new Bundle();
-                eventBundle.putParcelable("Event", Parcels.wrap(mEvent));
-                ReceiptFragment.this.showLeaveDialog(mEvent);
-            }
-        });
-
+        btnManager();
     }
 
     /**
@@ -255,6 +213,46 @@ public class ReceiptFragment extends Fragment  {
         }
         long accurateTime = date.getTime();
         return accurateTime;
+    }
+
+    private void btnManager() {
+        btnDirections.setOnClickListener(btnDirections -> {
+            Uri gmmIntentUri = Uri.parse("geo:" + 0 +"," + 0 +"?q="+ mLocation);
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);
+
+        });
+
+        btnChat.setOnClickListener(btnChat -> {
+            Intent intent= new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT, "Hi!");
+            intent.setType("text/plain");
+            intent.setPackage("com.facebook.orca");
+            try
+            {
+                startActivity(intent);
+            }
+            catch (ActivityNotFoundException ex)
+            {
+                Toast.makeText(getContext(),
+                        "Oops!Can't open Facebook messenger right now. Please try again later.",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        btnCalendar.setOnClickListener(btnCalendar -> addEvent(mName, mLocation, checkTime(mStartTime), checkTime(mEndTime), mDescription));
+
+        btnDitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO -- give User a warning message/confirmation overlay. If they choose to leave, take User's name off of the users attending. Lower their score if it's 24 hours before event will occur.
+                Bundle eventBundle = new Bundle();
+                eventBundle.putParcelable("Event", Parcels.wrap(mEvent));
+                ReceiptFragment.this.showLeaveDialog(mEvent);
+            }
+        });
     }
 
 }
