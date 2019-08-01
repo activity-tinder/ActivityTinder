@@ -93,7 +93,6 @@ public class CardFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void queryEvents() {
 
-
         ParseQuery<Event> eventQuery = new ParseQuery<Event>(Event.class);
         //Toast.makeText(getContext(), "got into queryEvents", Toast.LENGTH_SHORT).show();
         eventQuery.include(Event.KEY_CREATOR);
@@ -143,16 +142,11 @@ public class CardFragment extends Fragment {
                                     SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), thisEvent, cardViewHolderSize);
                                     Event eventToSend = thisEvent;
 
-                                    // TODO -- figure out how to dynamically set colors
-//                if (event.get(i).getCategory().equals("Active") && event.get(i).getCategory() != null) {
-//                    clCardStack.setBackgroundColor(23163377);
-//                }
                                     CardFragment.this.cardListeners(card, eventToSend);
 
                                     mSwipePlaceHolderView.addView(card);
                                 }
                             }
-                            buildCardStack();
 
                         } else {
                             Log.d(TAG, "Error with getting user's currently attending events.");
@@ -161,10 +155,9 @@ public class CardFragment extends Fragment {
                         }
                     }
                 });
-
             }
         });
-
+        buildCardStack();
     }
 
     /**
