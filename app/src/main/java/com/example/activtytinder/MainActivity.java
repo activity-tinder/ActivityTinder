@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
+
         fragmentManager.beginTransaction().addToBackStack("1").replace(R.id.flContainer, cardFragment).commit();
     }
 

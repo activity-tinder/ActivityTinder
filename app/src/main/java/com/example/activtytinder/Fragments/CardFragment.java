@@ -322,6 +322,16 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
 
         btnRefresh.setOnClickListener(view -> {
             //Log.d(TAG, "refresh clicked");
+            ParseRelation<Event> swipedNo = ParseUser.getCurrentUser().getRelation("swipedNo");
+            ParseQuery<Event> swipedQuery = swipedNo.getQuery();
+            swipedQuery.findInBackground(new FindCallback<Event>() {
+                @Override
+                public void done(List<Event> eventsNo, com.parse.ParseException e) {
+                    for (Event removedEvent : eventsNo) {
+                        swipedNo.remove(removedEvent);
+                    }
+                }
+            });
             mSwipePlaceHolderView.removeAllViews();
             queryEvents(eventCategory);
         });
