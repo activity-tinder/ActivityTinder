@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentManager;
 import com.bumptech.glide.Glide;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
+import com.google.android.gms.location.GeofencingClient;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -57,9 +58,8 @@ public class ReceiptFragment extends Fragment  {
     private Event mEvent;
     private String mStartTime;
     private String mEndTime;
-//    private Button btnHome;
+    private GeofencingClient geofencingClient;
 
-//    BottomNavigationView bottomNavigationView;
 
     @Nullable
     @Override

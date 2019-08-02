@@ -27,8 +27,8 @@ import com.bumptech.glide.Glide;
 import com.example.activtytinder.CardUtils;
 import com.example.activtytinder.LocationManager;
 import com.example.activtytinder.Models.Event;
-import com.example.activtytinder.Tools;
 import com.example.activtytinder.R;
+import com.example.activtytinder.Tools;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -146,13 +146,21 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
                             Integer PeopleLimit, ParseGeoPoint EventCoordinates, String Category, ParseFile EventPhoto)
     {
         if (Name.equals("") || Description.equals("") || Date.equals("") || StartTime.equals("") || EndTime.equals("")
-                || Address.equals("") || PeopleLimit == null || EventCoordinates == null || Category.equals("")
-                || EventPhoto == null || Category.equals("Choose Category") || !Address.equals(LocationManager.get().getCorrectAddress()))
-        {
-            Toast.makeText(getContext(), "ERROR IN REQUIRED FIELD! REVIEW EVENT!",Toast.LENGTH_SHORT).show();
+                || Address.equals("") || Category.equals("")) {
+            Toast.makeText(getContext(), "CANNOT LEAVE FIELD EMPTY!", Toast.LENGTH_SHORT).show();
+            return  null;
+        }else if(PeopleLimit == null || EventCoordinates == null || !Address.equals(LocationManager.get().getCorrectAddress())){
+            Toast.makeText(getContext(), "ENTER VALID LOCATION!",Toast.LENGTH_SHORT).show();
+            return  null;
+        }else if (EventPhoto == null){
+            Toast.makeText(getContext(), "MUST PROVIDE AN EVENT PHOTO!", Toast.LENGTH_SHORT).show();
+            return  null;
+        }else if (Category.equals("Choose Category")){
+            Toast.makeText(getContext(),"MUST CHOOSE A CATEGORY!", Toast.LENGTH_SHORT).show();
             return  null;
         }
         Event event = new Event();
+        event.put("eventPhoto", EventPhoto);
         event.setKeyCreator(ParseUser.getCurrentUser());
         event.setKeyName(Name);
         event.setKeyDescription(Description);
@@ -163,16 +171,20 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         event.setKeyLimit(PeopleLimit);
         event.setKeyLocation(EventCoordinates);
         event.setKeyCategory(Category);
-        event.put("eventPhoto", EventPhoto);
+
+
 
         event.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e != null) {
                     Log.d("Create Fragment", "Error while saving");
+                    Toast.makeText(getContext(),"Error while Saving!", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                     return;
                 }
+                //event.put("eventPhoto", EventPhoto);
+                //event.saveInBackground();
                 etEventAddress.setText("");
                 etEventName.setText("");
                 etEventDescription.setText("");
@@ -181,6 +193,7 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
                 etEventEndTime.setText("");
                 etEventMaxPeople.setText("");
                 ivImage.setImageResource(0);
+
 
                 CardUtils.addUserToEvent(ParseUser.getCurrentUser(), myEvent);
                 Toast.makeText(CreateFragment.this.getContext(), "Event Creation Successful!", Toast.LENGTH_SHORT).show();
