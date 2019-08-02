@@ -72,7 +72,6 @@ public class CardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         btnAccept = view.findViewById(R.id.btnAccept);
         btnReject = view.findViewById(R.id.btnReject);
         btnUndo = view.findViewById(R.id.btnUndo);
