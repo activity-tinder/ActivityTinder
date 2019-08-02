@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -52,6 +53,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
     private ImageButton btnReject;
     private ImageButton btnUndo;
     private ImageButton btnRefresh;
+    private ConstraintLayout mConstraintLayout;
 
     //TODO -- add a spinner for filtering
     private Spinner spinnerFilter;
@@ -77,7 +79,6 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         btnAccept = view.findViewById(R.id.btnAccept);
         btnReject = view.findViewById(R.id.btnReject);
         btnUndo = view.findViewById(R.id.btnUndo);

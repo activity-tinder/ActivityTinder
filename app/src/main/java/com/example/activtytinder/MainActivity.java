@@ -45,16 +45,20 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.action_card:
+//                    fragmentManager.saveFragmentInstanceState(cardFragment);
                     fragmentManager.beginTransaction().addToBackStack("1").replace(R.id.flContainer, cardFragment).commit();
                     break;
                 case R.id.action_create:
+//                    fragmentManager.saveFragmentInstanceState(createFragment);
                     fragmentManager.beginTransaction().addToBackStack("2").replace(R.id.flContainer, createFragment).commit();
                     break;
                 case R.id.action_profile:
+//                    fragmentManager.saveFragmentInstanceState(profileFragment);
                     fragmentManager.beginTransaction().addToBackStack("3").replace(R.id.flContainer, profileFragment).commit();
                     break;
                  default:
                      //Added this to the fragment manager so that I can create it at the beginning
+//                     fragmentManager.saveFragmentInstanceState(receiptFragment);
                      fragmentManager.beginTransaction().addToBackStack("4").replace(R.id.flContainer, receiptFragment).commit();
                      break;
             }
