@@ -30,7 +30,7 @@
             android:windowSoftInputMode="stateHidden"
             />
         <activity android:name=".MainActivity"
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.actions.SEARCH_ACTION"/>
