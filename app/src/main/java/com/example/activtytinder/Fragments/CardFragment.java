@@ -7,7 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,7 +47,7 @@ import static com.example.activtytinder.Fragments.ProfileFragment.TAG;
  * This class contains the card stack that shows the events users have created. Users are able to
  * swipe yes and no on cards in the stack, click the yes or no buttons
  */
-public class CardFragment extends Fragment {
+public class CardFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     private ImageButton btnAccept;
     private ImageButton btnReject;
@@ -52,12 +55,14 @@ public class CardFragment extends Fragment {
     private ImageButton btnRefresh;
     private ConstraintLayout mConstraintLayout;
 
-
-    //TODO -- Explain this ArrayList
-
     //TODO -- add a spinner for filtering
+    private Spinner spinnerFilter;
+    public String eventCategory;
 
-    public ArrayList<String> attending;
+    /**
+     * Contains the objectIds of the events that the current user is planning to attend.
+     */
+    public ArrayList<String> userEventsAttending;
 
 
     //TODO-- Explain this viewholder
@@ -78,7 +83,14 @@ public class CardFragment extends Fragment {
         btnReject = view.findViewById(R.id.btnReject);
         btnUndo = view.findViewById(R.id.btnUndo);
         btnRefresh = view.findViewById(R.id.btnRefresh);
-        attending = new ArrayList<>();
+        userEventsAttending = new ArrayList<>();
+
+        spinnerFilter = view.findViewById(R.id.spinnerFilter);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.filter_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerFilter.setAdapter(adapter);
+        spinnerFilter.setOnItemSelectedListener(this);
 
         int bottomMargin = CardUtils.dpToPx(160);
         Point windowSize = CardUtils.getDisplaySize(getActivity().getWindowManager());
@@ -86,12 +98,7 @@ public class CardFragment extends Fragment {
 
         mSwipePlaceHolderView = view.findViewById(R.id.swipeView);
 
-
-
-
-
-
-        queryEvents();
+        queryEvents("No Filter");
 
         btnListeners();
     }
@@ -102,9 +109,11 @@ public class CardFragment extends Fragment {
      * and display them in the card stack. This function also contains a swipe listener for when the
      * card is swiped in, and the checkout menu for the card appears as an overlay.
      * Filters the queried events by events that have not occurred yet.
+     * @param filter - A string that the query should use to filter the category of events shown in
+     *                 the card stack.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void queryEvents() {
+    private void queryEvents(String filter) {
 
         ParseQuery<Event> eventQuery = new ParseQuery<Event>(Event.class);
         //Toast.makeText(getContext(), "got into queryEvents", Toast.LENGTH_SHORT).show();
@@ -132,14 +141,14 @@ public class CardFragment extends Fragment {
                 ParseQuery<Event> queryWillAttend = eventsAttending.getQuery();
 
                 /**
-                 * Queries into the list of events that the current user is already attending.
+                 * Queries into the list of events that the current user is already userEventsAttending.
                  */
                 queryWillAttend.findInBackground(new FindCallback<Event>() {
                     @Override
                     public void done(List<Event> results, com.parse.ParseException attendingError) {
                         if(attendingError == null){
                             for (int i = 0; i < results.size(); i++) {
-                                attending.add(results.get(i).getObjectId());
+                                userEventsAttending.add(results.get(i).getObjectId());
                             }
 
                             for (int i = 0; i < events.size(); i++) {
@@ -150,19 +159,30 @@ public class CardFragment extends Fragment {
 
                                 long eventMillis = CardFragment.this.getDateInMillis(eventDateRaw);
 
-                                if (!(attending.contains(thisEvent.getObjectId())) && currentMillis < eventMillis) {
-                                    // figure out if this call is safe or not
-                                    SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), thisEvent, cardViewHolderSize);
-                                    Event eventToSend = thisEvent;
+                                if (filter.equals("Filter by")) {
+                                    if (!(userEventsAttending.contains(thisEvent.getObjectId())) && currentMillis < eventMillis) {
+                                        // figure out if this call is safe or not
+                                        SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), thisEvent, cardViewHolderSize);
+                                        Event eventToSend = thisEvent;
 
-                                    CardFragment.this.cardListeners(card, eventToSend);
+                                        CardFragment.this.cardListeners(card, eventToSend);
 
-                                    mSwipePlaceHolderView.addView(card);
+                                        mSwipePlaceHolderView.addView(card);
+                                    }
+                                } else {
+                                    if (!(userEventsAttending.contains(thisEvent.getObjectId())) && thisEvent.getCategory().equals(filter) && currentMillis < eventMillis) {
+                                        // figure out if this call is safe or not
+                                        SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), thisEvent, cardViewHolderSize);
+                                        Event eventToSend = thisEvent;
+
+                                        CardFragment.this.cardListeners(card, eventToSend);
+
+                                        mSwipePlaceHolderView.addView(card);
+                                    }
                                 }
                             }
-
                         } else {
-                            Log.d(TAG, "Error with getting user's currently attending events.");
+                            Log.d(TAG, "Error with getting user's currently userEventsAttending events.");
                             attendingError.printStackTrace();
                             return;
                         }
@@ -178,13 +198,36 @@ public class CardFragment extends Fragment {
      */
     public void buildCardStack() {
         mSwipePlaceHolderView.getBuilder()
-                .setDisplayViewCount(4)
-                .setHeightSwipeDistFactor(8)
+                .setDisplayViewCount(5)
+                .setHeightSwipeDistFactor(10)
                 .setWidthSwipeDistFactor(5)
                 .setIsUndoEnabled(true)
                 .setSwipeDecor(new SwipeDecor()
                         .setPaddingTop(15)
+                        .setMarginTop(10)
                         .setRelativeScale(0.01f));
+    }
+
+    /**
+     * When an item in the spinner is selected for filtering
+     * @param adapterView
+     * @param view
+     * @param i
+     * @param l
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        adapterView.getItemAtPosition(i);
+        eventCategory = adapterView.getItemAtPosition(i).toString();
+        mSwipePlaceHolderView.removeAllViews();
+        queryEvents(eventCategory);
+    }
+
+    //TODO -- explain this pls
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 
     /**
@@ -280,7 +323,7 @@ public class CardFragment extends Fragment {
         btnRefresh.setOnClickListener(view -> {
             //Log.d(TAG, "refresh clicked");
             mSwipePlaceHolderView.removeAllViews();
-            queryEvents();
+            queryEvents(eventCategory);
         });
     }
 }

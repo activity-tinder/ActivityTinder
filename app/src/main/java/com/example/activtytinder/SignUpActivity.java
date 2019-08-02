@@ -78,7 +78,7 @@ public class SignUpActivity  extends AppCompatActivity {
             final String Username = etUsernameInput.getText().toString();
             final String Password = etPasswordInput.getText().toString();
             final ParseGeoPoint BaseCoordinates = LocationManager.get().getLocationCoordinates();
-            final String HomeCity = LocationManager.get().getCity();
+            final String HomeCity = etBaseLocation.getText().toString();
             makeAccount(Name, Email, finalBirthday, BaseCoordinates, Username, Password, HomeCity);
         });
     }
@@ -110,7 +110,7 @@ public class SignUpActivity  extends AppCompatActivity {
         user.put("location", BaseLocation);
         user.put("birthday", Birthday);
         user.put("reliabilityScore", 100);
-        user.put("homeCity", HomeCity);
+        user.put("homeCity", LocationManager.get().getCity());
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {

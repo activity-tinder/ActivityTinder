@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -61,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (e == null){
                     Log.d("Login Activity", "Login successful!");
                     final Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
                     startActivity(intent);
                     finish();
                 } else {
