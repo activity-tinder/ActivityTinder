@@ -139,12 +139,18 @@ public class SwipeEventCard {
 
         tvCardEventCreator.setText(mEvent.getCreator().getUsername());
 
+        //TODO: Properly Select Colors for Categories
+
         if (mEvent.getCategory().equals("Active")) {
             mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.magenta));
         }else if (mEvent.getCategory().equals("Nature")){
             mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bright_green));
         }else if (mEvent.getCategory().equals("Food")){
             mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.orange));
+        }else if (mEvent.getCategory().equals("Social")){
+            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.blue));
+        }else{
+            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
         }
     }
 
