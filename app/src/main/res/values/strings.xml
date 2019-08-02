@@ -23,6 +23,14 @@
         <item>Social</item>
         <item>21+</item>
     </string-array>
+    <string-array name="filter_array">
+        <item>No Filter</item>
+        <item>Food</item>
+        <item>Nature</item>
+        <item>Active</item>
+        <item>Social</item>
+        <item>21+</item>
+    </string-array>
 
 
 
