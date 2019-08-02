@@ -36,7 +36,6 @@ import com.example.activtytinder.LoginActivity;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.ProfileAdapter;
 import com.example.activtytinder.R;
-import com.example.activtytinder.SwipeEventCard;
 import com.example.activtytinder.Tools;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
@@ -53,6 +52,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.activtytinder.MainActivity.fragmentManager;
 
 public class ProfileFragment extends Fragment{
 
@@ -60,6 +60,7 @@ public class ProfileFragment extends Fragment{
     private SwipeRefreshLayout swipeContainer;
 
     private Button btnLogout;
+    private Button btnSettings;
     private ProfileAdapter adapter;
     private List<Event> mEvents;
     private RecyclerView rvProfile;
@@ -70,13 +71,16 @@ public class ProfileFragment extends Fragment{
     private Button btnTakeImage;
     private Button btnUploadImage;
     private ImageView ivImage;
-
+//    public SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
     private File photoFile;
     private final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     private String photoFileName = "photo.jpg";
 
 
     static final String TAG = "ProfileFragment";
+
+    public ProfileFragment() {
+    }
 
 
     @Nullable
@@ -111,6 +115,7 @@ public class ProfileFragment extends Fragment{
         tvHomeCity = view.findViewById(R.id.tvHomeCity);
         btnTakeImage = view.findViewById(R.id.btnTakeImage);
         btnUploadImage = view.findViewById(R.id.btnUploadImage);
+        btnSettings = view.findViewById(R.id.btnSettings);
         ivImage = view.findViewById(R.id.ivProfilePicture);
 
         populateProfile();
@@ -126,9 +131,17 @@ public class ProfileFragment extends Fragment{
 
         btnTakeImage.setOnClickListener(btnTakeImage -> verifyCameraPermission());
 
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openSettings();
+            }
+        });
+
     }
 
     //TODO -- explain this
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void fetchEventsAsync(int i) {
         adapter.clear();
         populateEventAdapter();
@@ -145,6 +158,7 @@ public class ProfileFragment extends Fragment{
 
     //TODO -- explain this
     private void populateProfile(){
+        user = ParseUser.getCurrentUser();
         tvName.setText(user.getString("name"));
         tvUsername.setText(user.getUsername());
         tvScore.setText(user.getNumber("reliabilityScore").toString());
@@ -261,6 +275,14 @@ public class ProfileFragment extends Fragment{
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public void openSettings(){
+        Fragment fragment = new SettingsFragment();
+        Bundle bundle = new Bundle();
+        fragment.setArguments(bundle);
+        fragmentManager.popBackStack();
+        fragmentManager.beginTransaction().addToBackStack("Settings").replace(R.id.flContainer, fragment).commit();
     }
 
 
