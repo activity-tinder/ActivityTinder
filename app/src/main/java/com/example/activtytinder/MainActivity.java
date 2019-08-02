@@ -12,6 +12,7 @@ import com.example.activtytinder.Fragments.CardFragment;
 import com.example.activtytinder.Fragments.CreateFragment;
 import com.example.activtytinder.Fragments.ProfileFragment;
 import com.example.activtytinder.Fragments.ReceiptFragment;
+import com.example.activtytinder.Fragments.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 //TODO -- explain this activity
@@ -23,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
     final Fragment createFragment = new CreateFragment();
     public static Fragment profileFragment = new ProfileFragment();
     final Fragment receiptFragment = new ReceiptFragment();
+    final static Fragment settingsFragment = new SettingsFragment();
     public static FragmentManager fragmentManager;
+
 
 
     //TODO -- explain all the fragment stuff
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
 
+        fragmentManager.beginTransaction().add(R.id.flContainer, settingsFragment, "5").commit();
         fragmentManager.beginTransaction().add(R.id.flContainer, receiptFragment, "4").commit();
         fragmentManager.beginTransaction().add(R.id.flContainer, profileFragment, "3").commit();
         fragmentManager.beginTransaction().add(R.id.flContainer, createFragment, "2").commit();

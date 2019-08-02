@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="Account Info">
+
+        <SwitchPreferenceCompat
+
+            android:key="Notifications"
+            android:title="Enable application notifications" />
+
+        <SwitchPreferenceCompat
+            android:key="Night Mode"
+            android:title="Enable Night Mode"
+            android:defaultValue="Night Mode"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Help and Contact Information">
+
+        <Preference
+            android:key="Help"
+            android:title="Help"
+            android:summary="Learn more about the app">
+            <intent android:action="com.example.activtytinder.HelpActivity"/>
+        </Preference>
+        <Preference
+            android:key="Feedback"
+            android:title="Send feedback"
+            android:summary="Report technical issues or suggest new features">
+            <intent android:action="com.example.activtytinder.ContactUs"/>
+        </Preference>
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
