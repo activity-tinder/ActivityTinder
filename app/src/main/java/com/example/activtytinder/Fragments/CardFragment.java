@@ -142,6 +142,20 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
                 ParseRelation<Event> eventsAttending = currentUser.getRelation("willAttend");
                 ParseQuery<Event> queryWillAttend = eventsAttending.getQuery();
 
+
+                ParseRelation<Event> rejectedEvents = currentUser.getRelation("swipedNo");
+                ParseQuery<Event> queryReject = rejectedEvents.getQuery();
+
+                queryReject.findInBackground(new FindCallback<Event>() {
+                    @Override
+                    public void done(List<Event> rejectedEvents, com.parse.ParseException e) {
+                        for(int x = 0; x < rejectedEvents.size(); x++){
+                            eventsRejected.add(rejectedEvents.get(x).getObjectId());
+                        }
+                    }
+                });
+
+
                 /**
                  * Queries into the list of events that the current user is already userEventsAttending.
                  */
@@ -162,7 +176,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
                                 long eventMillis = CardFragment.this.getDateInMillis(eventDateRaw);
 
                                 if (filter.equals("Filter by")) {
-                                    if (!(userEventsAttending.contains(thisEvent.getObjectId())) && currentMillis < eventMillis) {
+                                    if (!(userEventsAttending.contains(thisEvent.getObjectId())) && currentMillis < eventMillis && !(eventsRejected.contains(thisEvent.getObjectId()))) {
                                         // figure out if this call is safe or not
                                         SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), thisEvent, cardViewHolderSize);
                                         Event eventToSend = thisEvent;
@@ -172,7 +186,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
                                         mSwipePlaceHolderView.addView(card);
                                     }
                                 } else {
-                                    if (!(userEventsAttending.contains(thisEvent.getObjectId())) && thisEvent.getCategory().equals(filter) && currentMillis < eventMillis) {
+                                    if (!(userEventsAttending.contains(thisEvent.getObjectId())) && thisEvent.getCategory().equals(filter) && currentMillis < eventMillis && !(eventsRejected.contains(thisEvent.getObjectId()))) {
                                         // figure out if this call is safe or not
                                         SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), thisEvent, cardViewHolderSize);
                                         Event eventToSend = thisEvent;
@@ -301,7 +315,6 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
             showDetailFragment(eventToSend);
         });
 
-       
     }
 
     /**

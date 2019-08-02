@@ -23,7 +23,10 @@ import com.mindorks.placeholderview.annotations.swipe.SwipeOut;
 import com.mindorks.placeholderview.annotations.swipe.SwipeOutState;
 import com.mindorks.placeholderview.annotations.swipe.SwipeTouch;
 import com.mindorks.placeholderview.annotations.swipe.SwipingDirection;
+import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 
 //TODO -- explain this class
@@ -35,7 +38,6 @@ public class SwipeEventCard {
 
     SwipeRightListener listener;
     onClickListener clickListener;
-    SwipeLeftListener rejectListener;
 
 
     // setting up layout variables
@@ -84,10 +86,6 @@ public class SwipeEventCard {
         void onSwiped();
     }
 
-    public interface SwipeLeftListener{
-        void onReject();
-    }
-
     /**
      * Listener interface created to detect when the user clicks on a card.
      */
@@ -105,7 +103,6 @@ public class SwipeEventCard {
 
     public void setOnClickListener(onClickListener clickListener) {this.clickListener = clickListener;}
 
-    public void setOnRejectListener(SwipeLeftListener rejectListener) {this.rejectListener = rejectListener;}
 
     //TODO -- explain this
     // loads information on cards
@@ -195,7 +192,14 @@ public class SwipeEventCard {
     @SwipeOut
     public void onSwipedOut(){
         Log.d("EVENT", "onSwipedOut");
-        rejectListener.onReject();
+        ParseUser user = ParseUser.getCurrentUser();
+        user.getRelation("swipedNo").add(mEvent);
+        user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                Log.d("CardFragment", "Added Event to reject list");
+            }
+        });
     }
 
     /**
