@@ -33,8 +33,9 @@ public class SwipeEventCard {
 
 
 
-    SwipeListener listener;
+    SwipeRightListener listener;
     onClickListener clickListener;
+    SwipeLeftListener rejectListener;
 
 
     // setting up layout variables
@@ -79,8 +80,12 @@ public class SwipeEventCard {
     /**
      * Listener interface created to detect when the user swipes the card in affirmation.
      */
-    public interface SwipeListener {
+    public interface SwipeRightListener {
         void onSwiped();
+    }
+
+    public interface SwipeLeftListener{
+        void onReject();
     }
 
     /**
@@ -94,11 +99,13 @@ public class SwipeEventCard {
      * Sets swipe listener on a SwipeEventCard object.
      * @param listener
      */
-    public void setOnSwipeListener(SwipeListener listener){
+    public void setOnSwipeListener(SwipeRightListener listener){
         this.listener = listener;
     }
 
     public void setOnClickListener(onClickListener clickListener) {this.clickListener = clickListener;}
+
+    public void setOnRejectListener(SwipeLeftListener rejectListener) {this.rejectListener = rejectListener;}
 
     //TODO -- explain this
     // loads information on cards
@@ -188,6 +195,7 @@ public class SwipeEventCard {
     @SwipeOut
     public void onSwipedOut(){
         Log.d("EVENT", "onSwipedOut");
+        rejectListener.onReject();
     }
 
     /**

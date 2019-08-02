@@ -63,6 +63,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
      * Contains the objectIds of the events that the current user is planning to attend.
      */
     public ArrayList<String> userEventsAttending;
+    public ArrayList<String> eventsRejected;
 
 
     //TODO-- Explain this viewholder
@@ -84,6 +85,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
         btnUndo = view.findViewById(R.id.btnUndo);
         btnRefresh = view.findViewById(R.id.btnRefresh);
         userEventsAttending = new ArrayList<>();
+        eventsRejected = new ArrayList<>();
 
         spinnerFilter = view.findViewById(R.id.spinnerFilter);
 
@@ -298,6 +300,8 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
             eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
             showDetailFragment(eventToSend);
         });
+
+       
     }
 
     /**
