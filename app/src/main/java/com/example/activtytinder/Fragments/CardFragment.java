@@ -159,7 +159,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
 
                                 long eventMillis = CardFragment.this.getDateInMillis(eventDateRaw);
 
-                                if (filter.equals("No Filter")) {
+                                if (filter.equals("Filter by")) {
                                     if (!(userEventsAttending.contains(thisEvent.getObjectId())) && currentMillis < eventMillis) {
                                         // figure out if this call is safe or not
                                         SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), thisEvent, cardViewHolderSize);
@@ -180,10 +180,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
                                         mSwipePlaceHolderView.addView(card);
                                     }
                                 }
-
-
                             }
-
                         } else {
                             Log.d(TAG, "Error with getting user's currently userEventsAttending events.");
                             attendingError.printStackTrace();
@@ -201,12 +198,13 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
      */
     public void buildCardStack() {
         mSwipePlaceHolderView.getBuilder()
-                .setDisplayViewCount(4)
-                .setHeightSwipeDistFactor(8)
+                .setDisplayViewCount(5)
+                .setHeightSwipeDistFactor(10)
                 .setWidthSwipeDistFactor(5)
                 .setIsUndoEnabled(true)
                 .setSwipeDecor(new SwipeDecor()
                         .setPaddingTop(15)
+                        .setMarginTop(10)
                         .setRelativeScale(0.01f));
     }
 
@@ -222,7 +220,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         adapterView.getItemAtPosition(i);
         eventCategory = adapterView.getItemAtPosition(i).toString();
-
+        mSwipePlaceHolderView.removeAllViews();
         queryEvents(eventCategory);
     }
 
