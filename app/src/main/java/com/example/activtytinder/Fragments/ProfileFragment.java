@@ -129,6 +129,7 @@ public class ProfileFragment extends Fragment{
     }
 
     //TODO -- explain this
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void fetchEventsAsync(int i) {
         adapter.clear();
         populateEventAdapter();
@@ -145,6 +146,7 @@ public class ProfileFragment extends Fragment{
 
     //TODO -- explain this
     private void populateProfile(){
+        user = ParseUser.getCurrentUser();
         tvName.setText(user.getString("name"));
         tvUsername.setText(user.getUsername());
         tvScore.setText(user.getNumber("reliabilityScore").toString());
