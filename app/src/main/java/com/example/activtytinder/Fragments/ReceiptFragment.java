@@ -49,7 +49,7 @@ public class ReceiptFragment extends Fragment  {
     private ScrollView scDetails;
     private TextView tvEventDetails;
     private String mName;
-    private String mCreator;
+    private ParseUser mCreator;
     private String mDate;
     private String mLocation;
     private ArrayList<String> mAttendees;
@@ -97,7 +97,7 @@ public class ReceiptFragment extends Fragment  {
                 if(e == null){
                     mName = event.getKeyName();
                     mDate = event.getKeyDate();
-                    mCreator = event.getCreator().getUsername();
+                    mCreator = event.getCreator();
                     mLocation = event.getKeyAddress();
                     mDescription = event.getKeyDescription();
                     mStartTime = event.getKeyStartTime();
@@ -111,7 +111,8 @@ public class ReceiptFragment extends Fragment  {
                         public void done(List<ParseUser> users, ParseException e) {
                             if(e == null){
                                 for(int x = 0; x < users.size(); x++){
-                                    mAttendees.add(users.get(x).getUsername());
+                                    String entry = users.get(x).get("name") + " (" + users.get(x).getUsername() +")";
+                                    mAttendees.add(entry);
                                 }
 
                                 ParseFile image = mEvent.getEventImage();
@@ -138,7 +139,8 @@ public class ReceiptFragment extends Fragment  {
                                         + "\n\nDate: "
                                         + mDate
                                         + "\n\nCreated by: "
-                                        + mCreator
+                                        + mCreator.get("name") + " ("
+                                        + mCreator.getUsername() + ")"
                                         +"\n\nLocation: "
                                         + mLocation
                                         +"\n\nTime: "
