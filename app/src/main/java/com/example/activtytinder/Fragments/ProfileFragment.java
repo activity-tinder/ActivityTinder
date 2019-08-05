@@ -75,6 +75,7 @@ public class ProfileFragment extends Fragment{
     private File photoFile;
     private final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     private String photoFileName = "photo.jpg";
+    byte[] image;
 
 
     static final String TAG = "ProfileFragment";
@@ -100,7 +101,7 @@ public class ProfileFragment extends Fragment{
         mEvents = new ArrayList<>();
         swipeContainer.setOnRefreshListener(() -> fetchEventsAsync(0));
 
-        //TODO -- change referesh colors to color scheme for app
+        //TODO -- change refresh colors to color scheme for app
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
@@ -123,11 +124,16 @@ public class ProfileFragment extends Fragment{
 
         tvScore.setText(user.getNumber("reliabilityScore").toString());
 
-        //TODO -- create seperate method for buttons
+        //TODO -- create separate method for buttons
 
         btnLogout.setOnClickListener(btnLogOut -> logout());
 
-        btnUploadImage.setOnClickListener(btnUploadImage -> selectImage());
+        btnUploadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View btnUploadImage) {
+                selectImage();
+            }
+        });
 
         btnTakeImage.setOnClickListener(btnTakeImage -> verifyCameraPermission());
 
@@ -259,15 +265,15 @@ public class ProfileFragment extends Fragment{
             }
             Bitmap thumbnail = BitmapFactory.decodeStream(inputStream);
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            thumbnail.createScaledBitmap(thumbnail, 350, 350, true);
             thumbnail.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-            byte[] image = outputStream.toByteArray();
-            ParseFile file = new ParseFile("EVENT_IMAGE", image);
-            user.put("profileImage", file);
-            user.saveInBackground();
+            image = outputStream.toByteArray();
+            saveImage();
         }
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Bitmap takenImage = Tools.rotateBitmapOrientation(photoFile.getAbsolutePath());
+                takenImage.createScaledBitmap(takenImage, 350, 350, true);
                 ivImage.setImageBitmap(takenImage);
                 user.put("profileImage", new ParseFile(photoFile));
                 user.saveInBackground();
@@ -285,11 +291,12 @@ public class ProfileFragment extends Fragment{
         fragmentManager.beginTransaction().addToBackStack("Settings").replace(R.id.flContainer, fragment).commit();
     }
 
-
-    //TODO -- explain this
-    public static void updateScore(){
-        tvScore.setText(ParseUser.getCurrentUser().getNumber("reliabilityScore").toString());
+    public void saveImage(){
+        ParseFile file = new ParseFile("EVENT_IMAGE", image);
+        user.put("profileImage", file);
+        user.saveInBackground();
     }
+
 
 
     @Override
