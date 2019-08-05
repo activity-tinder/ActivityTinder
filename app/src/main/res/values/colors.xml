@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="green">#21CC4C</color>
-    <color name="pink">#CE0F55</color>
+    <color name="pink">#ED6D98</color>
     <color name="red">#EB0505</color>
     <color name="blue">#0945EC</color>
     <color name="black">#000000 </color>
@@ -15,11 +15,14 @@
     <color name="bright_green">#91FF9C</color>
     <color name="lime_green">#62D16D</color>
     <color name="dark_rose">#852344</color>
-    <color name="magenta">#D16287</color>
+    <color name="magenta">#EF8FAE</color>
     <color name="dark_purple">#B059AE</color>
     <color name="mid_purple">#DD9DD9</color>
     <color name="light_purple">#F9CCF7</color>
 
     <color name="bude_blue">#7ddefc</color>
+    <color name="light_orange">#f5ae58</color>
+    <color name="yellow">#FFF297</color>
+
 
 </resources>
