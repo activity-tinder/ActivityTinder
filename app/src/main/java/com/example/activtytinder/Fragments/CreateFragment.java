@@ -160,7 +160,6 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
             return  null;
         }
         Event event = new Event();
-        event.put("eventPhoto", EventPhoto);
         event.setKeyCreator(ParseUser.getCurrentUser());
         event.setKeyName(Name);
         event.setKeyDescription(Description);
@@ -171,8 +170,7 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         event.setKeyLimit(PeopleLimit);
         event.setKeyLocation(EventCoordinates);
         event.setKeyCategory(Category);
-
-
+        event.setKeyImage(EventPhoto);
 
         event.saveInBackground(new SaveCallback() {
             @Override
@@ -183,8 +181,6 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
                     e.printStackTrace();
                     return;
                 }
-                //event.put("eventPhoto", EventPhoto);
-                //event.saveInBackground();
                 etEventAddress.setText("");
                 etEventName.setText("");
                 etEventDescription.setText("");
@@ -241,7 +237,8 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
             }
             Bitmap thumbnail = BitmapFactory.decodeStream(inputStream);
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            thumbnail.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            thumbnail.createScaledBitmap(thumbnail, 350, 350, true);
+            thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             byte[] image = outputStream.toByteArray();
             ParseFile file = new ParseFile("EVENT_IMAGE", image);
             eventImageFile = file;
