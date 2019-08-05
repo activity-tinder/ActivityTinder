@@ -27,11 +27,11 @@ import org.parceler.Parcels;
 
 public class CheckoutFragment extends DialogFragment {
 
-    public BtnNoListener btnNoListener;
+    private BtnNoListener btnNoListener;
     private TextView tvEventDetails;
     private Event event;
     private Button btnYes;
-    public Button btnNo;
+    private Button btnNo;
     private String mName;
     private String mDate;
     private String mLocation;

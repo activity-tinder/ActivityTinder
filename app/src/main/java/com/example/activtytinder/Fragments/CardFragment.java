@@ -32,6 +32,7 @@ import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
+import java.sql.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -339,18 +340,30 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
 
         btnRefresh.setOnClickListener(view -> {
             //Log.d(TAG, "refresh clicked");
+            ArrayList<Event> removedEvents = new ArrayList<>();
             ParseRelation<Event> swipedNo = ParseUser.getCurrentUser().getRelation("swipedNo");
             ParseQuery<Event> swipedQuery = swipedNo.getQuery();
             swipedQuery.findInBackground(new FindCallback<Event>() {
                 @Override
                 public void done(List<Event> eventsNo, com.parse.ParseException e) {
-                    for (Event removedEvent : eventsNo) {
-                        swipedNo.remove(removedEvent);
+                    while (!eventsNo.isEmpty()) {
+                        swipedNo.remove(eventsNo.get(0));
                     }
+//
+//                    swipedNo.remove(eventsNo);
+////                    while (!removedEvents.isEmpty()) {
+////
+////                        swipedNo.remove(removedEvents.get(0));
+////                        removedEvents.remove(removedEvents.get(0));
+////                    }
+////            for (Event eventToRestore : removedEvents) {
+////                swipedNo.remove(eventToRestore);
+////            }
+                    mSwipePlaceHolderView.removeAllViews();
+                    queryEvents(eventCategory);
                 }
             });
-            mSwipePlaceHolderView.removeAllViews();
-            queryEvents(eventCategory);
+
         });
     }
 }
