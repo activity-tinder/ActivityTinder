@@ -76,6 +76,7 @@ public class DetailsFragment extends DialogFragment {
         tvEventDetailsFragment = view.findViewById(R.id.tvEventDetailsFragment);
         btnClose = view.findViewById(R.id.btnClose);
 
+
         Bundle eventBundle = this.getArguments();
         if(eventBundle != null){
             mEvent = Parcels.unwrap(eventBundle.getParcelable("Event"));
@@ -86,6 +87,7 @@ public class DetailsFragment extends DialogFragment {
 
         tvEventDetailsFragment.requestFocus();
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_rounded_bg);
 
         mAttendees = new ArrayList();
         mName = mEvent.getKeyName();
