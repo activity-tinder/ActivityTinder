@@ -146,15 +146,15 @@ public class SwipeEventCard {
         //TODO: Properly Select Colors for Categories
 
         if (mEvent.getCategory().equals("Active")) {
-            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.yellow));
+            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPink));
         }else if (mEvent.getCategory().equals("Nature")){
-            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.lime_green));
+            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPinkDark));
         }else if (mEvent.getCategory().equals("Food")){
-            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.pink));
+            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorGreen));
         }else if (mEvent.getCategory().equals("Social")){
-            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bude_blue));
+            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
         }else{
-            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.mid_purple));
+            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryLight));
         }
     }
 

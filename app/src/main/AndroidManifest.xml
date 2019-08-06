@@ -31,7 +31,8 @@
             />
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.google.android.gms.actions.SEARCH_ACTION"/>
                 <category android:name="android.intent.category.DEFAULT"/>
