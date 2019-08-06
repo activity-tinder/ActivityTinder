@@ -18,11 +18,15 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.activtytinder.CardUtils;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
+
+import java.util.List;
 
 
 public class CheckoutFragment extends DialogFragment {
@@ -35,6 +39,7 @@ public class CheckoutFragment extends DialogFragment {
     private String mName;
     private String mDate;
     private String mLocation;
+    private String numberOfAttendees;
 
 
     //TODO -- Explain constructor
@@ -92,6 +97,7 @@ public class CheckoutFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_checkout, container, false);
     }
 
@@ -123,17 +129,44 @@ public class CheckoutFragment extends DialogFragment {
         query.include(Event.KEY_CREATOR);
         query.getInBackground(event.getObjectId(), (Event event, ParseException e) -> {
             if(e == null){
+                ParseRelation<ParseUser> relation = event.getRelation("usersAttending");
+                ParseQuery<ParseUser> numberQuery = relation.getQuery();
                 mName = event.getKeyName();
                 mDate = event.getKeyDate();
                 mLocation = event.getKeyAddress();
-                tvEventDetails.setText("Name: "
-                        + mName
-                        + "\n\nDate: "
-                        + mDate
-                        +"\n\nLocation: "
-                        + mLocation
-                        + "\n\n"
-                );
+                numberQuery.findInBackground(new FindCallback<ParseUser>() {
+                    @Override
+                    public void done(List<ParseUser> users, ParseException e) {
+                        if(users.size() == 1){
+                            numberOfAttendees = "There is "  + users.size() +" person attending.";
+                            tvEventDetails.setText("Name: "
+                                    + mName
+                                    + "\n\nDate: "
+                                    + mDate
+                                    +"\n\nLocation: "
+                                    + mLocation
+                                    + "\n\n"
+                                    + numberOfAttendees
+                                    + "\n\n"
+                            );
+                        }
+                        else{
+                           numberOfAttendees = "There are "  + users.size() +" people attending.";
+                            tvEventDetails.setText("Name: "
+                                    + mName
+                                    + "\n\nDate: "
+                                    + mDate
+                                    +"\n\nLocation: "
+                                    + mLocation
+                                    + "\n\nNumber of Attendees: "
+                                    + numberOfAttendees
+                                    + "\n\n"
+                            );
+                        }
+
+                    }
+                });
+
             }
             else{
                 Log.e("ReceiptFragment", "Girl, you don goofed");
@@ -159,8 +192,11 @@ public class CheckoutFragment extends DialogFragment {
                 CheckoutFragment.this.dismiss();
             }
         });
-
-
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
 }

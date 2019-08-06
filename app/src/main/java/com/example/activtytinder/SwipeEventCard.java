@@ -23,7 +23,10 @@ import com.mindorks.placeholderview.annotations.swipe.SwipeOut;
 import com.mindorks.placeholderview.annotations.swipe.SwipeOutState;
 import com.mindorks.placeholderview.annotations.swipe.SwipeTouch;
 import com.mindorks.placeholderview.annotations.swipe.SwipingDirection;
+import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 
 //TODO -- explain this class
@@ -33,7 +36,7 @@ public class SwipeEventCard {
 
 
 
-    SwipeListener listener;
+    SwipeRightListener listener;
     onClickListener clickListener;
 
 
@@ -79,7 +82,7 @@ public class SwipeEventCard {
     /**
      * Listener interface created to detect when the user swipes the card in affirmation.
      */
-    public interface SwipeListener {
+    public interface SwipeRightListener {
         void onSwiped();
     }
 
@@ -94,11 +97,12 @@ public class SwipeEventCard {
      * Sets swipe listener on a SwipeEventCard object.
      * @param listener
      */
-    public void setOnSwipeListener(SwipeListener listener){
+    public void setOnSwipeListener(SwipeRightListener listener){
         this.listener = listener;
     }
 
     public void setOnClickListener(onClickListener clickListener) {this.clickListener = clickListener;}
+
 
     //TODO -- explain this
     // loads information on cards
@@ -142,15 +146,15 @@ public class SwipeEventCard {
         //TODO: Properly Select Colors for Categories
 
         if (mEvent.getCategory().equals("Active")) {
-            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.magenta));
+            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPink));
         }else if (mEvent.getCategory().equals("Nature")){
-            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bright_green));
+            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPinkDark));
         }else if (mEvent.getCategory().equals("Food")){
-            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.orange));
+            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorGreen));
         }else if (mEvent.getCategory().equals("Social")){
-            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.blue));
-        }else{
             mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
+        }else{
+            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryLight));
         }
     }
 
@@ -188,6 +192,14 @@ public class SwipeEventCard {
     @SwipeOut
     public void onSwipedOut(){
         Log.d("EVENT", "onSwipedOut");
+        ParseUser user = ParseUser.getCurrentUser();
+        user.getRelation("swipedNo").add(mEvent);
+        user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                Log.d("CardFragment", "Added Event to reject list");
+            }
+        });
     }
 
     /**
