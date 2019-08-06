@@ -6,6 +6,8 @@
     <color name="colorAccent">#79f2cc</color>
     <color name="colorAccentDark">#41bf9b</color>
     <color name="colorAccentLight">#aeffff</color>
+    <color name="colorPinkDark">#F244C4</color>
+    <color name="colorPink">#F299DA</color>
 
     <color name="green">#21CC4C</color>
     <color name="pink">#ED6D98</color>
