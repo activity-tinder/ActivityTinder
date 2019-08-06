@@ -12,7 +12,7 @@
     <string name="categories">Choose Event Category</string>
     <string name="export_to_calendar">Export to Calendar</string>
     <string name="name">Name</string>
-    <string name="question">Are you sure you want to attend?</string>
+    <string name="question">Confirm your attendance?</string>
     <string name="close">Close</string>
     <string name="leave_event">Are you sure you want to leave this event?\n\n Your reliability score
         will decrease by 10 points if the event starts within 24 hours! Enter your password to confirm.
