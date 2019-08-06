@@ -24,13 +24,29 @@
             android:key="Help"
             android:title="Help"
             android:summary="Learn more about the app">
-            <intent android:action="com.example.activtytinder.HelpActivity"/>
+            <intent android:action="com.example.activtytinder.SETTING_START_ACTIVITY"
+                    android:targetClass="com.example.activtytinder.HelpActivity"
+                    android:targetPackage="com.example.activtytinder"/>
         </Preference>
         <Preference
             android:key="Feedback"
             android:title="Send feedback"
             android:summary="Report technical issues or suggest new features">
-            <intent android:action="com.example.activtytinder.ContactUs"/>
+            <intent android:action="com.example.activtytinder.SETTING_START_ACTIVITY"
+                    android:targetClass="com.example.activtytinder.ContactUsActivity"
+                    android:targetPackage="com.example.activtytinder"/>
+        </Preference>
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Log Out">
+
+        <Preference
+            android:key="logOut"
+            android:title="Log Out">
+
         </Preference>
 
 

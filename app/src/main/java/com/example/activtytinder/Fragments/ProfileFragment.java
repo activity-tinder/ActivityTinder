@@ -32,7 +32,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.activtytinder.LoginActivity;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.ProfileAdapter;
 import com.example.activtytinder.R;
@@ -58,8 +57,6 @@ public class ProfileFragment extends Fragment{
 
     private ParseUser user = ParseUser.getCurrentUser();
     private SwipeRefreshLayout swipeContainer;
-
-    private Button btnLogout;
     private Button btnSettings;
     private ProfileAdapter adapter;
     private List<Event> mEvents;
@@ -94,7 +91,6 @@ public class ProfileFragment extends Fragment{
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        btnLogout = view.findViewById(R.id.logout_btn);
         rvProfile = view.findViewById(R.id.rvEvents);
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
 
@@ -126,8 +122,6 @@ public class ProfileFragment extends Fragment{
 
         //TODO -- create separate method for buttons
 
-        btnLogout.setOnClickListener(btnLogOut -> logout());
-
         btnUploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View btnUploadImage) {
@@ -152,14 +146,6 @@ public class ProfileFragment extends Fragment{
         adapter.clear();
         populateEventAdapter();
         swipeContainer.setRefreshing(false);
-    }
-
-    private void logout() {
-        ParseUser.logOut();
-        ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
-        final Intent intent = new Intent(getActivity(), LoginActivity.class);
-        startActivity(intent);
-        getActivity().finish();
     }
 
     //TODO -- explain this
