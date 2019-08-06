@@ -321,6 +321,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
      * Initializes buttons in this fragment.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
+
     private void btnListeners() {
         btnAccept.setOnClickListener(btn -> {
             //Log.d(TAG, "accept clicked!");
