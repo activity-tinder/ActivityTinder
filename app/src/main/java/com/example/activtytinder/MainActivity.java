@@ -1,6 +1,7 @@
 package com.example.activtytinder;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 
@@ -34,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.bud_logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         fragmentManager = getSupportFragmentManager();
 
         fragmentManager.beginTransaction().add(R.id.flContainer, settingsFragment, "5").commit();

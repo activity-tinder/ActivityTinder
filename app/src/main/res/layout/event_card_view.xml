@@ -10,7 +10,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvCards"
-        android:layout_width="320dp"
+        android:layout_width="380dp"
         android:layout_height="420dp"
         android:layout_margin="15dp"
         android:orientation="vertical"
