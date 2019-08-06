@@ -52,7 +52,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
     private ImageButton btnAccept;
     private ImageButton btnReject;
     private ImageButton btnUndo;
-    private ImageButton btnRefresh;
+    //private ImageButton btnRefresh;
     private ConstraintLayout mConstraintLayout;
 
     //TODO -- add a spinner for filtering
@@ -83,7 +83,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
         btnAccept = view.findViewById(R.id.btnAccept);
         btnReject = view.findViewById(R.id.btnReject);
         btnUndo = view.findViewById(R.id.btnUndo);
-        btnRefresh = view.findViewById(R.id.btnRefresh);
+        //btnRefresh = view.findViewById(R.id.btnRefresh);
         userEventsAttending = new ArrayList<>();
         eventsRejected = new ArrayList<>();
 
@@ -175,7 +175,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
 
                                 long eventMillis = CardFragment.this.getDateInMillis(eventDateRaw);
 
-                                if (filter.equals("Filter by")) {
+                                if (filter.equals("All")) {
                                     if (!(userEventsAttending.contains(thisEvent.getObjectId())) && currentMillis < eventMillis && !(eventsRejected.contains(thisEvent.getObjectId()))) {
                                         // figure out if this call is safe or not
                                         SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), thisEvent, cardViewHolderSize);
@@ -338,10 +338,10 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
             mSwipePlaceHolderView.undoLastSwipe();
         });
 
-        btnRefresh.setOnClickListener(view -> {
-            //Log.d(TAG, "refresh clicked");
-            mSwipePlaceHolderView.removeAllViews();
-            queryEvents(eventCategory);
-        });
+//        btnRefresh.setOnClickListener(view -> {
+//            //Log.d(TAG, "refresh clicked");
+//            mSwipePlaceHolderView.removeAllViews();
+//            queryEvents(eventCategory);
+//        });
     }
 }
