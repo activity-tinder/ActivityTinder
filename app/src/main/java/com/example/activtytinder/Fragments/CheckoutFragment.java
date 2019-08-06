@@ -122,6 +122,7 @@ public class CheckoutFragment extends DialogFragment {
         //Show soft keyboard automatically and request focus to field
         tvEventDetails.requestFocus();
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_rounded_bg);
 
 
         //TODO -- Explain query
