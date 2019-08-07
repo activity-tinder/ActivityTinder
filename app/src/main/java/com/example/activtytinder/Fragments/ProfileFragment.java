@@ -51,13 +51,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.activtytinder.MainActivity.fragmentManager;
 
 public class ProfileFragment extends Fragment{
 
     private ParseUser user = ParseUser.getCurrentUser();
     private SwipeRefreshLayout swipeContainer;
-    private Button btnSettings;
     private ProfileAdapter adapter;
     private List<Event> mEvents;
     private RecyclerView rvProfile;
@@ -112,7 +110,6 @@ public class ProfileFragment extends Fragment{
         tvHomeCity = view.findViewById(R.id.tvHomeCity);
         btnTakeImage = view.findViewById(R.id.btnTakeImage);
         btnUploadImage = view.findViewById(R.id.btnUploadImage);
-        btnSettings = view.findViewById(R.id.btnSettings);
         ivImage = view.findViewById(R.id.ivProfilePicture);
         btnTakeImage.setFontFeatureSettings("smcp");
 
@@ -132,12 +129,6 @@ public class ProfileFragment extends Fragment{
 
         btnTakeImage.setOnClickListener(btnTakeImage -> verifyCameraPermission());
 
-        btnSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openSettings();
-            }
-        });
 
     }
 
@@ -270,13 +261,7 @@ public class ProfileFragment extends Fragment{
         }
     }
 
-    public void openSettings(){
-        Fragment fragment = new SettingsFragment();
-        Bundle bundle = new Bundle();
-        fragment.setArguments(bundle);
-        fragmentManager.popBackStack();
-        fragmentManager.beginTransaction().addToBackStack("Settings").replace(R.id.flContainer, fragment).commit();
-    }
+
 
     public void saveImage(){
         ParseFile file = new ParseFile("EVENT_IMAGE", image);
