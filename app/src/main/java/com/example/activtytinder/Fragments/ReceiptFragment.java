@@ -88,6 +88,7 @@ public class ReceiptFragment extends Fragment  {
         }
 
 
+
         //TODO -- explain query
         ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
         query.include(Event.KEY_CREATOR);

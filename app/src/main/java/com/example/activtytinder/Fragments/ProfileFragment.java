@@ -114,6 +114,7 @@ public class ProfileFragment extends Fragment{
         btnUploadImage = view.findViewById(R.id.btnUploadImage);
         btnSettings = view.findViewById(R.id.btnSettings);
         ivImage = view.findViewById(R.id.ivProfilePicture);
+        btnTakeImage.setFontFeatureSettings("smcp");
 
         populateProfile();
         populateEventAdapter();
