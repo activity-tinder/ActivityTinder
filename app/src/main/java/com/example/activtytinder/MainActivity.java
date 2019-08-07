@@ -1,7 +1,6 @@
 package com.example.activtytinder;
 
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 
@@ -36,9 +35,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.drawable.bud_logo);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
+//        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+//        setSupportActionBar(myToolbar);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setLogo(R.drawable.bud_logo);
+//        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         fragmentManager = getSupportFragmentManager();
 
