@@ -223,11 +223,14 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
                 .setDisplayViewCount(5)
                 .setHeightSwipeDistFactor(10)
                 .setWidthSwipeDistFactor(5)
+                .setSwipeType(1)
                 .setIsUndoEnabled(true)
                 .setSwipeDecor(new SwipeDecor()
                         .setPaddingTop(15)
                         .setMarginTop(10)
-                        .setRelativeScale(0.01f));
+                        .setRelativeScale(0.01f)
+                        .setSwipeMaxChangeAngle(2.0f)
+                        .setSwipeRotationAngle(30));
     }
 
     /**
@@ -343,11 +346,5 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
             //Log.d(TAG, "undo clicked!");
             mSwipePlaceHolderView.undoLastSwipe();
         });
-
-//        btnRefresh.setOnClickListener(view -> {
-//            //Log.d(TAG, "refresh clicked");
-//            mSwipePlaceHolderView.removeAllViews();
-//            queryEvents(eventCategory);
-//        });
     }
 }
