@@ -38,6 +38,9 @@ import com.parse.SaveCallback;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -60,6 +63,7 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
     private ImageView ivImage;
     private ParseFile eventImageFile;
     private Event myEvent;
+    private String parseEventDate;
 
     @Nullable
     @Override
@@ -91,7 +95,13 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         etEventDate.setInputType(InputType.TYPE_NULL);
 
         //TODO -- put button in separate method
-        etEventDate.setOnClickListener(btnEventDate -> Tools.getDate(getContext(),etEventDate));
+        etEventDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View btnEventDate) {
+                Tools.getDate(CreateFragment.this.getContext(), etEventDate);
+
+            }
+        });
 
         etEventStartTime.setOnClickListener(btnEventStartTime -> Tools.getTime(getContext(), etEventStartTime));
 
@@ -109,10 +119,21 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
                 Toast.makeText(CreateFragment.this.getContext(), "Please enter valid amount of people!", Toast.LENGTH_SHORT).show();
                 return;
             }
+            String currentDate = etEventDate.getText().toString();
+            Date newDate = null;
+            SimpleDateFormat spf = new SimpleDateFormat("EEE, d MMM yyyy");
+            try {
+                newDate = spf.parse(currentDate);
+            } catch (java.text.ParseException e) {
+                e.printStackTrace();
+            }
+            spf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+            currentDate = spf.format(newDate);
+            parseEventDate = currentDate;
             gpEventCoordinates = LocationManager.get().getLocationCoordinates();
             final String EventName = etEventName.getText().toString();
             final String EventDescription = etEventDescription.getText().toString();
-            final String EventDate = etEventDate.getText().toString();
+            final String EventDate = parseEventDate;
             final String StartTime = etEventStartTime.getText().toString();
             final String EndTime = etEventEndTime.getText().toString();
             final String Address = etEventAddress.getText().toString();
