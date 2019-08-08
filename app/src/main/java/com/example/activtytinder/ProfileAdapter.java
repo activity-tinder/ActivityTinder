@@ -59,7 +59,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         Event event = mEvents.get(position);
         holder.tvName.setText(event.getKeyName());
         holder.tvDate.setText(Tools.convertDate(event.getKeyDate()));
-        holder.tvLocation.setText(event.getKeyAddress());
+        //holder.tvLocation.setText(event.getKeyAddress());
         //TODO - explain this query
         ParseRelation<ParseUser> relation = event.getRelation("usersAttending");
         ParseQuery<ParseUser> query = relation.getQuery();
