@@ -66,7 +66,8 @@ public class Tools {
             public void onDateSet(DatePicker view1, int year1, int monthOfYear, int dayOfMonth) {
                 //etDate.setText((monthOfYear + 1) + "/" + dayOfMonth + "/" + year1);
                 int month = monthOfYear + 1;
-                etDate.setText(String.format("%02d/%02d/%02d", month, dayOfMonth, year1));
+                String currentDate = String.format("%02d/%02d/%02d", month, dayOfMonth, year1);
+                etDate.setText(convertDate(currentDate));
             }
         }, year, month, day);
 
@@ -119,5 +120,31 @@ public class Tools {
         }
         long millis = currentDate.getTime();
         return millis;
+    }
+
+    public static String convertDate (String currentDate) {
+        if (currentDate.charAt(0) == '0' || currentDate.charAt(0) == '1') {
+            Date newDate = null;
+            SimpleDateFormat spf = new SimpleDateFormat("MM/dd/yyyy");
+            try {
+                newDate = spf.parse(currentDate);
+            } catch (java.text.ParseException e) {
+                e.printStackTrace();
+            }
+            spf = new SimpleDateFormat("EEE, d MMM yyyy", Locale.US);
+            currentDate = spf.format(newDate);
+            return currentDate;
+        }else{
+            Date newDate = null;
+            SimpleDateFormat spf = new SimpleDateFormat("EEE, d MMM yyyy");
+            try {
+                newDate = spf.parse(currentDate);
+            } catch (java.text.ParseException e) {
+                e.printStackTrace();
+            }
+            spf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+            currentDate = spf.format(newDate);
+            return currentDate;
+        }
     }
 }
