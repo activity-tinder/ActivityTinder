@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -52,6 +53,8 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
     private ImageButton btnAccept;
     private ImageButton btnReject;
     private ImageButton btnUndo;
+
+    private Toolbar toolbar;
     //private ImageButton btnRefresh;
     private ConstraintLayout mConstraintLayout;
 
@@ -86,6 +89,9 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
         //btnRefresh = view.findViewById(R.id.btnRefresh);
         userEventsAttending = new ArrayList<>();
         eventsRejected = new ArrayList<>();
+
+//        toolbar = view.findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         spinnerFilter = view.findViewById(R.id.spinnerFilter);
 
