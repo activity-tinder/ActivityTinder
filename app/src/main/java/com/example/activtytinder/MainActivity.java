@@ -1,11 +1,14 @@
 package com.example.activtytinder;
 
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -20,6 +23,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     public BottomNavigationView bottomNavigationView;
+
+    private Toolbar toolbar;
 
     final static Fragment cardFragment = new CardFragment();
     final Fragment createFragment = new CreateFragment();
@@ -36,9 +41,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.drawable.bud_logo);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setLogo(R.drawable.bud_logo);
+//        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         fragmentManager = getSupportFragmentManager();
 
@@ -79,6 +88,20 @@ public class MainActivity extends AppCompatActivity {
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_card);
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.setting){
+            openSettings();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     /**
      * Back button only goes to card fragment to prevent tracking entire stack back.
@@ -93,5 +116,12 @@ public class MainActivity extends AppCompatActivity {
         // first parameter is the context, second is the class of the activity to launch
         Intent i = new Intent(this, ContactUsActivity.class);
         startActivity(i);
+    }
+    public void openSettings(){
+        Fragment fragment = new SettingsFragment();
+        Bundle bundle = new Bundle();
+        fragment.setArguments(bundle);
+        fragmentManager.popBackStack();
+        fragmentManager.beginTransaction().addToBackStack("Settings").replace(R.id.flContainer, fragment).commit();
     }
 }

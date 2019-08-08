@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/flower_bud"
         android:supportsRtl="true"
-        android:theme="@style/Platform.MaterialComponents.Light">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.codepath.fileprovider"
@@ -32,7 +32,7 @@
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:exported="true"
-            android:theme="@style/AppTheme">
+            >
             <intent-filter>
                 <action android:name="com.google.android.gms.actions.SEARCH_ACTION"/>
                 <category android:name="android.intent.category.DEFAULT"/>

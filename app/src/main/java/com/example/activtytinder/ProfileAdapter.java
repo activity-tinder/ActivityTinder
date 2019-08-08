@@ -67,10 +67,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             @Override
             public void done(List<ParseUser> users, ParseException e) {
                 if(users.size() == 1){
-                    holder.tvPeopleAttending.setText("There is "  + users.size() +" person attending.");
+                    holder.tvPeopleAttending.setText(+ users.size() +" person attending");
                 }
                 else{
-                    holder.tvPeopleAttending.setText("There are "  + users.size() +" people attending.");
+                    holder.tvPeopleAttending.setText(users.size() +" people attending");
                 }
 
             }
@@ -113,7 +113,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         public ImageView ivEventImage;
         public TextView tvName;
         public TextView tvDate;
-        public TextView tvLocation;
         public TextView tvPeopleAttending;
 
         public ViewHolder(View itemview) {
@@ -122,7 +121,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             ivEventImage = itemview.findViewById(R.id.ivEventImage);
             tvName = itemview.findViewById(R.id.tvName);
             tvDate = itemview.findViewById(R.id.tvDate);
-            tvLocation = itemview.findViewById(R.id.tvLocation);
             tvPeopleAttending= itemview.findViewById(R.id.tvPeopleAttending);
         }
         public void bind(final Event event){
