@@ -22,14 +22,13 @@
             <ImageView
                 android:id="@+id/ivImage"
                 android:layout_width="match_parent"
-                android:layout_height="239dp"
+                android:layout_height="240dp"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
                 android:layout_marginTop="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/ic_menu_gallery"
-                tools:srcCompat="@android:drawable/ic_menu_gallery" />
+                app:srcCompat="@drawable/ic_image_upload" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/username_text_input_layout"
