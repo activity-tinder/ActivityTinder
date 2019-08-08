@@ -10,11 +10,11 @@
 
     <ImageView
         android:id="@+id/ivFlowerBud"
-        android:layout_width="219dp"
-        android:layout_height="118dp"
+        android:layout_width="247dp"
+        android:layout_height="124dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="76dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:src="@drawable/bude_updated"
@@ -24,17 +24,16 @@
 
     <ImageView
         android:id="@+id/ivTitle"
-        android:layout_width="330dp"
-        android:layout_height="176dp"
+        android:layout_width="175dp"
+        android:layout_height="101dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="192dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:src="@drawable/bud_logo"
         android:tint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,6 +42,7 @@
         android:id="@+id/username_text_input_layout12"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:textColorHint="@color/white"
         app:layout_constraintTop_toBottomOf="@+id/ivTitle"
         tools:layout_editor_absoluteX="0dp">

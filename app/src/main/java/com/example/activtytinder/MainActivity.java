@@ -44,11 +44,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        getSupportActionBar().setLogo(R.drawable.bud_logo);
-//        getSupportActionBar().setDisplayUseLogoEnabled(true);
-
         fragmentManager = getSupportFragmentManager();
 
         fragmentManager.beginTransaction().add(R.id.flContainer, settingsFragment, "5").commit();
