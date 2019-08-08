@@ -13,7 +13,7 @@
         android:name=".ParseApp"
         android:allowBackup="true"
         android:icon="@drawable/flower_bud"
-        android:label=""
+        android:label="bud.E"
         android:roundIcon="@drawable/flower_bud"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">

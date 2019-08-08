@@ -20,8 +20,8 @@
 
         <ImageView
             android:id="@+id/ivLogo"
-            android:layout_width="140dp"
-            android:layout_height="45dp"
+            android:layout_width="112dp"
+            android:layout_height="35dp"
             android:background="@drawable/bud_logo"
             app:layout_constraintStart_toStartOf="@+id/toolbar"
             app:layout_constraintTop_toTopOf="parent" />
