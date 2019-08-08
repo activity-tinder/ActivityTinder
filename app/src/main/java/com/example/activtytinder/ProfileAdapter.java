@@ -58,7 +58,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Event event = mEvents.get(position);
         holder.tvName.setText(event.getKeyName());
-        holder.tvDate.setText(event.getKeyDate());
+        holder.tvDate.setText(Tools.convertDate(event.getKeyDate()));
         holder.tvLocation.setText(event.getKeyAddress());
         //TODO - explain this query
         ParseRelation<ParseUser> relation = event.getRelation("usersAttending");
