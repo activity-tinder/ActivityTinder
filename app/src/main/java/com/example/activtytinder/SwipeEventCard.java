@@ -149,19 +149,19 @@ public class SwipeEventCard {
         //TODO: Properly Select Colors for Categories
 
         if (mEvent.getCategory().equals("Active")) {
-            ivEventCategory.setImageResource(R.drawable.ic_running);
+            ivEventCategory.setImageResource(R.drawable.ic_running_blue);
             mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bude_blue));
         }else if (mEvent.getCategory().equals("Nature")){
-            ivEventCategory.setImageResource(R.drawable.ic_mountain);
+            ivEventCategory.setImageResource(R.drawable.ic_mountain_blue);
             mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bude_blue));
         }else if (mEvent.getCategory().equals("Food")){
-            ivEventCategory.setImageResource(R.drawable.ic_cutlery);
+            ivEventCategory.setImageResource(R.drawable.ic_cutlery_blue);
             mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bude_blue));
         }else if (mEvent.getCategory().equals("Social")){
-            ivEventCategory.setImageResource(R.drawable.ic_chat);
+            ivEventCategory.setImageResource(R.drawable.ic_chat_blue);
             mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bude_blue));
         }else{
-            ivEventCategory.setImageResource(R.drawable.ic_glass);
+            ivEventCategory.setImageResource(R.drawable.ic_glass_blue);
             mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bude_blue));
         }
     }
