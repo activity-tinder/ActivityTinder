@@ -19,7 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -60,10 +59,8 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
 
     private Toolbar cardToolbar;
     //private ImageButton btnRefresh;
-    private ConstraintLayout mConstraintLayout;
 
     //TODO -- add a spinner for filtering
-    //private Spinner spinnerFilter;
     public String eventCategory;
 
     /**
@@ -98,11 +95,6 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
 //        cardToolbar = view.findViewById(R.id.toolbarCard);
 //        ((AppCompatActivity)getActivity()).setSupportActionBar(cardToolbar);
 
-//        spinnerFilter = view.findViewById(R.id.spinnerFilter);
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.filter_array, android.R.layout.simple_spinner_item);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinnerFilter.setAdapter(adapter);
-//        spinnerFilter.setOnItemSelectedListener(this);
 
         int bottomMargin = CardUtils.dpToPx(160);
         Point windowSize = CardUtils.getDisplaySize(getActivity().getWindowManager());

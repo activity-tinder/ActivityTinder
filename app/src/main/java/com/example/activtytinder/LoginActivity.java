@@ -7,13 +7,17 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
 //TODO -- explain activity
+/**
+ * This class is where the app first takes you to login. At this activity, a user can choose to
+ * either login with their valid Parse credentials or sign up for an account by clicking on the
+ * corresponding buttons. Both buttons fire intents to the next screens depending on the action.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etUsernameInput;
@@ -37,16 +41,7 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
-        //TODO -- move buttons to separate method
-        btnLogin.setOnClickListener(view -> {
-            final String username = etUsernameInput.getText().toString();
-            final String password = etPasswordInput.getText().toString();
-            login(username, password);
-        });
-
-        btnSignUp.setOnClickListener(view -> {
-            goToSignUpScreen();
-        });
+        btnListeners();
     }
 
     /**
@@ -81,5 +76,21 @@ public class LoginActivity extends AppCompatActivity {
         final Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
         startActivity(intent);
         finish();
+    }
+
+
+    /**
+     * Initializes buttons in this fragment.
+     */
+    private void btnListeners(){
+        btnLogin.setOnClickListener(view -> {
+            final String username = etUsernameInput.getText().toString();
+            final String password = etPasswordInput.getText().toString();
+            login(username, password);
+        });
+
+        btnSignUp.setOnClickListener(view -> {
+            goToSignUpScreen();
+        });
     }
 }
