@@ -18,7 +18,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="TextView"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/ivProfilePicture"
@@ -154,7 +154,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="11dp"
         android:background="@drawable/ic_image_upload"
         app:layout_constraintStart_toEndOf="@+id/btnTakeImage"
         app:layout_constraintTop_toBottomOf="@+id/ivProfilePicture" />

@@ -259,9 +259,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
                 .setSwipeDecor(new SwipeDecor()
                         .setPaddingTop(15)
                         .setMarginTop(10)
-                        .setRelativeScale(0.01f)
-                        .setSwipeMaxChangeAngle(2.0f)
-                        .setSwipeRotationAngle(30));
+                        .setRelativeScale(0.01f));
     }
 
     /**

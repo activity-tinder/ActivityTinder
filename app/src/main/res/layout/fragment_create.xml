@@ -46,7 +46,6 @@
                     android:gravity="top|left"
                     android:hint="Event Name"
                     android:inputType="textPersonName"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:visibility="visible" />
