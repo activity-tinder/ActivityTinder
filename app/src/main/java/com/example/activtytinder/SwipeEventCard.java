@@ -144,7 +144,8 @@ public class SwipeEventCard {
             tvCardLocation.setText(mEvent.getKeyAddress());
         }
 
-        tvCardEventCreator.setText(mEvent.getCreator().getUsername());
+        String creatorHandle = "@" + mEvent.getCreator().getUsername();
+        tvCardEventCreator.setText(creatorHandle);
 
         //TODO: Properly Select Colors for Categories
 
