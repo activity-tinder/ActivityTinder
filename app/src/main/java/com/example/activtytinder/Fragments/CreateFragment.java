@@ -29,11 +29,9 @@ import com.example.activtytinder.LocationManager;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.example.activtytinder.Tools;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -94,56 +92,10 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         API_KEY = getActivity().getResources().getString(R.string.mapquest_api_key);
         etEventDate.setInputType(InputType.TYPE_NULL);
 
+        btnListeners();
+
         //TODO -- put button in separate method
-        etEventDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View btnEventDate) {
-                Tools.getDate(CreateFragment.this.getContext(), etEventDate);
 
-            }
-        });
-
-        etEventStartTime.setOnClickListener(btnEventStartTime -> Tools.getTime(getContext(), etEventStartTime));
-
-        etEventEndTime.setOnClickListener(btnEventEndTime -> { Tools.getTime(getContext(),etEventEndTime);});
-
-        ivImage.setOnClickListener(btnIvImage -> selectImage());
-
-        btnGetEventLocation.setOnClickListener(btnEventLocation -> {
-            searchQuery = etEventAddress.getText().toString();
-            LocationManager.get().getLocationAddress(searchQuery, API_KEY, etEventAddress, getContext());
-        });
-
-        btnCreateEvent.setOnClickListener(btnCreateEvent -> {
-            if (etEventMaxPeople.getText().toString().equals("")) {
-                Toast.makeText(CreateFragment.this.getContext(), "Please enter valid amount of people!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            String currentDate = etEventDate.getText().toString();
-            Date newDate = null;
-            SimpleDateFormat spf = new SimpleDateFormat("EEE, d MMM yyyy");
-            try {
-                newDate = spf.parse(currentDate);
-            } catch (java.text.ParseException e) {
-                e.printStackTrace();
-            }
-            spf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-            currentDate = spf.format(newDate);
-            parseEventDate = currentDate;
-            gpEventCoordinates = LocationManager.get().getLocationCoordinates();
-            final String EventName = etEventName.getText().toString();
-            final String EventDescription = etEventDescription.getText().toString();
-            final String EventDate = parseEventDate;
-            final String StartTime = etEventStartTime.getText().toString();
-            final String EndTime = etEventEndTime.getText().toString();
-            final String Address = etEventAddress.getText().toString();
-            final String Category = eventCategory;
-            final Integer PeopleLimit = Integer.parseInt(etEventMaxPeople.getText().toString());
-            final ParseGeoPoint EventCoordinates = gpEventCoordinates;
-            final ParseFile EventPhoto = eventImageFile;
-            myEvent = CreateFragment.this.makeEvent(EventName, EventDescription, EventDate, StartTime, EndTime, Address, PeopleLimit, EventCoordinates, Category, EventPhoto);
-
-        });
     }
 
     /**
@@ -193,28 +145,25 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
         event.setKeyCategory(Category);
         event.setKeyImage(EventPhoto);
 
-        event.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.d("Create Fragment", "Error while saving");
-                    Toast.makeText(getContext(),"Error while Saving!", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                    return;
-                }
-                etEventAddress.setText("");
-                etEventName.setText("");
-                etEventDescription.setText("");
-                etEventDate.setText("");
-                etEventStartTime.setText("");
-                etEventEndTime.setText("");
-                etEventMaxPeople.setText("");
-                ivImage.setImageResource(0);
-
-
-                CardUtils.addUserToEvent(ParseUser.getCurrentUser(), myEvent);
-                Toast.makeText(CreateFragment.this.getContext(), "Event Creation Successful!", Toast.LENGTH_SHORT).show();
+        event.saveInBackground(e -> {
+            if (e != null) {
+                Log.d("Create Fragment", "Error while saving");
+                Toast.makeText(getContext(),"Error while Saving!", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+                return;
             }
+            etEventAddress.setText("");
+            etEventName.setText("");
+            etEventDescription.setText("");
+            etEventDate.setText("");
+            etEventStartTime.setText("");
+            etEventEndTime.setText("");
+            etEventMaxPeople.setText("");
+            ivImage.setImageResource(0);
+
+
+            CardUtils.addUserToEvent(ParseUser.getCurrentUser(), myEvent);
+            Toast.makeText(CreateFragment.this.getContext(), "Event Creation Successful!", Toast.LENGTH_SHORT).show();
         });
         return event;
     }
@@ -238,13 +187,21 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
             eventCategory = adapterView.getItemAtPosition(i).toString();
     }
 
-    //TODO -- explain this pls
+    /**
+     * Required method for use of the spinner to select event category.
+     * @param adapterView - adapterView of the spinner in question
+     */
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 
-    //TODO -- explain this
+    /**
+     * Method that awaits a result from getting a photo. If the appropriate data is received, the
+     * image will be loaded into the ivImage to be displayed.
+     * @param requestCode - requestCode for selecting an image from the gallery
+     * @param resultCode - RESULT_OK for successful result
+     * @param data - data retrieved from the photo selected
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1 && resultCode == RESULT_OK) {
@@ -265,5 +222,59 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
             ParseFile file = new ParseFile("EVENT_IMAGE", image);
             eventImageFile = file;
         }
+    }
+
+    /**
+     * Initializes buttons in this fragment.
+     */
+    private void btnListeners() {
+        etEventDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View btnEventDate) {
+                Tools.getDate(CreateFragment.this.getContext(), etEventDate);
+
+            }
+        });
+
+        etEventStartTime.setOnClickListener(btnEventStartTime -> Tools.getTime(getContext(), etEventStartTime));
+
+        etEventEndTime.setOnClickListener(btnEventEndTime -> { Tools.getTime(getContext(),etEventEndTime);});
+
+        ivImage.setOnClickListener(btnIvImage -> selectImage());
+
+        btnGetEventLocation.setOnClickListener(btnEventLocation -> {
+            searchQuery = etEventAddress.getText().toString();
+            LocationManager.get().getLocationAddress(searchQuery, API_KEY, etEventAddress, getContext());
+        });
+
+        btnCreateEvent.setOnClickListener(btnCreateEvent -> {
+            if (etEventMaxPeople.getText().toString().equals("")) {
+                Toast.makeText(CreateFragment.this.getContext(), "Please enter valid amount of people!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            String currentDate = etEventDate.getText().toString();
+            Date newDate = null;
+            SimpleDateFormat spf = new SimpleDateFormat("EEE, d MMM yyyy");
+            try {
+                newDate = spf.parse(currentDate);
+            } catch (java.text.ParseException e) {
+                e.printStackTrace();
+            }
+            spf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+            currentDate = spf.format(newDate);
+            parseEventDate = currentDate;
+            gpEventCoordinates = LocationManager.get().getLocationCoordinates();
+            final String EventName = etEventName.getText().toString();
+            final String EventDescription = etEventDescription.getText().toString();
+            final String EventDate = parseEventDate;
+            final String StartTime = etEventStartTime.getText().toString();
+            final String EndTime = etEventEndTime.getText().toString();
+            final String Address = etEventAddress.getText().toString();
+            final String Category = eventCategory;
+            final Integer PeopleLimit = Integer.parseInt(etEventMaxPeople.getText().toString());
+            final ParseGeoPoint EventCoordinates = gpEventCoordinates;
+            final ParseFile EventPhoto = eventImageFile;
+            myEvent = CreateFragment.this.makeEvent(EventName, EventDescription, EventDate, StartTime, EndTime, Address, PeopleLimit, EventCoordinates, Category, EventPhoto);
+        });
     }
 }
