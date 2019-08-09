@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentManager;
 import com.bumptech.glide.Glide;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
+import com.example.activtytinder.Tools;
 import com.google.android.gms.location.GeofencingClient;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -48,7 +49,12 @@ public class ReceiptFragment extends Fragment  {
     private Button btnDitch;
     private ImageView ivPicture;
     private ScrollView scDetails;
-    private TextView tvEventDetails;
+    private TextView tvEventName;
+    private TextView tvEventTime;
+    private TextView tvEventDate;
+    private TextView tvEventLocation;
+    private TextView tvEventAttendees;
+    private TextView tvEventDescription;
     private String mName;
     private ParseUser mCreator;
     private String mDate;
@@ -75,7 +81,12 @@ public class ReceiptFragment extends Fragment  {
         btnCalendar = view.findViewById(R.id.btnCalendar);
         btnDitch = view.findViewById(R.id.btnDitchEvent);
         scDetails = view.findViewById(R.id.scDetails);
-        tvEventDetails = view.findViewById(R.id.eventDetails);
+        tvEventName = view.findViewById(R.id.tvName);
+        tvEventTime = view.findViewById(R.id.tvTime);
+        tvEventDate = view.findViewById(R.id.tvDate);
+        tvEventLocation = view.findViewById(R.id.tvLocation);
+        tvEventAttendees = view.findViewById(R.id.tvAttendees);
+        tvEventDescription = view.findViewById(R.id.tvDescription);
         ivPicture = view.findViewById(R.id.ivReceiptImage);
         mAttendees = new ArrayList<>();
         Bundle eventBundle = this.getArguments();
@@ -83,7 +94,7 @@ public class ReceiptFragment extends Fragment  {
             mEvent = Parcels.unwrap(eventBundle.getParcelable("Event"));
         }
         else{
-            tvEventDetails.setText("You have not selected an event to attend yet!");
+            tvEventName.setText("You have not selected an event to attend yet!");
             return;
         }
 
@@ -96,7 +107,7 @@ public class ReceiptFragment extends Fragment  {
             public void done(Event event, ParseException e) {
                 if(e == null){
                     mName = event.getKeyName();
-                    mDate = event.getKeyDate();
+                    mDate = Tools.convertDate(event.getKeyDate());
                     mCreator = event.getCreator();
                     mLocation = event.getKeyAddress();
                     mDescription = event.getKeyDescription();
@@ -134,21 +145,26 @@ public class ReceiptFragment extends Fragment  {
                                             .into(ivPicture);
                                 }
 
-                                tvEventDetails.setText("Name: "
-                                        + mName
-                                        + "\n\nDate: "
-                                        + mDate
-                                        + "\n\nCreated by: "
+                                tvEventName.setText(mName
+                                        + "\n"
+                                );
+                                tvEventDate.setText(mDate
+                                        + "\n"
+                                );
+                                tvEventLocation.setText(mLocation
+                                        +"\n"
+                                );
+                                tvEventTime.setText(mStartTime + " - " + mEndTime
+                                        + "\n"
+                                );
+                                tvEventAttendees.setText("Created by: "
                                         + mCreator.get("name") + " ("
                                         + mCreator.getUsername() + ")"
-                                        +"\n\nLocation: "
-                                        + mLocation
-                                        +"\n\nTime: "
-                                        + mStartTime + " - " + mEndTime
-                                        + "\n\nAttendees: "
+                                        + "\nAttendees: "
                                         + mAttendees.toString().substring(1, mAttendees.toString().length() -1 )
-                                        + "\n\nDescription: "
-                                        + mDescription
+                                        + "\n\n"
+                                );
+                                tvEventDescription.setText(mDescription
                                         + "\n\n"
                                 );
                             }
@@ -195,19 +211,20 @@ public class ReceiptFragment extends Fragment  {
 
     //TODO -- explain this
     private long checkTime (String time) {
+//        time = Tools.convertDate(time);
         String finalTime;
         String myDate;
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
         Date date = null;
         if (time.charAt(6) == 'A') {
             finalTime = time.substring(0,5);
-            myDate = mDate + " " + finalTime + ":00";
+            myDate = Tools.convertDate(mDate) + " " + finalTime + ":00";
         }else{
             String errorTime = time.substring(0,2);
             int fixedTime = Integer.parseInt(errorTime);
             fixedTime = fixedTime + 12;
             finalTime = (fixedTime)+ time.substring(2,5);
-            myDate = mDate + " " +finalTime + ":00";
+            myDate =Tools.convertDate( mDate) + " " +finalTime + ":00";
         }
         try{
             date = sdf.parse(myDate);
