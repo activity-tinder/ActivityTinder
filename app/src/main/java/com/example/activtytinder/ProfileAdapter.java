@@ -67,10 +67,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             @Override
             public void done(List<ParseUser> users, ParseException e) {
                 if(users.size() == 1){
-                    holder.tvPeopleAttending.setText(+ users.size() +" person attending");
+                    holder.tvPeopleAttending.setText("" + users.size() + " attendee");
                 }
                 else{
-                    holder.tvPeopleAttending.setText(users.size() +" people attending");
+                    holder.tvPeopleAttending.setText("" + users.size() + " attendees");
                 }
 
             }
