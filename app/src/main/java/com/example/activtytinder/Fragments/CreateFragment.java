@@ -258,8 +258,9 @@ public class CreateFragment extends Fragment implements AdapterView.OnItemSelect
             }
             Bitmap thumbnail = BitmapFactory.decodeStream(inputStream);
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            //TODO: Keep aspect ratio of image
             thumbnail.createScaledBitmap(thumbnail, 350, 350, true);
-            thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            thumbnail.compress(Bitmap.CompressFormat.JPEG, 70, outputStream);
             byte[] image = outputStream.toByteArray();
             ParseFile file = new ParseFile("EVENT_IMAGE", image);
             eventImageFile = file;
