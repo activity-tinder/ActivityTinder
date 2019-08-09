@@ -44,7 +44,7 @@
         android:layout_height="65dp"
         android:background="@color/light_grey"
         app:itemIconSize="25dp"
-        app:itemRippleColor="@color/bude_blue"
+        app:itemRippleColor="@color/black"
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
         app:layout_constraintBottom_toBottomOf="parent"
