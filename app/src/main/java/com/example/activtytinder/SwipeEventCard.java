@@ -155,7 +155,7 @@ public class SwipeEventCard {
             ivEventCategory.setImageResource(R.drawable.ic_mountain);
             mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bude_blue));
         }else if (mEvent.getCategory().equals("Food")){
-            ivEventCategory.setImageResource(R.drawable.ic_cutlery);
+            ivEventCategory.setImageResource(R.drawable.ic_cutlery_blue);
             mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bude_blue));
         }else if (mEvent.getCategory().equals("Social")){
             ivEventCategory.setImageResource(R.drawable.ic_chat);
