@@ -157,12 +157,17 @@ public class ReceiptFragment extends Fragment  {
                                 tvEventTime.setText(mStartTime + " - " + mEndTime
                                         + "\n"
                                 );
+
+                                String attendeesList = "";
+                                for (int i = 0; i < mAttendees.size(); i++) {
+                                    attendeesList += "• " + mAttendees.get(i) + "\n";
+                                }
+
                                 tvEventAttendees.setText("Created by: "
                                         + mCreator.get("name") + " ("
                                         + mCreator.getUsername() + ")"
-                                        + "\nAttendees: "
-                                        + mAttendees.toString().substring(1, mAttendees.toString().length() -1 )
-                                        + "\n\n"
+                                        + "\nAttendees:\n"
+                                        + attendeesList
                                 );
                                 tvEventDescription.setText(mDescription
                                         + "\n\n"
