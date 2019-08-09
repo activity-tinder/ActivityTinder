@@ -163,8 +163,6 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
                 long currentMillis = CardFragment.this.getDateInMillis(dtf.format(now));
 
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                ParseRelation<Event> eventsAttending = currentUser.getRelation("willAttend");
-                ParseQuery<Event> queryWillAttend = eventsAttending.getQuery();
 
 
                 ParseRelation<Event> rejectedEvents = currentUser.getRelation("swipedNo");
@@ -179,6 +177,8 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
                     }
                 });
 
+                ParseRelation<Event> eventsAttending = currentUser.getRelation("willAttend");
+                ParseQuery<Event> queryWillAttend = eventsAttending.getQuery();
 
                 /**
                  * Queries into the list of events that the current user is already userEventsAttending.
@@ -186,7 +186,12 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
                 queryWillAttend.findInBackground(new FindCallback<Event>() {
                     @Override
                     public void done(List<Event> results, com.parse.ParseException attendingError) {
-                        if(attendingError == null){
+
+                        if (attendingError == null) {
+                            /**
+                             * Checks the events that the user is already attending in order for them
+                             * not to show in the card stack.
+                             */
                             for (int i = 0; i < results.size(); i++) {
                                 userEventsAttending.add(results.get(i).getObjectId());
                             }
