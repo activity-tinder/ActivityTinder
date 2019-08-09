@@ -73,6 +73,7 @@ public class ProfileFragment extends Fragment{
     byte[] image;
 
 
+
     static final String TAG = "ProfileFragment";
 
     public ProfileFragment() {
@@ -115,6 +116,8 @@ public class ProfileFragment extends Fragment{
 
         populateProfile();
         populateEventAdapter();
+
+
 
         tvScore.setText(user.getNumber("reliabilityScore").toString());
 
