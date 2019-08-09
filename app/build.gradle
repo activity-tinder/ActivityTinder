@@ -82,4 +82,7 @@ dependencies {
 
     //Volley for GET requests
     implementation 'com.android.volley:volley:1.1.1'
+
+    implementation 'com.android.support:appcompat-v7:28.0.0' // where X.X.X version
+    implementation 'com.android.support:design:28.0.0' // where X.X.X version
 }
