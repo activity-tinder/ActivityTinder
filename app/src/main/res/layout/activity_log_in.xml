@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/bude_blue"
     tools:context=".LoginActivity">
 
 
@@ -32,7 +32,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:src="@drawable/bud_logo"
-        android:tint="@color/bude_blue"
+        android:tint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:textColorHint="@color/bude_blue"
+        android:textColorHint="@color/white"
         app:layout_constraintTop_toBottomOf="@+id/ivTitle"
         tools:layout_editor_absoluteX="0dp">
 
@@ -61,7 +61,7 @@
             android:backgroundTint="@color/white"
             android:hint="@string/username"
             android:inputType="text"
-            android:textColor="@color/black"
+            android:textColor="#FEFEFE"
             android:textColorHighlight="#F0F8F6F6"
             android:textColorHint="#FFFFFF"
             android:textColorLink="#FFFFFF"
@@ -88,14 +88,14 @@
             android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
-            android:textColorHint="@color/bude_blue"
+            android:textColorHint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.00"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:passwordToggleContentDescription="password"
             app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/black">
+            app:passwordToggleTint="@color/white">
 
             <EditText
                 android:id="@+id/etPassword"
@@ -107,7 +107,7 @@
                 android:layout_marginTop="28dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:backgroundTint="@color/black"
+                android:backgroundTint="@color/white"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -124,20 +124,17 @@
 
     <Button
         android:id="@+id/btnLogin"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="28dp"
-        android:background="@color/white"
-        android:shadowColor="@color/bude_blue"
+        android:background="@color/magenta"
         android:text="@string/login"
-        android:textColor="@color/bude_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username_text_input_layout13" />
-
 
     <Button
         android:id="@+id/btnSignup"
