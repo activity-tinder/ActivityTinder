@@ -1,5 +1,6 @@
 package com.example.activtytinder;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -11,15 +12,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-//TODO -- expalin this activity
+/**
+ * This class contains screen and functionality for the user to create and register their account
+ * for the app with the Parse data base. The user supplies their information through the edit texts
+ * which are wired to the appropriate xml file and then the button listeners await for the user
+ * to submit certain date ultimately leading to the makeAccount function which inputs the user's
+ * data into the Parse data base and fires an intent to the home card fragment inside the main
+ * activity.
+ */
 public class SignUpActivity  extends AppCompatActivity {
 
     private EditText etFullName;
@@ -52,35 +58,7 @@ public class SignUpActivity  extends AppCompatActivity {
         etBirthday.setInputType(InputType.TYPE_NULL);
         etBirthday.setOnClickListener(btnBirthday -> Tools.getDate(SignUpActivity.this, etBirthday));
 
-        //TODO -- create separate
-        btnGetLocation.setOnClickListener(btnGetLocation -> {
-            String search = etBaseLocation.getText().toString();
-            LocationManager.get().getLocationAddress(search, API_KEY, etBaseLocation, SignUpActivity.this);
-        });
-
-        btnCreateAccount.setOnClickListener(btnCreateAccount -> {
-            if (LocationManager.get().getCity() == null) {
-                Toast.makeText(SignUpActivity.this, "Please enter valid Address", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            String Birthday = etBirthday.getText().toString();
-            String deliveryDate = Birthday;
-            SimpleDateFormat dateFormatprev = new SimpleDateFormat("MM/dd/yyyy");
-            Date birthday = null;
-            try {
-                birthday = dateFormatprev.parse(deliveryDate);
-            } catch (java.text.ParseException e) {
-                e.printStackTrace();
-            }
-            final Date finalBirthday = birthday;
-            final String Name = etFullName.getText().toString();
-            final String Email = etEmail.getText().toString();
-            final String Username = etUsernameInput.getText().toString();
-            final String Password = etPasswordInput.getText().toString();
-            final ParseGeoPoint BaseCoordinates = LocationManager.get().getLocationCoordinates();
-            final String HomeCity = etBaseLocation.getText().toString();
-            makeAccount(Name, Email, finalBirthday, BaseCoordinates, Username, Password, HomeCity);
-        });
+        btnListeners();
     }
 
     /**
@@ -111,18 +89,49 @@ public class SignUpActivity  extends AppCompatActivity {
         user.put("birthday", Birthday);
         user.put("reliabilityScore", 100);
         user.put("homeCity", LocationManager.get().getCity());
-        user.signUpInBackground(new SignUpCallback() {
-            public void done(ParseException e) {
-                if (e == null) {
-                    Toast.makeText(getApplicationContext(), "Sign Up Successful!", Toast.LENGTH_SHORT).show();
-                    final Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Sign Up Failed!", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                }
+        user.signUpInBackground(e -> {
+            if (e == null) {
+                Toast.makeText(getApplicationContext(), "Sign Up Successful!", Toast.LENGTH_SHORT).show();
+                final Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(getApplicationContext(), "Sign Up Failed!", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
             }
+        });
+    }
+
+    /**
+     * Initializes buttons in this activity.
+     */
+    private void btnListeners(){
+        btnGetLocation.setOnClickListener(btnGetLocation -> {
+            String search = etBaseLocation.getText().toString();
+            LocationManager.get().getLocationAddress(search, API_KEY, etBaseLocation, SignUpActivity.this);
+        });
+
+        btnCreateAccount.setOnClickListener(btnCreateAccount -> {
+            if (LocationManager.get().getCity() == null) {
+                Toast.makeText(SignUpActivity.this, "Please enter valid Address", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            String deliveryDate = etBirthday.getText().toString();
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            Date birthday = null;
+            try {
+                birthday = dateFormat.parse(deliveryDate);
+            } catch (java.text.ParseException e) {
+                e.printStackTrace();
+            }
+            final Date finalBirthday = birthday;
+            final String Name = etFullName.getText().toString();
+            final String Email = etEmail.getText().toString();
+            final String Username = etUsernameInput.getText().toString();
+            final String Password = etPasswordInput.getText().toString();
+            final ParseGeoPoint BaseCoordinates = LocationManager.get().getLocationCoordinates();
+            final String HomeCity = etBaseLocation.getText().toString();
+            makeAccount(Name, Email, finalBirthday, BaseCoordinates, Username, Password, HomeCity);
         });
     }
 }

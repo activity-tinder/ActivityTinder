@@ -8,11 +8,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.parse.LogInCallback;
-import com.parse.ParseException;
 import com.parse.ParseUser;
 
-//TODO -- explain activity
 /**
  * This class is where the app first takes you to login. At this activity, a user can choose to
  * either login with their valid Parse credentials or sign up for an account by clicking on the
@@ -51,19 +48,16 @@ public class LoginActivity extends AppCompatActivity {
      * @param password - String for the user's password input
      */
     private void login(String username, String password){
-        ParseUser.logInInBackground(username, password, new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException e) {
-                if (e == null){
-                    Log.d("Login Activity", "Login successful!");
-                    final Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        ParseUser.logInInBackground(username, password, (user, e) -> {
+            if (e == null){
+                Log.d("Login Activity", "Login successful!");
+                final Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Log.e("Login Activity", "Login failure!");
-                    e.printStackTrace();
-                }
+                startActivity(intent);
+                finish();
+            } else {
+                Log.e("Login Activity", "Login failure!");
+                e.printStackTrace();
             }
         });
     }
@@ -80,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     /**
-     * Initializes buttons in this fragment.
+     * Initializes buttons in this activity.
      */
     private void btnListeners(){
         btnLogin.setOnClickListener(view -> {
@@ -89,8 +83,6 @@ public class LoginActivity extends AppCompatActivity {
             login(username, password);
         });
 
-        btnSignUp.setOnClickListener(view -> {
-            goToSignUpScreen();
-        });
+        btnSignUp.setOnClickListener(view -> LoginActivity.this.goToSignUpScreen());
     }
 }
