@@ -8,7 +8,6 @@ import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.parceler.Parcel;
@@ -17,21 +16,25 @@ import org.parceler.Parcel;
 @Parcel(analyze = Event.class)
 @ParseClassName("Event")
 
-//TODO-- explain model
+/**
+ * Model for the Event data type that is stored in the parse data base. This event model contains
+ * all the getters and setter that using Parse keywords corresponding to column titles, help extract
+ * or set particular data based on these key names.
+ */
 public class Event extends ParseObject implements Parcelable {
 
-    public static final String KEY_EVENT_DATE = "eventDate";
-    public static final String KEY_NAME= "name";
+    private static final String KEY_EVENT_DATE = "eventDate";
+    private static final String KEY_NAME= "name";
     public static final String KEY_CREATOR = "creator";
-    public static final String KEY_LIMIT = "peopleLimit";
-    public static final String KEY_DESCRIPTION = "description";
-    public static final String KEY_LOCATION  = "location";
-    public static final String KEY_CATEGORY = "category";
-    public static final String KEY_EVENT_IMAGE = "eventPhoto";
-    public static final String KEY_START_TIME = "startTime";
-    public static final String KEY_END_TIME = "endTime";
-    public static final String KEY_ADDRESS = "address";
-    public static final String KEY_IMAGE = "eventPhoto";
+    private static final String KEY_LIMIT = "peopleLimit";
+    private static final String KEY_DESCRIPTION = "description";
+    private static final String KEY_LOCATION  = "location";
+    private static final String KEY_CATEGORY = "category";
+    private static final String KEY_EVENT_IMAGE = "eventPhoto";
+    private static final String KEY_START_TIME = "startTime";
+    private static final String KEY_END_TIME = "endTime";
+    private static final String KEY_ADDRESS = "address";
+    private static final String KEY_IMAGE = "eventPhoto";
 
     public Event() {}
 
@@ -108,14 +111,5 @@ public class Event extends ParseObject implements Parcelable {
         put(KEY_IMAGE, image);
     }
 
-    public static class Query extends ParseQuery<ParseUser>{
-        public Query(Class<ParseUser> subclass) {
-            super(subclass);
-        }
 
-        public Query withCreator(){
-            include("creator");
-            return this;
-        }
-    }
 }
