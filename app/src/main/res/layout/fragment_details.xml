@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
-    android:layout_height="wrap_content"
+    android:id="@+id/clDetails"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/dialog_rounded_bg"
+    android:maxHeight="300dp"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="0dp"
+    android:tag="work"
+    android:elevation="1dp"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    tools:visibility="invisible">
 
 
     <Button
@@ -28,19 +34,18 @@
     <ScrollView
         android:id="@+id/scDetailsFragment"
         android:layout_width="match_parent"
-        android:layout_height="324dp"
+        android:layout_height="match_parent"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/btnClose"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="5">
+        app:layout_constraintVertical_bias="1.0">
 
         <TextView
             android:id="@+id/tvEventDetailsFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
             android:hint="@string/event_details"
@@ -51,4 +56,4 @@
     </ScrollView>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

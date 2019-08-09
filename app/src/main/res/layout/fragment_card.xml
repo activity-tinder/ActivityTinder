@@ -1,96 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/white">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:elevation="20dp">
 
-    <ImageButton
-        android:id="@+id/btnReject"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="bottom|left"
-        android:layout_marginLeft="100dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/ic_error"
-        android:elevation="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white">
 
-    <ImageButton
-        android:id="@+id/btnAccept"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="bottom|right"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="100dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/ic_success"
-        android:backgroundTint="@color/bude_blue"
-        android:elevation="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnReject" />
+        <ImageButton
+            android:id="@+id/btnReject"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|left"
+            android:layout_marginLeft="100dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/ic_error"
+            android:elevation="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <com.mindorks.placeholderview.SwipePlaceHolderView
-        android:id="@+id/swipeView"
+        <ImageButton
+            android:id="@+id/btnAccept"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/ic_success"
+            android:backgroundTint="@color/bude_blue"
+            android:elevation="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnReject" />
+
+        <com.mindorks.placeholderview.SwipePlaceHolderView
+            android:id="@+id/swipeView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="70dp"
+            android:elevation="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnReject"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+        </com.mindorks.placeholderview.SwipePlaceHolderView>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="250dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:elevation="1dp"
+            android:text="Fetching events/\nno more events to show!"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/swipeView"
+            app:layout_constraintHorizontal_bias="0.515"
+            app:layout_constraintStart_toStartOf="@+id/swipeView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.427" />
+
+        <ImageButton
+            android:id="@+id/btnUndo"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/black"
+            android:background="@android:drawable/ic_menu_revert"
+            android:elevation="3dp" />
+
+        <!--<ImageButton-->
+            <!--android:id="@+id/btnRefresh"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:background="@android:drawable/ic_popup_sync"-->
+            <!--android:backgroundTint="@color/blue"-->
+            <!--android:layout_gravity="right|bottom"-->
+            <!--android:elevation="3dp"-->
+            <!--android:layout_marginBottom="20dp"-->
+            <!--android:layout_marginRight="20dp"/>-->
+
+
+
+
+    </FrameLayout>
+
+    <!-- Bottom Sheet -->
+    <include
+        layout="@layout/fragment_details"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="70dp"
-        android:elevation="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnReject"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        tools:visibility="invisible" />
 
-
-    </com.mindorks.placeholderview.SwipePlaceHolderView>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="250dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:elevation="1dp"
-        android:text="Fetching events/\nno more events to show!"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/swipeView"
-        app:layout_constraintHorizontal_bias="0.515"
-        app:layout_constraintStart_toStartOf="@+id/swipeView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.427" />
-
-    <ImageButton
-        android:id="@+id/btnUndo"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/black"
-        android:background="@android:drawable/ic_menu_revert"
-        android:elevation="3dp" />
-
-    <!--<ImageButton-->
-        <!--android:id="@+id/btnRefresh"-->
-        <!--android:layout_width="40dp"-->
-        <!--android:layout_height="40dp"-->
-        <!--android:background="@android:drawable/ic_popup_sync"-->
-        <!--android:backgroundTint="@color/blue"-->
-        <!--android:layout_gravity="right|bottom"-->
-        <!--android:elevation="3dp"-->
-        <!--android:layout_marginBottom="20dp"-->
-        <!--android:layout_marginRight="20dp"/>-->
-
-
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

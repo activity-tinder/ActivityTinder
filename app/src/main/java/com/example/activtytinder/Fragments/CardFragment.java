@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ import com.example.activtytinder.MainActivity;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.example.activtytinder.SwipeEventCard;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.parse.FindCallback;
@@ -58,6 +60,8 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
     private ImageButton btnUndo;
 
     private Toolbar cardToolbar;
+
+    private BottomSheetBehavior bottomSheetBehavior;
     //private ImageButton btnRefresh;
 
     //TODO -- add a spinner for filtering
@@ -85,6 +89,8 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        view.findViewById(R.id.clDetails).setVisibility(View.INVISIBLE);
         btnAccept = view.findViewById(R.id.btnAccept);
         btnReject = view.findViewById(R.id.btnReject);
         btnUndo = view.findViewById(R.id.btnUndo);
@@ -94,6 +100,13 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
 
 //        cardToolbar = view.findViewById(R.id.toolbarCard);
 //        ((AppCompatActivity)getActivity()).setSupportActionBar(cardToolbar);
+
+        LinearLayout bottomSheetViewGroup = view.findViewById(R.id.clDetails);
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetViewGroup);
+        //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+
+
 
 
         int bottomMargin = CardUtils.dpToPx(160);
@@ -296,6 +309,9 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
         FragmentManager fragmentManager = getFragmentManager();
         DetailsFragment detailsDialogFragment = DetailsFragment.newInstance("Event", event);
         detailsDialogFragment.show(fragmentManager, "CheckoutFragment");
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        //BottomSheetDialogFragment bottomsheet = new BottomSheetDialogFragment();
+        //bottomsheet.show(fragmentManager,"work");
     }
 
     /**
@@ -338,6 +354,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
             Bundle eventBundle = new Bundle();
             eventBundle.putParcelable("Event", Parcels.wrap(eventToSend));
             showDetailFragment(eventToSend);
+
         });
 
     }

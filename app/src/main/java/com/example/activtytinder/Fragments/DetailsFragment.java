@@ -1,5 +1,6 @@
 package com.example.activtytinder.Fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,11 +12,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.example.activtytinder.Tools;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -27,7 +28,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailsFragment extends DialogFragment {
+public class DetailsFragment extends BottomSheetDialogFragment {
 
     private TextView tvEventDetailsFragment;
     private Button btnClose;
@@ -62,7 +63,9 @@ public class DetailsFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_details, container, false);
+        View v =  inflater.inflate(R.layout.fragment_details, container, false);
+        v.setBackgroundResource(android.R.color.transparent);
+        return v;
     }
 
     @Override
@@ -72,10 +75,28 @@ public class DetailsFragment extends DialogFragment {
     }
 
     @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        return super.onCreateDialog(savedInstanceState);
+    }
+
+    public void onResume() {
+        // Get existing layout params for the window
+//        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+//        // Assign window properties to fill the parent
+//        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+//        params.height = 500;
+//        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+
+        super.onResume();
+
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         tvEventDetailsFragment = view.findViewById(R.id.tvEventDetailsFragment);
         btnClose = view.findViewById(R.id.btnClose);
+        //getDialog().getWindow().findViewById(R.id.clDetails).setBackgroundResource(android.R.color.transparent);
 
 
         Bundle eventBundle = this.getArguments();
