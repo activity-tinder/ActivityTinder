@@ -11,11 +11,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.example.activtytinder.Tools;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -27,7 +27,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailsFragment extends DialogFragment {
+public class DetailsFragment extends BottomSheetDialogFragment {
 
     private TextView tvEventDetailsFragment;
     private Button btnClose;
