@@ -5,6 +5,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.activtytinder.CardUtils;
+import com.example.activtytinder.MainActivity;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.example.activtytinder.SwipeEventCard;
@@ -54,7 +58,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
     private ImageButton btnReject;
     private ImageButton btnUndo;
 
-    private Toolbar toolbar;
+    private Toolbar cardToolbar;
     //private ImageButton btnRefresh;
     private ConstraintLayout mConstraintLayout;
 
@@ -76,6 +80,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_card, container, false);
     }
 
@@ -90,8 +95,8 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
         userEventsAttending = new ArrayList<>();
         eventsRejected = new ArrayList<>();
 
-//        toolbar = view.findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+//        cardToolbar = view.findViewById(R.id.toolbarCard);
+//        ((AppCompatActivity)getActivity()).setSupportActionBar(cardToolbar);
 
         spinnerFilter = view.findViewById(R.id.spinnerFilter);
 
@@ -110,6 +115,21 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
 
         btnListeners();
     }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.menu_home_page, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.setting){
+            MainActivity.openSettings();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     /**
      * Gets the events from the database and puts them into the SwipePlaceHolderView card stack.

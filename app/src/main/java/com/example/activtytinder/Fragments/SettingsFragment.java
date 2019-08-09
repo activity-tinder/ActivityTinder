@@ -23,6 +23,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return false;
             }
         });
+
     }
     private void logout() {
         ParseUser.logOut();

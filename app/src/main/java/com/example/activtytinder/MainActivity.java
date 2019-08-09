@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, ContactUsActivity.class);
         startActivity(i);
     }
-    public void openSettings(){
+    public static void openSettings(){
         Fragment fragment = new SettingsFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
