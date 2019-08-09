@@ -26,7 +26,7 @@
         <item>21+</item>
     </string-array>
     <string-array name="filter_array">
-        <item>All</item>
+        <item>Categories</item>
         <item>Food</item>
         <item>Nature</item>
         <item>Active</item>
