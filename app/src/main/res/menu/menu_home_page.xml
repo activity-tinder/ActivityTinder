@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/spinner"
+    <item android:id="@+id/realSpinner"
         app:showAsAction="ifRoom"
         android:layout_width="200dp"
         android:layout_height="40dp"
@@ -10,7 +10,9 @@
         android:elevation="5dp"
         android:textDirection="rtl"
         app:actionViewClass="android.widget.Spinner"
-        android:title="spinner" />
+        android:title="spinner"/>
+
+
     <item
         android:id="@+id/setting"
         android:icon="@drawable/ic_settings"

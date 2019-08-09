@@ -63,7 +63,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
     private ConstraintLayout mConstraintLayout;
 
     //TODO -- add a spinner for filtering
-    private Spinner spinnerFilter;
+    //private Spinner spinnerFilter;
     public String eventCategory;
 
     /**
@@ -98,12 +98,11 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
 //        cardToolbar = view.findViewById(R.id.toolbarCard);
 //        ((AppCompatActivity)getActivity()).setSupportActionBar(cardToolbar);
 
-        spinnerFilter = view.findViewById(R.id.spinnerFilter);
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.filter_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerFilter.setAdapter(adapter);
-        spinnerFilter.setOnItemSelectedListener(this);
+//        spinnerFilter = view.findViewById(R.id.spinnerFilter);
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.filter_array, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinnerFilter.setAdapter(adapter);
+//        spinnerFilter.setOnItemSelectedListener(this);
 
         int bottomMargin = CardUtils.dpToPx(160);
         Point windowSize = CardUtils.getDisplaySize(getActivity().getWindowManager());
@@ -120,6 +119,14 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
         inflater.inflate(R.menu.menu_home_page, menu);
+
+        MenuItem item = menu.findItem(R.id.realSpinner);
+        Spinner spinner = (Spinner) item.getActionView();
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.filter_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+
     }
 
     @Override
@@ -129,6 +136,10 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
 
 
     /**

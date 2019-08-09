@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     final Fragment receiptFragment = new ReceiptFragment();
     final static Fragment settingsFragment = new SettingsFragment();
     public static FragmentManager fragmentManager;
+    public Spinner spinner2;
+    public String eventCategory;
+
 
 
 
@@ -120,4 +124,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.popBackStack();
         fragmentManager.beginTransaction().addToBackStack("Settings").replace(R.id.flContainer, fragment).commit();
     }
+
+
 }
