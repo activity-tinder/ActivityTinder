@@ -14,7 +14,6 @@ import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.LocationCallback;
@@ -33,7 +32,13 @@ import permissions.dispatcher.NeedsPermission;
 
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
-//TODO -- explain class
+
+/**
+ * This class handles all needs for getting location information. This class supports both using the
+ * mapQuest API to retrieve information through JSON responses and using the Google Maps API to
+ * return location coordinates.
+ */
+@SuppressLint("Registered")
 public class LocationManager extends Activity
 {
 
@@ -41,10 +46,7 @@ public class LocationManager extends Activity
 
     private Context mContext;
     private Activity mActivity;
-
-    private double mLongitude = -1000.0;
-    private double mLatitude = -1000.0;
-
+    
     private double eventLat = 50.0;
     private double eventLong = 50.0;
 
@@ -126,10 +128,22 @@ public class LocationManager extends Activity
         return City;
     }
 
+    /**
+     * Stores the correctly formatted address of a location into a global String when
+     * getLocationAddress is called.
+     * @param place - String of the value of the correctly formatted place that the GET request
+     *              received from getLocationAddress
+     */
     private void setCorrectAddress (String place){
         correctAddress = place;
     }
 
+    /**
+     * Should be called AFTER getLocationAddress has successfully run. This method returns the name
+     * of the location's correctly formatted address to the activity or fragment that requires the
+     * information in the form of a string.
+     * @return - String of the value of the correctly formatted address.
+     */
     public String getCorrectAddress(){
         return correctAddress;
     }
@@ -163,9 +177,8 @@ public class LocationManager extends Activity
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(mActivity, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION,
                     android.Manifest.permission.ACCESS_FINE_LOCATION}, 20);
-        }else {
-            //Log.e(TAG, "PERMISSION GRANTED");
-        }
+        } //Log.e(TAG, "PERMISSION GRANTED");
+
         getFusedLocationProviderClient(mContext).requestLocationUpdates(myLocationRequest, new LocationCallback() {
                     @Override
                     public void onLocationResult(LocationResult locationResult)
@@ -194,24 +207,21 @@ public class LocationManager extends Activity
     public void getLocationAddress(String searchQuery, String key, EditText etEventAddress, Context context){
         requestQueue = Volley.newRequestQueue(context);
         JsonObjectRequest addressRequest = new JsonObjectRequest(Request.Method.GET, url + key + Location + searchQuery, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray results = response.getJSONArray("results");
-                            JSONArray locations = results.getJSONObject(0).getJSONArray("locations");
-                            String city = locations.getJSONObject(0).get("adminArea5").toString();
-                            String street = locations.getJSONObject(0).get("street").toString();
-                            String state = locations.getJSONObject(0).get("adminArea3").toString();
-                            JSONObject eventLatLng = locations.getJSONObject(0).getJSONObject("latLng");
-                            setLocationCoordinates(eventLatLng.getDouble("lat"), eventLatLng.getDouble("lng"));
-                            etEventAddress.setText(street + ", " + city + ", " + state);
-                            setCorrectAddress(street + ", " + city + ", " + state);
-                            setCity(city + ", " + state);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(context, "Please try a valid address!", Toast.LENGTH_SHORT).show();
-                        }
+                response -> {
+                    try {
+                        JSONArray results = response.getJSONArray("results");
+                        JSONArray locations = results.getJSONObject(0).getJSONArray("locations");
+                        String city = locations.getJSONObject(0).get("adminArea5").toString();
+                        String street = locations.getJSONObject(0).get("street").toString();
+                        String state = locations.getJSONObject(0).get("adminArea3").toString();
+                        JSONObject eventLatLng = locations.getJSONObject(0).getJSONObject("latLng");
+                        setLocationCoordinates(eventLatLng.getDouble("lat"), eventLatLng.getDouble("lng"));
+                        etEventAddress.setText(street + ", " + city + ", " + state);
+                        setCorrectAddress(street + ", " + city + ", " + state);
+                        setCity(city + ", " + state);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, "Please try a valid address!", Toast.LENGTH_SHORT).show();
                     }
                 },
                 error -> {
