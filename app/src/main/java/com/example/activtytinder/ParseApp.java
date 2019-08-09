@@ -9,13 +9,20 @@ import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-//TODO -- explain this class
+
+/**
+ * This class connects the Parse database online to our java code. By registering the subclasses,
+ * Parse is now fully configured and we can use Parse helper functions set up in the Event model.
+ */
 public class ParseApp extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
-        //TODO -- explain the register for subclasses
+        /**
+         * Registering each subclass takes the classes in our Parse online database and configures
+         * them to be used and matched with the appropriate class in our Java code.
+         */
         ParseObject.registerSubclass(ParseUser.class);//must have this for Parse to be configured fully
         ParseObject.registerSubclass(Event.class);//must have this for Parse to be configured fully
         ParseObject.registerSubclass(Feedback.class);//must have this for Parse to be configured fully
