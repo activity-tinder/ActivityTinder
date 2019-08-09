@@ -102,7 +102,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
 
         mSwipePlaceHolderView = view.findViewById(R.id.swipeView);
 
-        queryEvents("No Filter");
+        queryEvents("All");
 
         btnListeners();
     }
@@ -128,11 +128,6 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
-
 
     /**
      * Gets the events from the database and puts them into the SwipePlaceHolderView card stack.
