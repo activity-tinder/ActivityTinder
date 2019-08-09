@@ -22,6 +22,17 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/ivEventCategory"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@color/bude_blue" />
+
+            <ImageView
                 android:id="@+id/ivCardImage"
                 android:layout_width="0dp"
                 android:layout_height="0dp"

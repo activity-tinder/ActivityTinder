@@ -59,6 +59,9 @@ public class SwipeEventCard {
     @View(R.id.tvCardEventCreator)
     protected TextView tvCardEventCreator;
 
+    @View(R.id.ivEventCategory)
+    protected ImageView ivEventCategory;
+
     @View(R.id.clCardStack)
     protected ConstraintLayout mConstraintLayout;
 
@@ -148,7 +151,7 @@ public class SwipeEventCard {
         if (mEvent.getCategory().equals("Active")) {
             mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
         }else if (mEvent.getCategory().equals("Nature")){
-            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPinkDark));
+            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
         }else if (mEvent.getCategory().equals("Food")){
             mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
         }else if (mEvent.getCategory().equals("Social")){
