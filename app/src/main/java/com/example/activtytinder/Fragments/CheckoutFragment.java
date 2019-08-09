@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.activtytinder.CardUtils;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
+import com.example.activtytinder.Tools;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -133,18 +134,18 @@ public class CheckoutFragment extends DialogFragment {
                 ParseRelation<ParseUser> relation = event.getRelation("usersAttending");
                 ParseQuery<ParseUser> numberQuery = relation.getQuery();
                 mName = event.getKeyName();
-                mDate = event.getKeyDate();
+                mDate = Tools.convertDate(event.getKeyDate());
                 mLocation = event.getKeyAddress();
                 numberQuery.findInBackground(new FindCallback<ParseUser>() {
                     @Override
                     public void done(List<ParseUser> users, ParseException e) {
                         if(users.size() == 1){
                             numberOfAttendees = "There is "  + users.size() +" person attending.";
-                            tvEventDetails.setText("Name: "
-                                    + mName
-                                    + "\n\nDate: "
+                            tvEventDetails.setText(
+                                    mName
+                                    + "\n\n"
                                     + mDate
-                                    +"\n\nLocation: "
+                                    +"\n\n"
                                     + mLocation
                                     + "\n\n"
                                     + numberOfAttendees

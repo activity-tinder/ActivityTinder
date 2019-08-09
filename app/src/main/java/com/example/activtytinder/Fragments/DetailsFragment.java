@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
+import com.example.activtytinder.Tools;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -91,7 +92,7 @@ public class DetailsFragment extends DialogFragment {
 
         mAttendees = new ArrayList();
         mName = mEvent.getKeyName();
-        mDate = mEvent.getKeyDate();
+        mDate = Tools.convertDate(mEvent.getKeyDate());
         mLocation = mEvent.getKeyAddress();
         mCreator = mEvent.getCreator().getUsername();
         mLimit = mEvent.getKeyLimit();
