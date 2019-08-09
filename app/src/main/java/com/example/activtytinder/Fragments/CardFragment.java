@@ -102,7 +102,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
 
         mSwipePlaceHolderView = view.findViewById(R.id.swipeView);
 
-        queryEvents("All");
+        queryEvents("Categories");
 
         btnListeners();
     }
@@ -199,7 +199,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
 
                                 long eventMillis = CardFragment.this.getDateInMillis(eventDateRaw);
 
-                                if (filter.equals("All")) {
+                                if (filter.equals("Categories")) {
                                     if (!(userEventsAttending.contains(thisEvent.getObjectId())) && currentMillis < eventMillis && !(eventsRejected.contains(thisEvent.getObjectId()))) {
                                         // figure out if this call is safe or not
                                         SwipeEventCard card = new SwipeEventCard(CardFragment.this.getContext(), thisEvent, cardViewHolderSize);
