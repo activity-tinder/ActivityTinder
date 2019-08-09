@@ -19,6 +19,12 @@ import java.util.Date;
 import java.util.Locale;
 
 //TODO -- explain tools class
+
+/**
+ * This class serves as a utilities class that provides helpful static functions to be used throughout
+ * the code. The methods mostly pretain to formatting and effectively selecting dates, times and
+ * converting between their forms along with rotating pictures.
+ */
 public class Tools {
 
     /**
@@ -122,6 +128,12 @@ public class Tools {
         return millis;
     }
 
+    /**
+     * Converts a date in string format to a different format depending on the input format.
+     * @param currentDate - Date in string form. If in the form MM/dd/yyyy, converts to the format
+     *                    EEE, d MMM yyyy and vice versa
+     * @return - currentDate is a string that is the newly formatted date in string form
+     */
     public static String convertDate (String currentDate) {
         if (currentDate.charAt(0) == '0' || currentDate.charAt(0) == '1') {
             Date newDate = null;

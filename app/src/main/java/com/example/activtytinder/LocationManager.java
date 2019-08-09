@@ -46,7 +46,7 @@ public class LocationManager extends Activity
 
     private Context mContext;
     private Activity mActivity;
-    
+
     private double eventLat = 50.0;
     private double eventLong = 50.0;
 
