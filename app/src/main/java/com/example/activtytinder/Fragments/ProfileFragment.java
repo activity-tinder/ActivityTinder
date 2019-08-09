@@ -147,7 +147,7 @@ public class ProfileFragment extends Fragment{
     private void populateProfile(){
         user = ParseUser.getCurrentUser();
         tvName.setText(user.getString("name"));
-        tvUsername.setText(user.getUsername());
+        tvUsername.setText("@"+user.getUsername());
         tvScore.setText(user.getNumber("reliabilityScore").toString());
         tvHomeCity.setText(user.getString("homeCity"));
         ParseFile image = user.getParseFile("profileImage");
