@@ -5,14 +5,15 @@
     android:id="@+id/frameLayout2"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="0dp"
+    android:layout_marginBottom="20dp"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvCards"
         android:layout_width="350dp"
-        android:layout_height="420dp"
-        android:layout_margin="15dp"
+        android:layout_height="500dp"
+        android:layout_margin="0dp"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical"
         app:cardCornerRadius="0dp"
         app:cardElevation="4dp">
@@ -23,11 +24,11 @@
 
             <ImageView
                 android:id="@+id/ivEventCategory"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
                 android:elevation="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
