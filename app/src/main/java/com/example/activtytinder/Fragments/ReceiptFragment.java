@@ -122,7 +122,7 @@ public class ReceiptFragment extends Fragment  {
                         public void done(List<ParseUser> users, ParseException e) {
                             if(e == null){
                                 for(int x = 0; x < users.size(); x++){
-                                    String entry = users.get(x).get("name") + " (" + users.get(x).getUsername() +")";
+                                    String entry = users.get(x).get("name") + " (@" + users.get(x).getUsername() +")";
                                     mAttendees.add(entry);
                                 }
 
@@ -160,11 +160,11 @@ public class ReceiptFragment extends Fragment  {
 
                                 String attendeesList = "";
                                 for (int i = 0; i < mAttendees.size(); i++) {
-                                    attendeesList += "• " + mAttendees.get(i) + "\n";
+                                    attendeesList += "    - " + mAttendees.get(i) + "\n";
                                 }
 
                                 tvEventAttendees.setText("Created by: "
-                                        + mCreator.get("name") + " ("
+                                        + mCreator.get("name") + " (@"
                                         + mCreator.getUsername() + ")"
                                         + "\nAttendees:\n"
                                         + attendeesList
