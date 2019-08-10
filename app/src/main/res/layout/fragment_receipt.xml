@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/title_gradient"
         app:layout_constraintBottom_toBottomOf="@id/ivReceiptImage">
 
         <TextView
