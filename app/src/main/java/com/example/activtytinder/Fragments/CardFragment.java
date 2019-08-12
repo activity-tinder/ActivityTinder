@@ -101,7 +101,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
 
         mSwipePlaceHolderView = view.findViewById(R.id.swipeView);
 
-        queryEvents("Categories");
+        //queryEvents("Categories");
 
         btnListeners();
     }
@@ -116,6 +116,8 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.filter_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        //TODO - this is why the card stack is double querying, it queries again when the on item selected
+        // listener is automatically callled
         spinner.setOnItemSelectedListener(this);
     }
 
