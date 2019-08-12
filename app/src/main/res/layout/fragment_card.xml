@@ -54,16 +54,16 @@
         android:elevation="1dp"
         app:srcCompat="@drawable/bude_updated" />
 
-    <!--<ImageButton-->
-        <!--android:id="@+id/btnUndo"-->
-        <!--android:layout_width="45dp"-->
-        <!--android:layout_height="45dp"-->
-        <!--android:layout_gravity="center_horizontal|bottom"-->
-        <!--android:layout_marginRight="0dp"-->
-        <!--android:layout_marginBottom="28dp"-->
-        <!--android:background="@drawable/ic_undo"-->
-        <!--android:backgroundTint="@color/black"-->
-        <!--android:elevation="3dp" />-->
+    <ImageButton
+        android:id="@+id/btnUndo"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/ic_undo"
+        android:backgroundTint="@color/black"
+        android:elevation="3dp" />
 
     <!--<ImageButton-->
         <!--android:id="@+id/btnRefresh"-->

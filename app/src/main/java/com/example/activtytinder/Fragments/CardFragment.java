@@ -87,7 +87,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
         super.onViewCreated(view, savedInstanceState);
         btnAccept = view.findViewById(R.id.btnAccept);
         btnReject = view.findViewById(R.id.btnReject);
-        //btnUndo = view.findViewById(R.id.btnUndo);
+        btnUndo = view.findViewById(R.id.btnUndo);
         //btnRefresh = view.findViewById(R.id.btnRefresh);
         userEventsAttending = new ArrayList<>();
         eventsRejected = new ArrayList<>();
@@ -363,9 +363,9 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
             mSwipePlaceHolderView.doSwipe(false);
         });
 
-//        btnUndo.setOnClickListener(btn -> {
-//            //Log.d(TAG, "undo clicked!");
-//            mSwipePlaceHolderView.undoLastSwipe();
-//        });
+        btnUndo.setOnClickListener(btn -> {
+            //Log.d(TAG, "undo clicked!");
+            mSwipePlaceHolderView.undoLastSwipe();
+        });
     }
 }

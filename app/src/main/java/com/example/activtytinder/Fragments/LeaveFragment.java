@@ -70,7 +70,7 @@ public class LeaveFragment extends DialogFragment {
         btnYes = view.findViewById(R.id.btnYes);
         btnNo = view.findViewById(R.id.btnNo);
         etPasswordInput = view.findViewById(R.id.etPasswordInput);
-        //tvScore = view.findViewById(R.id.tvScore);
+        tvScore = view.findViewById(R.id.tvScore);
         getDialog().setCanceledOnTouchOutside(false);
         Bundle eventBundle = this.getArguments();
         if(eventBundle != null){

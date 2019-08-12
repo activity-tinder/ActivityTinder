@@ -61,7 +61,7 @@ public class ProfileFragment extends Fragment{
     private RecyclerView rvProfile;
     private TextView tvName;
     private TextView tvUsername;
-    //public static TextView tvScore;
+    public static TextView tvScore;
     private TextView tvHomeCity;
     private Button btnTakeImage;
     private Button btnUploadImage;
@@ -107,7 +107,7 @@ public class ProfileFragment extends Fragment{
         rvProfile.setAdapter(adapter);
         tvName = view.findViewById(R.id.tvName);
         tvUsername = view.findViewById(R.id.tvUsername);
-        //tvScore = view.findViewById(R.id.tvScore);
+        tvScore = view.findViewById(R.id.tvScore);
         tvHomeCity = view.findViewById(R.id.tvHomeCity);
         btnTakeImage = view.findViewById(R.id.btnTakeImage);
         btnUploadImage = view.findViewById(R.id.btnUploadImage);
@@ -119,7 +119,7 @@ public class ProfileFragment extends Fragment{
 
 
 
-        //tvScore.setText(user.getNumber("reliabilityScore").toString());
+        tvScore.setText(user.getNumber("reliabilityScore").toString());
 
         //TODO -- create separate method for buttons
 
@@ -148,7 +148,7 @@ public class ProfileFragment extends Fragment{
         user = ParseUser.getCurrentUser();
         tvName.setText(user.getString("name"));
         tvUsername.setText("@"+user.getUsername());
-        //tvScore.setText(user.getNumber("reliabilityScore").toString());
+        tvScore.setText(user.getNumber("reliabilityScore").toString());
         tvHomeCity.setText(user.getString("homeCity"));
         ParseFile image = user.getParseFile("profileImage");
         String url;
