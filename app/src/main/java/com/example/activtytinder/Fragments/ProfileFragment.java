@@ -97,10 +97,7 @@ public class ProfileFragment extends Fragment{
         swipeContainer.setOnRefreshListener(() -> fetchEventsAsync(0));
 
         //TODO -- change refresh colors to color scheme for app
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+        swipeContainer.setColorSchemeResources(R.color.bude_blue);
 
         adapter = new ProfileAdapter(getContext(), mEvents);
         rvProfile.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -159,7 +156,7 @@ public class ProfileFragment extends Fragment{
         catch (Exception e){
             return;
         }
-        Log.d("DEBUG", "in setting image " + security + url);
+        Log.d("DEBUG", "setting profile photo: " + user.getUsername() + " " + security + url);
         Glide.with(getContext())
                 .load(security + url)
                 .placeholder(R.drawable.ic_launcher_foreground)
