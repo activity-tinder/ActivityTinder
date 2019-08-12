@@ -151,19 +151,14 @@ public class SwipeEventCard {
 
         if (mEvent.getCategory().equals("Active")) {
             ivEventCategory.setImageResource(R.drawable.ic_circle_running);
-            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bude_blue));
         }else if (mEvent.getCategory().equals("Nature")){
             ivEventCategory.setImageResource(R.drawable.ic_circle_mountain);
-            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bude_blue));
         }else if (mEvent.getCategory().equals("Food")){
             ivEventCategory.setImageResource(R.drawable.ic_circle_food);
-            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bude_blue));
         }else if (mEvent.getCategory().equals("Social")){
             ivEventCategory.setImageResource(R.drawable.ic_circle_chat);
-            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bude_blue));
         }else{
             ivEventCategory.setImageResource(R.drawable.ic_circle_glass);
-            mConstraintLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bude_blue));
         }
     }
 
