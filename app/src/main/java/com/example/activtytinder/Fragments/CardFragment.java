@@ -94,8 +94,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
 
 //        cardToolbar = view.findViewById(R.id.toolbarCard);
 //        ((AppCompatActivity)getActivity()).setSupportActionBar(cardToolbar);
-
-
+        
         int bottomMargin = CardUtils.dpToPx(160);
         Point windowSize = CardUtils.getDisplaySize(getActivity().getWindowManager());
         cardViewHolderSize = new Point(windowSize.x, windowSize.y - bottomMargin);
@@ -118,7 +117,6 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
-
     }
 
     @Override
