@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.example.activtytinder.Tools;
+import com.github.jinatonic.confetti.CommonConfetti;
 import com.github.jinatonic.confetti.ConfettiManager;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -147,7 +148,7 @@ public class ReceiptFragment extends Fragment  {
                                 for(int x = 0; x < users.size(); x++){
                                     String entry = users.get(x).get("name") + " (@" + users.get(x).getUsername() +")";
                                     mAttendees.add(entry);
-//                                    activeConfettiManagers.add(CommonConfetti.rainingConfetti(confettiContainer, colors).infinite());
+                                    activeConfettiManagers.add(CommonConfetti.rainingConfetti(confettiContainer, colors).infinite());
                                 }
 
                                 ParseFile image = mEvent.getEventImage();
