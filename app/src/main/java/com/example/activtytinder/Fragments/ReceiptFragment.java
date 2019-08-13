@@ -1,5 +1,7 @@
 package com.example.activtytinder.Fragments;
 
+import android.annotation.SuppressLint;
+import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,10 +23,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
+import com.example.activtytinder.GeoFenceBroadcastReceiver;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.example.activtytinder.Tools;
+import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
+import com.google.android.gms.location.GeofencingRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -47,6 +55,7 @@ public class ReceiptFragment extends Fragment  {
     private Button btnChat;
     private Button btnCalendar;
     private Button btnDitch;
+    private Button btnCreateGeofence;
     private ImageView ivPicture;
     private ScrollView scDetails;
     private TextView tvEventName;
@@ -65,6 +74,8 @@ public class ReceiptFragment extends Fragment  {
     private String mStartTime;
     private String mEndTime;
     private GeofencingClient geofencingClient;
+    private Geofence geofenceList;
+    private PendingIntent geofencePendingIntent;
 
 
     @Nullable
@@ -79,6 +90,7 @@ public class ReceiptFragment extends Fragment  {
         btnDirections = view.findViewById(R.id.btnMaps);
         btnChat = view.findViewById(R.id.btnChat);
         btnCalendar = view.findViewById(R.id.btnCalendar);
+        btnCreateGeofence = view.findViewById(R.id.btnCreateGeoFence);
         btnDitch = view.findViewById(R.id.btnDitchEvent);
         scDetails = view.findViewById(R.id.scDetails);
         tvEventName = view.findViewById(R.id.tvName);
@@ -89,6 +101,8 @@ public class ReceiptFragment extends Fragment  {
         tvEventDescription = view.findViewById(R.id.tvDescription);
         ivPicture = view.findViewById(R.id.ivReceiptImage);
         mAttendees = new ArrayList<>();
+
+        geofencingClient = LocationServices.getGeofencingClient(getContext());
         Bundle eventBundle = this.getArguments();
         if(eventBundle != null){
             mEvent = Parcels.unwrap(eventBundle.getParcelable("Event"));
@@ -272,12 +286,68 @@ public class ReceiptFragment extends Fragment  {
         btnDitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO -- give User a warning message/confirmation overlay. If they choose to leave, take User's name off of the users attending. Lower their score if it's 24 hours before event will occur.
                 Bundle eventBundle = new Bundle();
                 eventBundle.putParcelable("Event", Parcels.wrap(mEvent));
                 ReceiptFragment.this.showLeaveDialog(mEvent);
             }
         });
+
+        btnCreateGeofence.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("MissingPermission")
+            @Override
+            public void onClick(View view) {
+//                geofenceList.add(new Geofence.Builder()
+//                        // Set the request ID of the geofence. This is a string to identify this
+//                        // geofence.
+//                        .setRequestId(entry.getKey())
+//
+//                        .setCircularRegion(
+//                                entry.getValue().latitude,
+//                                entry.getValue().longitude,
+//                                Constants.GEOFENCE_RADIUS_IN_METERS
+//                        )
+//                        .setExpirationDuration(Constants.GEOFENCE_EXPIRATION_IN_MILLISECONDS)
+//                        .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
+//                                Geofence.GEOFENCE_TRANSITION_EXIT)
+//                        .build());
+
+                geofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
+                        .addOnSuccessListener(getActivity(), new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getContext(),"GeoFence Added!",Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
+                        .addOnFailureListener(getActivity(), new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(),"Failed to add GeoFence!",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+            }
+        });
+    }
+
+    private GeofencingRequest getGeofencingRequest() {
+        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
+        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
+        builder.addGeofences((List<Geofence>) geofenceList);
+        return builder.build();
+    }
+
+    private PendingIntent getGeofencePendingIntent() {
+        // Reuse the PendingIntent if we already have it.
+        if (geofencePendingIntent != null) {
+            return geofencePendingIntent;
+        }
+        Intent intent = new Intent(getActivity(), GeoFenceBroadcastReceiver.class);
+        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when
+        // calling addGeofences() and removeGeofences().
+        geofencePendingIntent = PendingIntent.getBroadcast(getContext(), 0, intent, PendingIntent.
+                FLAG_UPDATE_CURRENT);
+        return geofencePendingIntent;
     }
 
 }
