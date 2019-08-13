@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.oob.SignUp;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
@@ -59,6 +60,13 @@ public class SignUpActivity  extends AppCompatActivity {
         etBirthday.setOnClickListener(btnBirthday -> Tools.getDate(SignUpActivity.this, etBirthday));
 
         btnListeners();
+    }
+
+    @Override
+    public void onBackPressed() {
+        final Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     /**
