@@ -41,6 +41,7 @@ public class CheckoutFragment extends DialogFragment {
     private String mDate;
     private String mLocation;
     private String numberOfAttendees;
+    public static Integer num;
 
 
     //TODO -- Explain constructor
@@ -93,6 +94,7 @@ public class CheckoutFragment extends DialogFragment {
         fragmentTransaction.replace(R.id.flContainer, receiptFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
     }
 
     @Nullable
@@ -105,6 +107,9 @@ public class CheckoutFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        num = this.getId();
+        System.out.println(num);
 
         tvEventDetails = view.findViewById(R.id.etPasswordInput);
         btnYes = view.findViewById(R.id.btnYes);
@@ -183,6 +188,7 @@ public class CheckoutFragment extends DialogFragment {
                 CardUtils.addUserToEvent(ParseUser.getCurrentUser(), event);
                 CheckoutFragment.this.showReceiptFragment(event);
                 CheckoutFragment.this.dismiss();
+                ReceiptFragment.Confetti = true;
 
             }
         });

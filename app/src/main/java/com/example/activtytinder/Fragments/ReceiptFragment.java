@@ -2,6 +2,7 @@ package com.example.activtytinder.Fragments;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
@@ -24,7 +25,8 @@ import com.bumptech.glide.Glide;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.example.activtytinder.Tools;
-import com.google.android.gms.location.GeofencingClient;
+import com.github.jinatonic.confetti.CommonConfetti;
+import com.github.jinatonic.confetti.ConfettiManager;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -65,7 +67,15 @@ public class ReceiptFragment extends Fragment  {
     private Event mEvent;
     private String mStartTime;
     private String mEndTime;
-    private GeofencingClient geofencingClient;
+    private ViewGroup confettiContainer;
+    static boolean Confetti;
+
+    protected int goldDark, goldMed, gold, goldLight;
+    protected int[] colors;
+
+    private final List<ConfettiManager> activeConfettiManagers = new ArrayList<>();
+
+
 
     String appFb="fb://page/{fb_page_numerical_id}";
     String urlFb="https://www.facebook.com/{fb_page_name}";
@@ -80,6 +90,7 @@ public class ReceiptFragment extends Fragment  {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         btnDirections = view.findViewById(R.id.btnMaps);
         btnChat = view.findViewById(R.id.btnChat);
         btnCalendar = view.findViewById(R.id.btnCalendar);
@@ -94,6 +105,20 @@ public class ReceiptFragment extends Fragment  {
         ivPicture = view.findViewById(R.id.ivReceiptImage);
         btnShare = view.findViewById(R.id.btnShareEvent);
         mAttendees = new ArrayList<>();
+        confettiContainer = view.findViewById(R.id.clReceipt);
+
+
+
+        final Resources res = getResources();
+        goldDark = res.getColor(R.color.bude_blue);
+        gold = res.getColor(R.color.colorAccent);
+        goldLight = res.getColor(R.color.colorPinkDark);
+        colors = new int[] { goldDark, gold, goldLight };
+
+//        CommonConfetti.rainingConfetti(confettiContainer, new int[] { Color.BLACK }).infinite();
+
+
+
         Bundle eventBundle = this.getArguments();
         if(eventBundle != null){
             mEvent = Parcels.unwrap(eventBundle.getParcelable("Event"));
@@ -129,6 +154,30 @@ public class ReceiptFragment extends Fragment  {
                                 for(int x = 0; x < users.size(); x++){
                                     String entry = users.get(x).get("name") + " (@" + users.get(x).getUsername() +")";
                                     mAttendees.add(entry);
+                                    if(Confetti) {
+//                                        final List<Bitmap> allPossibleConfetti = Utils.generateConfettiBitmaps(new int[] {Color.BLACK},1);
+//                                        final int numConfetti = allPossibleConfetti.size();
+//                                        final ConfettoGenerator confettoGenerator = new ConfettoGenerator() {
+//                                            @Override
+//                                            public Confetto generateConfetto(Random random) {
+//                                                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bude_icon);
+//                                                //bitmap.createScaledBitmap(bitmap,4,4,true);
+//                                                return new BitmapConfetto(bitmap.createScaledBitmap(bitmap,40,40, true));
+//                                            }
+//                                        };
+//                                        final int containerMiddleX = confettiContainer.getWidth()/2;
+//                                        final int containerMiddleY = 0;
+//                                        final ConfettiSource confettiSource = new ConfettiSource(containerMiddleX, containerMiddleY);
+//                                        new ConfettiManager(getContext(), confettoGenerator, confettiSource, confettiContainer)
+//                                                .setEmissionDuration(1000)
+//                                                .setEmissionRate(150)
+//                                                .setVelocityX(60, 60)
+//                                                .setVelocityY(200)
+//                                                .setRotationalVelocity(180, 180)
+//                                                .animate();
+                                        activeConfettiManagers.add(CommonConfetti.rainingConfetti(confettiContainer, colors).stream(2500).setEmissionRate(100));
+                                        Confetti = false;
+                                    }
                                 }
 
                                 ParseFile image = mEvent.getEventImage();
@@ -284,6 +333,7 @@ public class ReceiptFragment extends Fragment  {
             }
         });
 
+
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -296,6 +346,7 @@ public class ReceiptFragment extends Fragment  {
         });
 
     }
+
+
+
 }
-
-
