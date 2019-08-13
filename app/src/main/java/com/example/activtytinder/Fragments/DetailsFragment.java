@@ -35,7 +35,7 @@ public class DetailsFragment extends DialogFragment {
     private String mName;
     private String mDate;
     private String mLocation;
-    private String mCreator;
+    private ParseUser mCreator;
     private ArrayList mAttendees;
     private Integer mLimit;
     private String mDescription;
@@ -94,7 +94,7 @@ public class DetailsFragment extends DialogFragment {
         mName = mEvent.getKeyName();
         mDate = Tools.convertDate(mEvent.getKeyDate());
         mLocation = mEvent.getKeyAddress();
-        mCreator = mEvent.getCreator().getUsername();
+        mCreator = mEvent.getCreator();
         mLimit = mEvent.getKeyLimit();
         mDescription = mEvent.getKeyDescription();
         mStartTime = mEvent.getKeyStartTime();
@@ -109,29 +109,37 @@ public class DetailsFragment extends DialogFragment {
             public void done(List<ParseUser> users, ParseException e) {
                 if(e == null){
                     for(int x = 0; x < users.size(); x++){
-                        mAttendees.add(users.get(x).getUsername());
+                        String entry = users.get(x).get("name") + " (@" + users.get(x).getUsername() +")";
+                        mAttendees.add(entry);
                     }
-                    tvEventDetailsFragment.setText(
-                            "Name: "
-                                    + mName
-                                    + "\n\nDescription: "
-                                    + mDescription
-                                    + "\n\nDate: "
-                                    + mDate
-                                    + "\n\nTime: "
-                                    + mStartTime
-                                    + " - "
-                                    + mEndTime
-                                    + "\n\nCreated by: "
-                                    + mCreator
-                                    +"\n\nLocation: "
-                                    + mLocation
-                                    + "\n\nAttendees: "
-                                    + mAttendees.toString().substring(1, mAttendees.toString().length() -1 )
-                                    + "\n\nPeople Limit: "
-                                    + mLimit
-                                    + "\n\n"
-                    );
+
+                    String attendeesList = "";
+                    for (int i = 0; i < mAttendees.size(); i++) {
+                        attendeesList += "    - " + mAttendees.get(i) + "\n";
+                    }
+
+                    String detailText = "Name: "
+                            + mName
+                            + "\n\nDescription:\n"
+                            + mDescription
+                            + "\n\nDate: "
+                            + mDate
+                            + "\n\nTime: "
+                            + mStartTime
+                            + " - "
+                            + mEndTime
+                            +"\n\nLocation: "
+                            + mLocation
+                            + "\n\nCreated by: "
+                            + mCreator.get("name") + " (@"
+                            + mCreator.getUsername() + ")"
+                            + "\n\nAttendees:\n"
+                            + attendeesList
+                            + "\nPeople Limit: "
+                            + mLimit
+                            + "\n\n";
+
+                    tvEventDetailsFragment.setText(detailText);
                 }
                 else{
                     Log.e("ReceiptFragment", "There are no attendees");
