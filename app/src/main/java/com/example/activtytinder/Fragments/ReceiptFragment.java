@@ -2,6 +2,7 @@ package com.example.activtytinder.Fragments;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
@@ -24,7 +25,7 @@ import com.bumptech.glide.Glide;
 import com.example.activtytinder.Models.Event;
 import com.example.activtytinder.R;
 import com.example.activtytinder.Tools;
-import com.google.android.gms.location.GeofencingClient;
+import com.github.jinatonic.confetti.ConfettiManager;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -64,7 +65,14 @@ public class ReceiptFragment extends Fragment  {
     private Event mEvent;
     private String mStartTime;
     private String mEndTime;
-    private GeofencingClient geofencingClient;
+    private ViewGroup confettiContainer;
+
+    protected int goldDark, goldMed, gold, goldLight;
+    protected int[] colors;
+
+    private final List<ConfettiManager> activeConfettiManagers = new ArrayList<>();
+
+
 
 
     @Nullable
@@ -89,6 +97,21 @@ public class ReceiptFragment extends Fragment  {
         tvEventDescription = view.findViewById(R.id.tvDescription);
         ivPicture = view.findViewById(R.id.ivReceiptImage);
         mAttendees = new ArrayList<>();
+        confettiContainer = view.findViewById(R.id.clReceipt);
+
+
+
+        final Resources res = getResources();
+        goldDark = res.getColor(R.color.bude_blue);
+        goldMed = res.getColor(R.color.black);
+        gold = res.getColor(R.color.green);
+        goldLight = res.getColor(R.color.bright_green);
+        colors = new int[] { goldDark, goldMed, gold, goldLight };
+
+        //CommonConfetti.rainingConfetti(confettiContainer, new int[] { Color.BLACK }).infinite();
+
+
+
         Bundle eventBundle = this.getArguments();
         if(eventBundle != null){
             mEvent = Parcels.unwrap(eventBundle.getParcelable("Event"));
@@ -124,6 +147,7 @@ public class ReceiptFragment extends Fragment  {
                                 for(int x = 0; x < users.size(); x++){
                                     String entry = users.get(x).get("name") + " (@" + users.get(x).getUsername() +")";
                                     mAttendees.add(entry);
+//                                    activeConfettiManagers.add(CommonConfetti.rainingConfetti(confettiContainer, colors).infinite());
                                 }
 
                                 ParseFile image = mEvent.getEventImage();
@@ -279,5 +303,6 @@ public class ReceiptFragment extends Fragment  {
             }
         });
     }
+
 
 }

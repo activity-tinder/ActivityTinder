@@ -93,6 +93,7 @@ public class CheckoutFragment extends DialogFragment {
         fragmentTransaction.replace(R.id.flContainer, receiptFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
     }
 
     @Nullable
