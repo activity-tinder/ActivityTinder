@@ -47,6 +47,7 @@ public class ReceiptFragment extends Fragment  {
     private Button btnChat;
     private Button btnCalendar;
     private Button btnDitch;
+    private Button btnShare;
     private ImageView ivPicture;
     private ScrollView scDetails;
     private TextView tvEventName;
@@ -65,6 +66,9 @@ public class ReceiptFragment extends Fragment  {
     private String mStartTime;
     private String mEndTime;
     private GeofencingClient geofencingClient;
+
+    String appFb="fb://page/{fb_page_numerical_id}";
+    String urlFb="https://www.facebook.com/{fb_page_name}";
 
 
     @Nullable
@@ -88,6 +92,7 @@ public class ReceiptFragment extends Fragment  {
         tvEventAttendees = view.findViewById(R.id.tvAttendees);
         tvEventDescription = view.findViewById(R.id.tvDescription);
         ivPicture = view.findViewById(R.id.ivReceiptImage);
+        btnShare = view.findViewById(R.id.btnShareEvent);
         mAttendees = new ArrayList<>();
         Bundle eventBundle = this.getArguments();
         if(eventBundle != null){
@@ -278,6 +283,19 @@ public class ReceiptFragment extends Fragment  {
                 ReceiptFragment.this.showLeaveDialog(mEvent);
             }
         });
-    }
 
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "I'm attending " + mName + "!\nIt's on " + mDate + ", from "+ mStartTime + " to " + mEndTime +".\nYou should sign up through bud.E as well!");
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+            }
+        });
+
+    }
 }
+
+
