@@ -67,6 +67,7 @@ public class ReceiptFragment extends Fragment  {
     private String mStartTime;
     private String mEndTime;
     private ViewGroup confettiContainer;
+    static boolean Confetti;
 
     protected int goldDark, goldMed, gold, goldLight;
     protected int[] colors;
@@ -85,6 +86,7 @@ public class ReceiptFragment extends Fragment  {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         btnDirections = view.findViewById(R.id.btnMaps);
         btnChat = view.findViewById(R.id.btnChat);
         btnCalendar = view.findViewById(R.id.btnCalendar);
@@ -104,12 +106,11 @@ public class ReceiptFragment extends Fragment  {
 
         final Resources res = getResources();
         goldDark = res.getColor(R.color.bude_blue);
-        goldMed = res.getColor(R.color.black);
-        gold = res.getColor(R.color.green);
-        goldLight = res.getColor(R.color.bright_green);
-        colors = new int[] { goldDark, goldMed, gold, goldLight };
+        gold = res.getColor(R.color.colorAccent);
+        goldLight = res.getColor(R.color.colorPinkDark);
+        colors = new int[] { goldDark, gold, goldLight };
 
-        //CommonConfetti.rainingConfetti(confettiContainer, new int[] { Color.BLACK }).infinite();
+//        CommonConfetti.rainingConfetti(confettiContainer, new int[] { Color.BLACK }).infinite();
 
 
 
@@ -148,7 +149,10 @@ public class ReceiptFragment extends Fragment  {
                                 for(int x = 0; x < users.size(); x++){
                                     String entry = users.get(x).get("name") + " (@" + users.get(x).getUsername() +")";
                                     mAttendees.add(entry);
-                                    activeConfettiManagers.add(CommonConfetti.rainingConfetti(confettiContainer, colors).infinite());
+                                    if(Confetti) {
+                                        activeConfettiManagers.add(CommonConfetti.rainingConfetti(confettiContainer, colors).stream(2500));
+                                        Confetti = false;
+                                    }
                                 }
 
                                 ParseFile image = mEvent.getEventImage();
