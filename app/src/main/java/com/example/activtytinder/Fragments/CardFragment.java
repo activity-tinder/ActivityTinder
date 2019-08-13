@@ -81,6 +81,14 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
         return inflater.inflate(R.layout.fragment_card, container, false);
     }
 
+    /**
+     * Finds buttons in xml by id and assign them programmatically. Initiates data structures used in this
+     * fragment. Sets up SwipeCardViewHolder size and appearance. Initiates the button listeners. This
+     * override method does not query the events in the card stack because the spinner automatically
+     * queries the default card stack upon creation.
+     * @param view
+     * @param savedInstanceState
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -101,8 +109,6 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
 
         mSwipePlaceHolderView = view.findViewById(R.id.swipeView);
 
-        //queryEvents("Categories");
-
         btnListeners();
     }
     @Override
@@ -116,8 +122,6 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.filter_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        //TODO - this is why the card stack is double querying, it queries again when the on item selected
-        // listener is automatically callled
         spinner.setOnItemSelectedListener(this);
     }
 
