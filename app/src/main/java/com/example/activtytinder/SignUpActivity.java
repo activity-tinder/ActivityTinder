@@ -117,21 +117,22 @@ public class SignUpActivity  extends AppCompatActivity {
                 return;
             }
             String deliveryDate = etBirthday.getText().toString();
+            String convertedBirthday = Tools.convertDate(deliveryDate);
             @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
             Date birthday = null;
             try {
-                birthday = dateFormat.parse(deliveryDate);
+                birthday = dateFormat.parse(convertedBirthday);
             } catch (java.text.ParseException e) {
                 e.printStackTrace();
             }
-            final Date finalBirthday = birthday;
+
             final String Name = etFullName.getText().toString();
             final String Email = etEmail.getText().toString();
             final String Username = etUsernameInput.getText().toString();
             final String Password = etPasswordInput.getText().toString();
             final ParseGeoPoint BaseCoordinates = LocationManager.get().getLocationCoordinates();
             final String HomeCity = etBaseLocation.getText().toString();
-            makeAccount(Name, Email, finalBirthday, BaseCoordinates, Username, Password, HomeCity);
+            makeAccount(Name, Email, birthday, BaseCoordinates, Username, Password, HomeCity);
         });
     }
 }
