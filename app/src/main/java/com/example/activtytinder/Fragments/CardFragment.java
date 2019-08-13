@@ -1,5 +1,6 @@
 package com.example.activtytinder.Fragments;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
@@ -96,12 +98,9 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
         btnAccept = view.findViewById(R.id.btnAccept);
         btnReject = view.findViewById(R.id.btnReject);
         btnUndo = view.findViewById(R.id.btnUndo);
-        //btnRefresh = view.findViewById(R.id.btnRefresh);
+
         userEventsAttending = new ArrayList<>();
         eventsRejected = new ArrayList<>();
-
-//        cardToolbar = view.findViewById(R.id.toolbarCard);
-//        ((AppCompatActivity)getActivity()).setSupportActionBar(cardToolbar);
         
         int bottomMargin = CardUtils.dpToPx(160);
         Point windowSize = CardUtils.getDisplaySize(getActivity().getWindowManager());
