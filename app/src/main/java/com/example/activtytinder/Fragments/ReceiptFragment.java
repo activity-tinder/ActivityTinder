@@ -150,7 +150,27 @@ public class ReceiptFragment extends Fragment  {
                                     String entry = users.get(x).get("name") + " (@" + users.get(x).getUsername() +")";
                                     mAttendees.add(entry);
                                     if(Confetti) {
-                                        activeConfettiManagers.add(CommonConfetti.rainingConfetti(confettiContainer, colors).stream(2500));
+//                                        final List<Bitmap> allPossibleConfetti = Utils.generateConfettiBitmaps(new int[] {Color.BLACK},1);
+//                                        final int numConfetti = allPossibleConfetti.size();
+//                                        final ConfettoGenerator confettoGenerator = new ConfettoGenerator() {
+//                                            @Override
+//                                            public Confetto generateConfetto(Random random) {
+//                                                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bude_icon);
+//                                                //bitmap.createScaledBitmap(bitmap,4,4,true);
+//                                                return new BitmapConfetto(bitmap.createScaledBitmap(bitmap,40,40, true));
+//                                            }
+//                                        };
+//                                        final int containerMiddleX = confettiContainer.getWidth()/2;
+//                                        final int containerMiddleY = 0;
+//                                        final ConfettiSource confettiSource = new ConfettiSource(containerMiddleX, containerMiddleY);
+//                                        new ConfettiManager(getContext(), confettoGenerator, confettiSource, confettiContainer)
+//                                                .setEmissionDuration(1000)
+//                                                .setEmissionRate(150)
+//                                                .setVelocityX(60, 60)
+//                                                .setVelocityY(200)
+//                                                .setRotationalVelocity(180, 180)
+//                                                .animate();
+                                        activeConfettiManagers.add(CommonConfetti.rainingConfetti(confettiContainer, colors).stream(2500).setEmissionRate(100));
                                         Confetti = false;
                                     }
                                 }
