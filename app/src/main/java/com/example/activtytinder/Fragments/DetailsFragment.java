@@ -23,6 +23,7 @@ import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ public class DetailsFragment extends DialogFragment {
 
     private TextView tvEventDetailsFragment;
     private Button btnClose;
+    private TextView tvEventName;
+
     private Event mEvent;
     private String mName;
     private String mDate;
@@ -76,7 +79,7 @@ public class DetailsFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         tvEventDetailsFragment = view.findViewById(R.id.tvEventDetailsFragment);
         btnClose = view.findViewById(R.id.btnClose);
-
+        tvEventName = view.findViewById(R.id.tvEventName);
 
         Bundle eventBundle = this.getArguments();
         if(eventBundle != null){
@@ -100,6 +103,8 @@ public class DetailsFragment extends DialogFragment {
         mStartTime = mEvent.getKeyStartTime();
         mEndTime = mEvent.getKeyEndTime();
 
+        tvEventName.setText(mName);
+
         //TODO -- explain this query
         ParseRelation<ParseUser> relation = mEvent.getRelation("usersAttending");
         ParseQuery<ParseUser> query = relation.getQuery();
@@ -118,9 +123,8 @@ public class DetailsFragment extends DialogFragment {
                         attendeesList += "    - " + mAttendees.get(i) + "\n";
                     }
 
-                    String detailText = "Name: "
-                            + mName
-                            + "\n\nDescription:\n"
+                    String detailText =
+                            "Description:\n"
                             + mDescription
                             + "\n\nDate: "
                             + mDate
