@@ -124,9 +124,7 @@ public class DetailsFragment extends DialogFragment {
                     }
 
                     String detailText =
-                            "Description:\n"
-                            + mDescription
-                            + "\n\nDate: "
+                            "Date: "
                             + mDate
                             + "\n\nTime: "
                             + mStartTime
@@ -134,6 +132,8 @@ public class DetailsFragment extends DialogFragment {
                             + mEndTime
                             +"\n\nLocation: "
                             + mLocation
+                            + "\n\nDescription:\n"
+                            + mDescription
                             + "\n\nCreated by: "
                             + mCreator.get("name") + " (@"
                             + mCreator.getUsername() + ")"
