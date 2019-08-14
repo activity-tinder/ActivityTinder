@@ -136,8 +136,7 @@ public class DetailsFragment extends DialogFragment {
                             + "\n\nAttendees:\n"
                             + attendeesList
                             + "\nPeople Limit: "
-                            + mLimit
-                            + "\n\n";
+                            + mLimit;
 
                     tvEventDetailsFragment.setText(detailText);
                 }
