@@ -253,7 +253,7 @@ public class CardFragment extends Fragment implements AdapterView.OnItemSelected
                 .setIsUndoEnabled(true)
                 .setSwipeDecor(new SwipeDecor()
                         .setPaddingTop(15)
-                        .setMarginTop(0)
+                        .setMarginTop(-120)
                         .setRelativeScale(0.01f));
     }
 
