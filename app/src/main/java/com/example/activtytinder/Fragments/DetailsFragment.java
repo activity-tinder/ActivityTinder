@@ -135,7 +135,7 @@ public class DetailsFragment extends DialogFragment {
                             + mCreator.getUsername() + ")"
                             + "\n\nAttendees:\n"
                             + attendeesList
-                            + "\nPeople Limit: "
+                            + "\nAttendee Limit: "
                             + mLimit;
 
                     tvEventDetailsFragment.setText(detailText);
