@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             } else {
+                Toast.makeText(this, "Incorrect username/password entered", Toast.LENGTH_SHORT).show();
                 Log.e("Login Activity", "Login failure!");
                 e.printStackTrace();
             }
