@@ -109,7 +109,7 @@ public class DetailsFragment extends DialogFragment {
             public void done(List<ParseUser> users, ParseException e) {
                 if(e == null){
                     for(int x = 0; x < users.size(); x++){
-                        String entry = users.get(x).get("name") + " (@" + users.get(x).getUsername() +")";
+                        String entry = users.get(x).get("name") + " (@" + users.get(x).getUsername() + " - " + users.get(x).get("reliabilityScore") +")";
                         mAttendees.add(entry);
                     }
 
